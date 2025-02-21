@@ -10,7 +10,7 @@ export interface IRoute {
 
 export const PUBLIC_ROUTES: IRoute[] = [
   {
-    path: "/home",
+    path: "/",
     component: <Home />,
   },
   {

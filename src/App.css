@@ -1,7 +1,6 @@
 body {
-  /* background-image: url("https://www.metmuseum.org/-/media/images/learn/educators/curriculum-resources/islamic_teacher_resource/teasers/image13_teaser.jpg?sc_lang=en"); */
   background-position: center;
-  backdrop-filter: brightness(20%);
+  background-color: #f4efca;
 }
 * {
   box-sizing: border-box;

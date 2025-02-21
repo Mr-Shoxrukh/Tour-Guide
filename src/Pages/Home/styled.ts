@@ -158,7 +158,7 @@ export const SpotTitle = styled.div`
   width: 100%;
   h1 {
     font-size: 42px;
-    color: aliceblue;
+    color: #dd2c00;
   }
 `;
 export const CardCity__wrapper = styled.div`

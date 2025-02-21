@@ -1,5 +1,5 @@
 import { Box, Button, Container, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "./Components/header";
 import {
   BookingGuide,
@@ -26,6 +26,7 @@ import EastIcon from "@mui/icons-material/East";
 import activeTourist from "./Components/img/activeTourist.jpg";
 import HealthAndSafetyIcon from "@mui/icons-material/HealthAndSafety";
 import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
+import CircularProgress from "@mui/material/CircularProgress";
 import { createClient } from "@supabase/supabase-js";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -35,28 +36,18 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { motion } from "framer-motion";
 import { ROUTES_PATH } from "../../routes/path";
 
-type Props = {};
+interface GuideData {
+  id: any;
+  guideImg: string;
+  guideName: string;
+}
 
-const cards = [
-  {
-    id: 1,
-    img: " https://mjcedactmdisysxnyusx.supabase.co/storage/v1/object/sign/gallery/23b5ab5c-71eb-48b3-939c-3233c043bd56_removalai_preview.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYWxsZXJ5LzIzYjVhYjVjLTcxZWItNDhiMy05MzljLTMyMzNjMDQzYmQ1Nl9yZW1vdmFsYWlfcHJldmlldy5wbmciLCJpYXQiOjE3Mzk5NTgzNTEsImV4cCI6MTc3MTQ5NDM1MX0.gC9R_b513OITxVlnzzPa1vP1cmT9OhKeoscyDdLxmeA",
-    title: "Sanat Berdiyev",
-    description: "This is the first card.",
-  },
-  {
-    id: 2,
-    img: "https://mjcedactmdisysxnyusx.supabase.co/storage/v1/object/sign/gallery/b074ecea-5057-495f-bb9c-fc9acdcfe550_removalai_preview.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYWxsZXJ5L2IwNzRlY2VhLTUwNTctNDk1Zi1iYjljLWZjOWFjZGNmZTU1MF9yZW1vdmFsYWlfcHJldmlldy5wbmciLCJpYXQiOjE3Mzk5NTgyMzIsImV4cCI6MTc3MTQ5NDIzMn0.xe7BHxi4IXhCKaZb5imVaA3uILN2cM0DHIBHtKJbgM4",
-    title: "Olimjon Tolipov",
-    description: "This is the second card.",
-  },
-];
-
-function Home({}: Props) {
+function Home() {
   const [getData, steData] = useState<any>([]);
   const [currentIndex, setCurrentIndex] = useState(1);
-  const [selectedGuide, setSelectedGuide] = useState(cards[0]);
+  const [guide, setGuide] = useState<any>([]);
   const [step, setStep] = useState(1);
+  const [activeIndex, setActiveIndex] = useState(0);
   const navigate = useNavigate();
 
   const supabaseUrl = "https://mjcedactmdisysxnyusx.supabase.co";
@@ -64,22 +55,15 @@ function Home({}: Props) {
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1qY2VkYWN0bWRpc3lzeG55dXN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk4NzE0MjksImV4cCI6MjA1NTQ0NzQyOX0.9slbpltg1VrHV4ZxI6gcXvP9zus0kXpQH6oqFmy_RO0";
   const supabase = createClient(supabaseUrl, supabaseKey);
 
-  const nextCard = () => {
-    if (step === 1) {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % cards.length);
-      setStep(2); // 1-stepdan 2-stepga o'tish
-    }
-  };
-
-  const prevCard = () => {
-    if (step === 2) {
-      setCurrentIndex(
-        (prevIndex) => (prevIndex - 1 + cards.length) % cards.length
-      );
-      setStep(1); // 2-stepdan 1-stepga qaytish
-    }
-  };
   useEffect(() => {
+    const fetchGuides = async () => {
+      const { data, error } = await supabase.from("guides").select("*");
+      if (error) {
+        console.error("Supabase Error:", error);
+      } else {
+        setGuide(data as GuideData[]);
+      }
+    };
     const fetchDataByDB = async () => {
       try {
         const { data, error } = await supabase.from("gallery").select("*");
@@ -95,11 +79,41 @@ function Home({}: Props) {
     };
 
     fetchDataByDB();
+    fetchGuides();
   }, []);
-  const handleBooking = () => {
-    navigate(ROUTES_PATH.BOOKING, {
-      state: { guide: selectedGuide, step: currentIndex },
-    });
+  if (guide.length === 0) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          height: "70vh",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
+  const nextCard = () => {
+    if (step === 1) {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % getData.length);
+      setActiveIndex((prev) => (prev + 1) % getData.length);
+      setStep(2);
+    }
+  };
+
+  const prevCard = () => {
+    if (step === 2) {
+      setCurrentIndex(
+        (prevIndex) => (prevIndex - 1 + getData.length) % getData.length
+      );
+      setActiveIndex((prev) => (prev + 1) % getData.length);
+      setStep(1);
+    }
+  };
+  const handleBooking = (guide: string) => {
+    navigate(`/booking/${guide}`);
   };
   return (
     <Container maxWidth="xl">
@@ -122,40 +136,43 @@ function Home({}: Props) {
           <Box
             sx={{
               display: "flex",
-              justifyContent: "center",
+              flexDirection: "column",
+              alignItems: "center",
             }}
           >
             <motion.img
-              src={cards[currentIndex].img}
+              src={guide[activeIndex].guideImg} // Supabase-dan kelgan rasm
               alt="Guide"
               className="guide-image"
-              initial={{ y: 100, opacity: 0 }} // Boshlanish holati (pastda)
-              animate={{ y: 0, opacity: 1 }} // Animatsiya bo'lgandan keyin
-              transition={{ duration: 0.5, ease: "easeOut" }} // Sekin-asta chiqadi
-              key={currentIndex}
-              style={{
-                width: "300px",
-              }} // step o‘zgarsa animatsiya yangilanadi
+              initial={{ y: 100, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+              key={activeIndex}
+              style={{ width: "300px" }}
             />
-          </Box>
-          <Typography variant="h1" fontSize={22}>
-            {cards[currentIndex].title}
-          </Typography>
-          <SelectGuide>
-            <Button variant="contained" onClick={prevCard}>
-              <WestIcon />
-            </Button>
+            <Typography variant="h1" fontSize={22}>
+              {guide[activeIndex].guideName} {/* Guide nomi */}
+            </Typography>
 
-            <Button variant="outlined" onClick={handleBooking}>
-              Book Now
-            </Button>
-
-            {currentIndex < 2 && (
-              <Button variant="contained" onClick={nextCard}>
-                <EastIcon />
+            <Box
+              sx={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "space-between",
+                marginTop: 2,
+              }}
+            >
+              <Button variant="contained" onClick={prevCard}>
+                Prev
               </Button>
-            )}
-          </SelectGuide>
+              <Button onClick={() => handleBooking(guide[activeIndex].id)}>
+                Book now
+              </Button>
+              <Button variant="contained" onClick={nextCard}>
+                Next
+              </Button>
+            </Box>
+          </Box>
         </BookingGuide>
       </Registan__wrapper>
       <Tour_Actives>

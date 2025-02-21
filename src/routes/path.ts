@@ -1,4 +1,4 @@
 export const ROUTES_PATH = {
-  HOME: "/home",
+  HOME: "/",
   BOOKING: "/booking",
 };

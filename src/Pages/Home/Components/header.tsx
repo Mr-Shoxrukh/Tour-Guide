@@ -12,19 +12,20 @@ import MenuItem from "@mui/material/MenuItem";
 import CallIcon from "@mui/icons-material/Call";
 import Logo from "./img/Logo.jpg";
 import { Logo__wr } from ".";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { createClient } from "@supabase/supabase-js";
 const pages = [
   "Home",
   "About",
-  "Tour",
+  "Tours",
   "GAllery",
   "Contact",
   "Happy Clients :)",
 ];
-
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const navigate = useNavigate();
+
   const handleOpenNavMenu = (event: any) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -56,7 +57,6 @@ function ResponsiveAppBar() {
             </Logo__wr>
           </Typography>
 
-          {/* Mobil menyu */}
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
@@ -75,7 +75,7 @@ function ResponsiveAppBar() {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={() => handleCloseNavMenu(page)}>
-                  <Typography>{page}</Typography>
+                  <Typography color="#f4efca">{page}</Typography>
                 </MenuItem>
               ))}
             </Menu>
