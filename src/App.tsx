@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Home from "./Pages/Home";
 import Booking from "./Pages/Booking";
 import GalleryPage from "./Pages/Gallery";
@@ -10,7 +10,7 @@ import ToursPage from "./Pages/Tours";
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route path="/home" element={<Home />} />
       <Route path="/booking/:guideId" element={<Booking />} />
       <Route path="/about" element={<AboutPage />} />
       <Route path="/gallery" element={<GalleryPage />} />

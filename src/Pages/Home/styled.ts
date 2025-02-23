@@ -39,7 +39,7 @@ export const BookingGuide = styled.div`
 `;
 export const Tour_Actives = styled.section`
   width: 100%;
-  margin-top: 100px;
+  margin-top: 50px;
   padding: 30px 0;
   background-color: rgb(255, 255, 255);
   border-radius: 20px;
@@ -97,7 +97,7 @@ export const ExperienceTitle = styled.div`
 export const ExperienceWithTourests__wrapper = styled.section`
   width: 100%;
   background-color: rgb(255, 255, 255);
-  margin-top: 120px;
+  margin-top: 50px;
   padding: 30px 0;
   border-radius: 20px;
 `;
@@ -134,7 +134,7 @@ export const GoodSides = styled.div`
 export const SpotTourst = styled.section`
   width: 100%;
   background-color: rgb(255, 255, 255);
-  margin-top: 100px;
+  margin-top: 50px;
   border-radius: 20px;
   display: flex;
   flex-direction: column;

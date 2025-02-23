@@ -13,7 +13,6 @@ import {
   GoodSidesIcon,
   MApImg,
   Registan__wrapper,
-  SelectGuide,
   SpotTitle,
   SpotTourst,
   Tour_Actives,
@@ -21,8 +20,6 @@ import {
   TourGallery,
   WithTourestyImg,
 } from "./styled";
-import WestIcon from "@mui/icons-material/West";
-import EastIcon from "@mui/icons-material/East";
 import activeTourist from "./Components/img/activeTourist.jpg";
 import HealthAndSafetyIcon from "@mui/icons-material/HealthAndSafety";
 import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
@@ -35,6 +32,8 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { motion } from "framer-motion";
 import { ROUTES_PATH } from "../../routes/path";
+import { UltimateCardWrapper } from "./Components/Ultimate Travel/style";
+import UltimateTour from "./Components/Ultimate Travel";
 
 interface GuideData {
   id: any;
@@ -140,18 +139,23 @@ function Home() {
               alignItems: "center",
             }}
           >
-            <motion.img
-              src={guide[activeIndex].guideImg} // Supabase-dan kelgan rasm
-              alt="Guide"
-              className="guide-image"
-              initial={{ y: 100, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-              key={activeIndex}
-              style={{ width: "300px" }}
-            />
+            {guide.length > 0 && guide[activeIndex]?.guideImg ? (
+              <motion.img
+                src={guide[activeIndex].guideImg}
+                alt="Guide"
+                className="guide-image"
+                initial={{ y: 100, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+                key={activeIndex}
+                style={{ width: "300px" }}
+              />
+            ) : (
+              <p>Loading...</p>
+            )}
+
             <Typography variant="h1" fontSize={22}>
-              {guide[activeIndex].guideName} {/* Guide nomi */}
+              {guide[activeIndex].guideName}
             </Typography>
 
             <Box
@@ -379,6 +383,7 @@ function Home() {
           </CardCity__wrapper>
         </MApImg>
       </SpotTourst>
+      <UltimateTour />
     </Container>
   );
 }
