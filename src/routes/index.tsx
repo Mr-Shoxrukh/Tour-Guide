@@ -1,6 +1,7 @@
 import AboutPage from "../Pages/About";
 import Booking from "../Pages/Booking";
 import GalleryPage from "../Pages/Gallery";
+import HappyClientsPage from "../Pages/HappyClients";
 import Home from "../Pages/Home";
 
 export interface IRoute {
@@ -24,5 +25,9 @@ export const PUBLIC_ROUTES: IRoute[] = [
   {
     path: "/gallery",
     component: <GalleryPage />,
+  },
+  {
+    path: "/happy-clients",
+    component: <HappyClientsPage />,
   },
 ];
