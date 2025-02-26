@@ -21,8 +21,8 @@ export const UltimateTitle = styled.div`
 export const UltimateCardWrapper = styled.div`
   width: 100%;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: space-between;
   flex-wrap: wrap;
   gap: 20px;
 `;
