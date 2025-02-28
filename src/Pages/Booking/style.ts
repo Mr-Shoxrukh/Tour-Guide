@@ -22,7 +22,4 @@ export const BookingCard = styled.div`
 export const BookingFrom = styled.div`
   width: 100%;
   display: flex;
-  justify-content: center;
-  flex-direction: column;
-  gap: 25px;
 `;

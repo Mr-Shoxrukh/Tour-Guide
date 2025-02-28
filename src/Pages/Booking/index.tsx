@@ -5,6 +5,7 @@ import Header from "../../Pages/Home/Components/header";
 import {
   Box,
   Button,
+  CircularProgress,
   Container,
   FormControl,
   FormControlLabel,
@@ -25,7 +26,6 @@ import emailjs from "emailjs-com";
 import { BookingCard, BookingFrom, BookingWrapper } from "./style";
 import { ToastContainer, toast } from "react-toastify";
 import Footer from "../Home/Components/footer";
-import SignIn from "../../SignIn";
 interface Guide {
   id: string;
   guideName: string;
@@ -46,7 +46,6 @@ function Booking() {
   const [code, setCode] = useState("");
   const [generatedCode, setGeneratedCode] = useState<string | null>(null);
   const [isCodeSent, setIsCodeSent] = useState(false);
-  const [activeStep, setActiveStep] = useState(0);
   const [formData, setFormData] = useState({
     peopleCount: "",
     email: "",
@@ -128,33 +127,24 @@ function Booking() {
       toast.error("❌ Noto‘g‘ri kod. Qayta urinib ko‘ring.");
     }
   };
-  const steps = ["Foydalanuvchi Ma'lumotlari", "Qo'shimcha Ma'lumotlar"];
 
-  const handleChange = (e: any) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleNext = () => {
-    if ((activeStep === 0 && !formData.peopleCount) || !formData.transport) {
-      toast.error("Iltimos, barcha maydonlarni to'ldiring!");
-      return;
-    }
-
-    setActiveStep((prevStep) => prevStep + 1);
-  };
-
-  const handleBack = () => {
-    setActiveStep((prevStep) => prevStep - 1);
-  };
   const handleCountOfPeople = (event: any) => {
     setAge(event.target.value as string);
   };
-  const handleTransport = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTransport((event.target as HTMLInputElement).value);
-  };
 
   if (loading) {
-    return <p>Loading...</p>;
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          height: "70vh",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
   }
 
   if (!guide) {
@@ -178,121 +168,89 @@ function Booking() {
                 textAlign: "center",
               }}
             >
-              <Stepper activeStep={activeStep} alternativeLabel>
-                {steps.map((label, index) => (
-                  <Step key={index}>
-                    <StepLabel>{label}</StepLabel>
-                  </Step>
-                ))}
-              </Stepper>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <FormControl sx={{ minWidth: 80, maxWidth: 150 }}>
+                  <InputLabel id="demo-simple-select-autowidth-label">
+                    Number of People
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-autowidth-label"
+                    id="demo-simple-select-autowidth"
+                    value={age}
+                    onChange={handleCountOfPeople}
+                    autoWidth
+                    label="Number of People"
+                  >
+                    <MenuItem value={20}>1</MenuItem>
+                    <MenuItem value={21}>2</MenuItem>
+                    <MenuItem value={22}>3</MenuItem>
+                    <MenuItem value={32}>4</MenuItem>
+                    <MenuItem value={42}>5</MenuItem>
+                    <MenuItem value={52}>6</MenuItem>
+                  </Select>
+                </FormControl>
+                <FormControl>
+                  <FormLabel id="demo-controlled-radio-buttons-group">
+                    Transport
+                  </FormLabel>
+                  <RadioGroup
+                    aria-labelledby="demo-controlled-radio-buttons-group"
+                    name="controlled-radio-buttons-group"
+                    value={transport}
+                    onChange={handleTransportChange}
+                  >
+                    <FormControlLabel
+                      value="Need"
+                      control={<Radio />}
+                      label="Need"
+                    />
+                    <FormControlLabel
+                      value="Needn't"
+                      control={<Radio />}
+                      label="Needn't"
+                    />
+                  </RadioGroup>
+                </FormControl>
+              </Box>
 
-              {activeStep === 0 && (
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                  }}
-                >
-                  <FormControl sx={{ minWidth: 80, maxWidth: 150 }}>
-                    <InputLabel id="demo-simple-select-autowidth-label">
-                      Number of People
-                    </InputLabel>
-                    <Select
-                      labelId="demo-simple-select-autowidth-label"
-                      id="demo-simple-select-autowidth"
-                      value={age}
-                      onChange={handleCountOfPeople}
-                      autoWidth
-                      label="Number of People"
-                    >
-                      <MenuItem value={20}>1</MenuItem>
-                      <MenuItem value={21}>2</MenuItem>
-                      <MenuItem value={22}>3</MenuItem>
-                      <MenuItem value={32}>4</MenuItem>
-                      <MenuItem value={42}>5</MenuItem>
-                      <MenuItem value={52}>6</MenuItem>
-                    </Select>
-                  </FormControl>
-                  <FormControl>
-                    <FormLabel id="demo-controlled-radio-buttons-group">
-                      Transport
-                    </FormLabel>
-                    <RadioGroup
-                      aria-labelledby="demo-controlled-radio-buttons-group"
-                      name="controlled-radio-buttons-group"
-                      value={transport}
-                      onChange={handleTransportChange}
-                    >
-                      <FormControlLabel
-                        value="Need"
-                        control={<Radio />}
-                        label="Need"
-                      />
-                      <FormControlLabel
-                        value="Needn't"
-                        control={<Radio />}
-                        label="Needn't"
-                      />
-                    </RadioGroup>
-                  </FormControl>
-                  <SignIn />
-                </Box>
-              )}
-
-              {activeStep === 1 && (
-                <Box
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "1rem",
-                    width: "300px",
-                    margin: "auto",
-                  }}
-                >
-                  {!isCodeSent ? (
-                    // 📌 1-qadam: Emailni kiritish va kod yuborish
-                    <div>
-                      <h2>Email tasdiqlash</h2>
-                      <input
-                        type="email"
-                        placeholder="Emailingizni kiriting"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                      />
-                      <button onClick={sendVerificationCode}>
-                        Kod yuborish
-                      </button>
-                    </div>
-                  ) : (
-                    // 📌 2-qadam: Tasdiqlash kodini kiritish
-                    <div>
-                      <h2>Tasdiqlash kodi</h2>
-                      <input
-                        type="text"
-                        placeholder="Kod kiriting"
-                        value={code}
-                        onChange={(e) => setCode(e.target.value)}
-                      />
-                      <button onClick={verifyCode}>Tasdiqlash</button>
-                    </div>
-                  )}
-                </Box>
-              )}
-
-              <Box sx={{ marginTop: 2 }}>
-                {activeStep > 0 && (
-                  <Button onClick={handleBack} sx={{ marginRight: 2 }}>
-                    Orqaga
-                  </Button>
-                )}
-                {activeStep < steps.length - 1 ? (
-                  <Button variant="contained" onClick={handleNext}>
-                    Keyingisi
-                  </Button>
+              <Box
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "1rem",
+                  width: "300px",
+                  margin: "auto",
+                }}
+              >
+                {!isCodeSent ? (
+                  // 📌 1-qadam: Emailni kiritish va kod yuborish
+                  <div>
+                    <h2>Email tasdiqlash</h2>
+                    <input
+                      type="email"
+                      placeholder="Emailingizni kiriting"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <button onClick={sendVerificationCode}>Kod yuborish</button>
+                  </div>
                 ) : (
-                  <Button variant="contained" color="success">
-                    Tugatish
-                  </Button>
+                  // 📌 2-qadam: Tasdiqlash kodini kiritish
+                  <div>
+                    <h2>Tasdiqlash kodi</h2>
+                    <input
+                      type="text"
+                      placeholder="Kod kiriting"
+                      value={code}
+                      onChange={(e) => setCode(e.target.value)}
+                    />
+                    <button onClick={verifyCode}>Tasdiqlash</button>
+                  </div>
                 )}
               </Box>
             </Box>

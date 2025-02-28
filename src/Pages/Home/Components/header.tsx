@@ -14,6 +14,7 @@ import Logo from "./img/Logo.jpg";
 import { Logo__wr } from ".";
 import { useNavigate, useParams } from "react-router-dom";
 import { createClient } from "@supabase/supabase-js";
+import { ROUTES_PATH } from "../../../routes/path";
 const pages = [
   "Home",
   "About",
@@ -34,7 +35,12 @@ function ResponsiveAppBar() {
     setAnchorElNav(null);
     if (page) navigate(`/${page.toLowerCase().replace(/\s+/g, "-")}`); // Sahifaga yo‘naltirish
   };
-
+  const handelSigin = () => {
+    navigate(ROUTES_PATH.SIGN_UP);
+  };
+  const handleLogin = () => {
+    navigate(ROUTES_PATH.LOG_IN);
+  };
   return (
     <AppBar sx={{ background: "#dd2c00" }} position="static">
       <Container maxWidth="xl">
@@ -98,6 +104,19 @@ function ResponsiveAppBar() {
             <Tooltip title="Tolipov Olimjon">
               <Typography variant="body1">📞 +998 99 927 22 11</Typography>
             </Tooltip>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              gap: 1,
+            }}
+          >
+            <Button variant="contained" onClick={handelSigin}>
+              Sign in
+            </Button>
+            <Button variant="contained" onClick={handleLogin}>
+              Login
+            </Button>
           </Box>
         </Toolbar>
       </Container>

@@ -7,6 +7,9 @@ import AboutPage from "./Pages/About";
 import ContactPage from "./Pages/Contact";
 import HappyClientsPage from "./Pages/HappyClients";
 import ToursPage from "./Pages/Tours";
+import SignUp from "./Pages/SignUp";
+import { ROUTES_PATH } from "./routes/path";
+import LogIn from "./Pages/LogIn";
 function App() {
   return (
     <Routes>
@@ -17,6 +20,8 @@ function App() {
       <Route path="/contact" element={<ContactPage />} />
       <Route path="/happy-clients" element={<HappyClientsPage />} />
       <Route path="/tours" element={<ToursPage />} />
+      <Route path="/signup" element={<SignUp />} />
+      <Route path="/log-in" element={<LogIn />} />
     </Routes>
   );
 }
