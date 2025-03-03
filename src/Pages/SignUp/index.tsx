@@ -7,18 +7,17 @@ import { CreateAcc } from "../LogIn/LogIn";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { ROUTES_PATH } from "../../routes/path";
-type Props = {};
 
-function SignUp({}: Props) {
+function SignUp() {
   const [password, setPassword] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [name, setName] = useState<string>("");
-  const [number, setNumber] = useState<string>("");
+  const [phoneNumber, setNumber] = useState<string>("");
   const [loading, setLoading] = useState(true);
 
-  const supabaseUrl = "https://wdybqcunwsmveabxiekf.supabase.co";
+  const supabaseUrl = "https://mjcedactmdisysxnyusx.supabase.co";
   const supabaseKey =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndkeWJxY3Vud3NtdmVhYnhpZWtmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzMzODkyNzYsImV4cCI6MjA0ODk2NTI3Nn0.Fyo48A9AP7-VcERAFEvq2TdZF2Ug2Kr1FwDAgpnp90o";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1qY2VkYWN0bWRpc3lzeG55dXN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk4NzE0MjksImV4cCI6MjA1NTQ0NzQyOX0.9slbpltg1VrHV4ZxI6gcXvP9zus0kXpQH6oqFmy_RO0";
   const supabase = createClient(supabaseUrl, supabaseKey);
 
   const navigate = useNavigate();
@@ -26,11 +25,11 @@ function SignUp({}: Props) {
   const FetchData = async () => {
     setLoading(true);
     try {
-      const { data, error } = await supabase.from("dataUsers").select("*");
+      const { data, error } = await supabase.from("userData").select("*");
       if (error) {
         console.error("Error fetching data:", error);
       } else {
-        localStorage.setItem("carData", JSON.stringify(data));
+        localStorage.setItem("guides", JSON.stringify(data));
       }
     } catch (err) {
       console.error("Unexpected error:", err);
@@ -47,7 +46,12 @@ function SignUp({}: Props) {
     const notifyError = (msg: string) => toast.error(msg);
     const notifySuccess = (msg: string) => toast.success(msg);
 
-    if (!name.trim() || !email.trim() || !password.trim() || !number.trim()) {
+    if (
+      !name.trim() ||
+      !email.trim() ||
+      !password.trim() ||
+      !phoneNumber.trim()
+    ) {
       notifyError("Iltimos, barcha maydonlarni to'ldiring!");
       return;
     }
@@ -70,8 +74,8 @@ function SignUp({}: Props) {
       }
 
       const { error: insertError } = await supabase
-        .from("Users")
-        .insert([{ email, name, password, number }]);
+        .from("userData")
+        .insert([{ email, name, password, phoneNumber }]);
 
       if (insertError) {
         console.error("Error inserting data:", insertError);
@@ -126,7 +130,7 @@ function SignUp({}: Props) {
             id="outlined-basic"
             label="Number"
             variant="outlined"
-            value={number}
+            value={phoneNumber}
             onChange={(e) => setNumber(e.target.value)}
             sx={{
               width: "100%",

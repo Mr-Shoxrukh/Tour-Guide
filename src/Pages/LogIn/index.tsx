@@ -40,20 +40,20 @@ const LogIn: React.FC<LogInProps> = () => {
   const [userData, setData] = useState<any>([]);
   const [loading, setLoading] = useState(true);
 
-  const supabaseUrl = "https://wdybqcunwsmveabxiekf.supabase.co";
+  const supabaseUrl = "https://mjcedactmdisysxnyusx.supabase.co";
   const supabaseKey =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndkeWJxY3Vud3NtdmVhYnhpZWtmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzMzODkyNzYsImV4cCI6MjA0ODk2NTI3Nn0.Fyo48A9AP7-VcERAFEvq2TdZF2Ug2Kr1FwDAgpnp90o";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1qY2VkYWN0bWRpc3lzeG55dXN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk4NzE0MjksImV4cCI6MjA1NTQ0NzQyOX0.9slbpltg1VrHV4ZxI6gcXvP9zus0kXpQH6oqFmy_RO0";
   const supabase = createClient(supabaseUrl, supabaseKey);
 
   const FetchData = async () => {
     setLoading(true);
     try {
-      const { data, error } = await supabase.from("car data").select("*");
+      const { data, error } = await supabase.from("guides").select("*");
       if (error) {
         console.error("Error fetching data:");
       } else {
         setData(data || []);
-        localStorage.setItem("carData", JSON.stringify(data));
+        localStorage.setItem("userData", JSON.stringify(data));
       }
     } catch (err) {
       console.error("Unexpected error:", err);
@@ -100,7 +100,7 @@ const LogIn: React.FC<LogInProps> = () => {
       const { data: existingUser, error: checkError } = await supabase
         .from("userData")
         .select("*")
-        .eq("email", value)
+        .eq("email name", value)
         .single();
 
       if (checkError) {
@@ -116,7 +116,7 @@ const LogIn: React.FC<LogInProps> = () => {
       }
 
       const { data, error: insertError } = await supabase
-        .from("userData")
+        .from("guides")
         .insert([{ email: value }]);
 
       if (insertError) {
@@ -126,7 +126,7 @@ const LogIn: React.FC<LogInProps> = () => {
         console.log("Email muvaffaqiyatli ro'yxatga olindi:", data);
         FetchData();
         setValue("");
-        navigate("/");
+        navigate("/home");
       }
     } catch (err) {
       console.error("Kutilmagan xatolik yuz berdi:", err);

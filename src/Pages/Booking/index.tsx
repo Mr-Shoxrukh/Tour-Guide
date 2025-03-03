@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
+import axios from "axios";
 import Header from "../../Pages/Home/Components/header";
 import {
   Box,
@@ -18,10 +19,6 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { GoogleLogin } from "react-google-login";
-import Stepper from "@mui/material/Stepper";
-import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
 import emailjs from "emailjs-com";
 import { BookingCard, BookingFrom, BookingWrapper } from "./style";
 import { ToastContainer, toast } from "react-toastify";
@@ -51,11 +48,9 @@ function Booking() {
     email: "",
     transport: "",
   });
+  const [numberOfPeople, setnumberOfPeople] = useState<string>("");
+  const [otpInput, setOtpInput] = useState<string>("");
 
-  const [pickUpDate, setPickupDate] = useState("");
-  const [dropOffDate, setDropOffDate] = useState("");
-
-  const [age, setAge] = React.useState("");
   const [transport, setTransport] = React.useState("female");
 
   useEffect(() => {
@@ -108,7 +103,7 @@ function Booking() {
     try {
       const response = await emailjs.send(
         "service_nm2wz8o", // EmailJS Service ID
-        "template_5f9q8rz", // EmailJS Template ID
+        "template_rtz6uqi", // EmailJS Template ID
         templateParams, // 🔹 To‘g‘ri formatlangan emailni ishlatamiz
         "Rl8mSc2VDDwj4Unh0" // EmailJS Public Key
       );
@@ -128,8 +123,61 @@ function Booking() {
     }
   };
 
-  const handleCountOfPeople = (event: any) => {
-    setAge(event.target.value as string);
+  const sendToTelegramBot = async (
+    email: string,
+    selectedPeople: string,
+    selectedTransport: string
+  ) => {
+    const botToken = "7716014519:AAFB5XdsTar9a_jkMNIa5Yu-Ck3hkra5eUs";
+    const chatId = "6287309235"; // Guide botining chat ID sini oling
+    const message = `🆕 Yangi buyurtma:\n📧 Email: ${email}\n🌍 Tanlangan tur: ${selectedPeople}\n📅 Sana: ${selectedTransport}`;
+
+    const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+
+    try {
+      await axios.post(url, {
+        chat_id: chatId,
+        text: message,
+      });
+
+      console.log("Ma'lumot Telegram botga yuborildi!");
+    } catch (error) {
+      console.error("Telegram botga xabar yuborishda xatolik:", error);
+    }
+  };
+  const handleVerifyCode = async () => {
+    if (code.trim() === "") {
+      toast.error("Tasdiqlash kodini kiriting!");
+      return;
+    }
+
+    try {
+      const { data, error } = await supabase.auth.verifyOtp({
+        email: email,
+        token: code,
+        type: "email",
+      });
+
+      if (error) {
+        console.error("Kod noto‘g‘ri:", error);
+        toast.error("Tasdiqlash kodi noto‘g‘ri!");
+        return;
+      }
+
+      console.log("Tasdiqlash muvaffaqiyatli!");
+
+      // Foydalanuvchi tanlagan ma'lumotlar
+      const selectedPeople = numberOfPeople; // Tanlangan turistik joy
+      const selectedTransport = transport; // Tanlangan sana
+
+      // Telegram botga ma'lumot yuborish
+      await sendToTelegramBot(email, selectedPeople, selectedTransport);
+
+      toast.success("Tasdiqlash muvaffaqiyatli va ma’lumot yuborildi!");
+    } catch (err) {
+      console.error("Xatolik:", err);
+      toast.error("Kutilmagan xatolik yuz berdi!");
+    }
   };
 
   if (loading) {
@@ -159,102 +207,77 @@ function Booking() {
             <img src={guide.guideImg} alt={guide.title} width="300" />
             <Typography variant="body1">{guide.guideExperience}</Typography>
           </BookingCard>
-          <BookingFrom>
-            <Box
-              sx={{
-                width: "100%",
-                margin: "auto",
-                padding: 4,
-                textAlign: "center",
-              }}
-            >
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
-                <FormControl sx={{ minWidth: 80, maxWidth: 150 }}>
-                  <InputLabel id="demo-simple-select-autowidth-label">
-                    Number of People
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-autowidth-label"
-                    id="demo-simple-select-autowidth"
-                    value={age}
-                    onChange={handleCountOfPeople}
-                    autoWidth
-                    label="Number of People"
-                  >
-                    <MenuItem value={20}>1</MenuItem>
-                    <MenuItem value={21}>2</MenuItem>
-                    <MenuItem value={22}>3</MenuItem>
-                    <MenuItem value={32}>4</MenuItem>
-                    <MenuItem value={42}>5</MenuItem>
-                    <MenuItem value={52}>6</MenuItem>
-                  </Select>
-                </FormControl>
-                <FormControl>
-                  <FormLabel id="demo-controlled-radio-buttons-group">
-                    Transport
-                  </FormLabel>
-                  <RadioGroup
-                    aria-labelledby="demo-controlled-radio-buttons-group"
-                    name="controlled-radio-buttons-group"
-                    value={transport}
-                    onChange={handleTransportChange}
-                  >
-                    <FormControlLabel
-                      value="Need"
-                      control={<Radio />}
-                      label="Need"
-                    />
-                    <FormControlLabel
-                      value="Needn't"
-                      control={<Radio />}
-                      label="Needn't"
-                    />
-                  </RadioGroup>
-                </FormControl>
-              </Box>
+          <Box sx={{ maxWidth: "400px", margin: "auto", textAlign: "center" }}>
+            <h2>Email tasdiqlash</h2>
 
-              <Box
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "1rem",
-                  width: "300px",
-                  margin: "auto",
-                }}
-              >
-                {!isCodeSent ? (
-                  // 📌 1-qadam: Emailni kiritish va kod yuborish
-                  <div>
-                    <h2>Email tasdiqlash</h2>
-                    <input
-                      type="email"
-                      placeholder="Emailingizni kiriting"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <button onClick={sendVerificationCode}>Kod yuborish</button>
-                  </div>
-                ) : (
-                  // 📌 2-qadam: Tasdiqlash kodini kiritish
-                  <div>
-                    <h2>Tasdiqlash kodi</h2>
-                    <input
-                      type="text"
-                      placeholder="Kod kiriting"
-                      value={code}
-                      onChange={(e) => setCode(e.target.value)}
-                    />
-                    <button onClick={verifyCode}>Tasdiqlash</button>
-                  </div>
-                )}
-              </Box>
-            </Box>
-          </BookingFrom>
+            {/* Email kiritish maydoni */}
+            <TextField
+              label="Email"
+              type="email"
+              fullWidth
+              margin="normal"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={sendVerificationCode}
+            >
+              Tasdiqlash kodini yuborish
+            </Button>
+
+            {/* Tasdiqlash kodi */}
+            <TextField
+              label="Tasdiqlash kodi"
+              type="text"
+              fullWidth
+              margin="normal"
+              value={code}
+              onChange={(e) => setCode(e.target.value)}
+            />
+            <Button
+              variant="contained"
+              color="success"
+              onClick={handleVerifyCode}
+            >
+              Kodni tekshirish
+            </Button>
+
+            {/* Odamlar soni */}
+            <TextField
+              label="Odamlar soni"
+              type="number"
+              fullWidth
+              margin="normal"
+              value={numberOfPeople}
+              onChange={(e) => setnumberOfPeople(e.target.value)}
+            />
+
+            {/* Transport turi tanlash */}
+            <RadioGroup value={transport} onChange={handleTransportChange}>
+              <FormControlLabel
+                value="car"
+                control={<Radio />}
+                label="Avtomobil"
+              />
+              <FormControlLabel
+                value="bus"
+                control={<Radio />}
+                label="Avtobus"
+              />
+              <FormControlLabel
+                value="train"
+                control={<Radio />}
+                label="Poyezd"
+              />
+            </RadioGroup>
+
+            {/* Tasdiqlash tugmasi */}
+            <Button variant="contained" color="secondary" onClick={verifyCode}>
+              Tasdiqlash
+            </Button>
+          </Box>
         </BookingWrapper>
       </Container>
       <Footer />
