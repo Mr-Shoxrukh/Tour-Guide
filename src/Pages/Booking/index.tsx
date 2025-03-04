@@ -23,6 +23,7 @@ import emailjs from "emailjs-com";
 import { BookingCard, BookingFrom, BookingWrapper } from "./style";
 import { ToastContainer, toast } from "react-toastify";
 import Footer from "../Home/Components/footer";
+import { stringify } from "querystring";
 interface Guide {
   id: string;
   guideName: string;
@@ -33,7 +34,13 @@ interface Guide {
 const supabaseUrl = "https://mjcedactmdisysxnyusx.supabase.co";
 const supabaseKey =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1qY2VkYWN0bWRpc3lzeG55dXN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk4NzE0MjksImV4cCI6MjA1NTQ0NzQyOX0.9slbpltg1VrHV4ZxI6gcXvP9zus0kXpQH6oqFmy_RO0";
-const supabase = createClient(supabaseUrl, supabaseKey);
+const supabase = createClient(supabaseUrl, supabaseKey, {
+  auth: {
+    persistSession: true, // Sessiyani saqlash
+    autoRefreshToken: true, // Tokenni avtomatik yangilash
+    detectSessionInUrl: true,
+  },
+});
 
 function Booking() {
   const { guideId } = useParams();
@@ -42,36 +49,78 @@ function Booking() {
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [generatedCode, setGeneratedCode] = useState<string | null>(null);
-  const [isCodeSent, setIsCodeSent] = useState(false);
   const [formData, setFormData] = useState({
     peopleCount: "",
     email: "",
     transport: "",
   });
+  const [userEmail, setUserEmail] = useState<string | null>(null);
   const [numberOfPeople, setnumberOfPeople] = useState<string>("");
   const [otpInput, setOtpInput] = useState<string>("");
 
-  const [transport, setTransport] = React.useState("female");
+  const [transport, setTransport] = React.useState("car");
 
   useEffect(() => {
-    const fetchGuide = async () => {
-      if (!guideId) return;
+    const fetchUser = async () => {
+      const { data, error } = await supabase.auth.getUser();
 
-      const { data, error } = await supabase
-        .from("guides")
-        .select("*")
-        .eq("id", guideId)
-        .single();
       if (error) {
-        console.error("Supabase Error:", error);
-      } else {
-        setGuide(data as Guide);
+        console.error("Foydalanuvchi ma'lumotlarini olishda xatolik:", error);
+        return;
       }
-      setLoading(false);
+
+      if (data?.user?.email) {
+        setUserEmail(data.user.email ?? null);
+        // sendVerificationCode(data.user.email);
+      } else {
+        console.log("⚠️ Foydalanuvchi tizimga kirmagan.");
+      }
     };
 
-    fetchGuide();
-  }, [guideId]);
+    fetchUser();
+  }, []);
+  const checkUser = async () => {
+    const { data: sessionData } = await supabase.auth.getSession();
+
+    if (!sessionData?.session) {
+      console.error("Sessiya topilmadi ❌");
+      return;
+    }
+
+    const { data: userData, error } = await supabase.auth.getUser();
+
+    if (error) {
+      console.error("Foydalanuvchi ma'lumotlarini olishda xatolik:", error);
+    } else {
+      console.log("Foydalanuvchi:", userData.user);
+    }
+  };
+
+  checkUser();
+  const checkSession = async () => {
+    const { data, error } = await supabase.auth.getSession();
+
+    if (!data.session) {
+      console.log(
+        "Sessiya yo‘q ❌, foydalanuvchi qayta tizimga kirishi kerak."
+      );
+    } else {
+      console.log("✅ Sessiya bor:", data.session);
+    }
+  };
+
+  checkSession();
+
+  const signInWithOTP = async (email: string) => {
+    const { error } = await supabase.auth.signInWithOtp({ email });
+
+    if (error) {
+      console.error("❌ OTP yuborishda xatolik:", error);
+      return;
+    }
+
+    console.log("✅ Emailga tasdiqlash kodi yuborildi:", email);
+  };
   const handleTransportChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -80,13 +129,13 @@ function Booking() {
 
   const sendVerificationCode = async () => {
     if (!email.trim()) {
-      alert("Iltimos, email kiriting!");
+      toast.warning("Iltimos, email kiriting!");
       return;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email.trim())) {
-      alert("Noto‘g‘ri email formati! To‘g‘ri email kiriting.");
+      toast.error("Noto‘g‘ri email formati! To‘g‘ri email kiriting.");
       return;
     }
     const verificationCode = Math.floor(
@@ -102,10 +151,10 @@ function Booking() {
 
     try {
       const response = await emailjs.send(
-        "service_nm2wz8o", // EmailJS Service ID
-        "template_rtz6uqi", // EmailJS Template ID
-        templateParams, // 🔹 To‘g‘ri formatlangan emailni ishlatamiz
-        "Rl8mSc2VDDwj4Unh0" // EmailJS Public Key
+        "service_nm2wz8o",
+        "template_rtz6uqi",
+        templateParams,
+        "Rl8mSc2VDDwj4Unh0"
       );
 
       console.log("✅ Email yuborildi:", response);
@@ -129,7 +178,7 @@ function Booking() {
     selectedTransport: string
   ) => {
     const botToken = "7716014519:AAFB5XdsTar9a_jkMNIa5Yu-Ck3hkra5eUs";
-    const chatId = "6287309235"; // Guide botining chat ID sini oling
+    const chatId = "5639461053"; // Guide botining chat ID sini oling
     const message = `🆕 Yangi buyurtma:\n📧 Email: ${email}\n🌍 Tanlangan tur: ${selectedPeople}\n📅 Sana: ${selectedTransport}`;
 
     const url = `https://api.telegram.org/bot${botToken}/sendMessage`;

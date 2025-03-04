@@ -1,192 +1,116 @@
-import { Box, Container } from "@mui/system";
+import { useState } from "react";
 import { createClient } from "@supabase/supabase-js";
-import { useEffect, useState } from "react";
-import { InputBox, SignInWrapper } from "./SignUp";
-import { Button, TextField, Typography } from "@mui/material";
-import { CreateAcc } from "../LogIn/LogIn";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import { ROUTES_PATH } from "../../routes/path";
+import { toast, ToastContainer } from "react-toastify";
+import { Button, Container, TextField } from "@mui/material";
+import { InputBox, SignInWrapper } from "./SignUp";
 
-function SignUp() {
-  const [password, setPassword] = useState<string>("");
+const supabaseUrl = "https://mjcedactmdisysxnyusx.supabase.co";
+const supabaseKey =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1qY2VkYWN0bWRpc3lzeG55dXN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk4NzE0MjksImV4cCI6MjA1NTQ0NzQyOX0.9slbpltg1VrHV4ZxI6gcXvP9zus0kXpQH6oqFmy_RO0"; // 🔒 API kalitingizni oshkor qilmang!
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+const SignUp = () => {
   const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const [name, setName] = useState<string>("");
-  const [phoneNumber, setNumber] = useState<string>("");
-  const [loading, setLoading] = useState(true);
-
-  const supabaseUrl = "https://mjcedactmdisysxnyusx.supabase.co";
-  const supabaseKey =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1qY2VkYWN0bWRpc3lzeG55dXN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk4NzE0MjksImV4cCI6MjA1NTQ0NzQyOX0.9slbpltg1VrHV4ZxI6gcXvP9zus0kXpQH6oqFmy_RO0";
-  const supabase = createClient(supabaseUrl, supabaseKey);
+  const [phonenumber, setPhoneNumber] = useState<string>("");
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
-  const FetchData = async () => {
+  const handleSignUp = async () => {
+    if (
+      !name.trim() ||
+      !email.trim() ||
+      !password.trim() ||
+      !phonenumber.trim()
+    ) {
+      toast.warning("Iltimos, barcha maydonlarni to'ldiring!");
+      return;
+    }
+
     setLoading(true);
+
     try {
-      const { data, error } = await supabase.from("userData").select("*");
-      if (error) {
-        console.error("Error fetching data:", error);
-      } else {
-        localStorage.setItem("guides", JSON.stringify(data));
+      const { data: authData, error: authError } = await supabase.auth.signUp({
+        email,
+        password,
+      });
+
+      if (authError) {
+        console.error("Auth xatolik:", authError);
+        toast.error(authError.message);
+        return;
       }
+
+      // 🔹 2. Foydalanuvchi yaratildi, endi qo‘shimcha ma'lumotlarni saqlaymiz
+      const { error: dbError } = await supabase.from("userdata").insert([
+        {
+          id: authData.user?.id, // Foydalanuvchi ID
+          email,
+          name,
+          phonenumber,
+        },
+      ]);
+
+      if (dbError) {
+        console.error("Ma'lumotlar bazasiga yozishda xatolik:", dbError);
+        toast.error(
+          "Foydalanuvchi ma'lumotlarini saqlashda xatolik yuz berdi."
+        );
+        return;
+      }
+
+      toast.success(
+        "Ro'yxatdan muvaffaqiyatli o'tdingiz! Emailingizni tasdiqlang."
+      );
+      navigate("/home"); // 🔹 Email tasdiqlash sahifasiga o'tkazish
     } catch (err) {
-      console.error("Unexpected error:", err);
+      console.error("Kutilmagan xatolik:", err);
+      toast.error("Kutilmagan xatolik yuz berdi!");
     } finally {
       setLoading(false);
     }
   };
 
-  useEffect(() => {
-    FetchData();
-  }, []);
-
-  const handleSubmit = async () => {
-    const notifyError = (msg: string) => toast.error(msg);
-    const notifySuccess = (msg: string) => toast.success(msg);
-
-    if (
-      !name.trim() ||
-      !email.trim() ||
-      !password.trim() ||
-      !phoneNumber.trim()
-    ) {
-      notifyError("Iltimos, barcha maydonlarni to'ldiring!");
-      return;
-    }
-
-    try {
-      const { data: existingUsers, error: fetchError } = await supabase
-        .from("userData")
-        .select("email")
-        .eq("email", email);
-
-      if (fetchError) {
-        console.error("Error checking existing email:", fetchError);
-        notifyError("Ma'lumotlarni tekshirishda xatolik yuz berdi!");
-        return;
-      }
-
-      if (existingUsers && existingUsers.length > 0) {
-        notifyError("Bu email allaqachon ro'yxatdan o'tgan!");
-        return;
-      }
-
-      const { error: insertError } = await supabase
-        .from("userData")
-        .insert([{ email, name, password, phoneNumber }]);
-
-      if (insertError) {
-        console.error("Error inserting data:", insertError);
-        notifyError("Foydalanuvchini qo'shishda xatolik yuz berdi!");
-        return;
-      }
-
-      notifySuccess("Ro'yxatdan muvaffaqiyatli o'tdingiz!");
-      FetchData();
-      navigate("/home");
-
-      setEmail("");
-      setName("");
-      setPassword("");
-      setNumber("");
-    } catch (err) {
-      console.error("Unexpected error:", err);
-      notifyError("Kutilmagan xatolik yuz berdi!");
-    }
-  };
   return (
-    <Container
-      maxWidth="xs"
-      sx={{
-        height: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <Container>
       <SignInWrapper>
-        <Typography variant="h1" fontSize={"29px"} marginBottom={"8px"}>
-          Create an account
-        </Typography>
-        <Typography variant="subtitle1" textAlign={"center"}>
-          Create an account to enjoy all the services without any ads for free!
-        </Typography>
+        <h2>Ro'yxatdan o'tish</h2>
         <InputBox>
           <TextField
-            id="outlined-basic"
-            label="Name"
-            variant="outlined"
+            type="text"
+            placeholder="Ismingiz"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            sx={{
-              width: "100%",
-              background: "#FFFFFF",
-            }}
           />
-          <br />
           <TextField
-            id="outlined-basic"
-            label="Number"
-            variant="outlined"
-            value={phoneNumber}
-            onChange={(e) => setNumber(e.target.value)}
-            sx={{
-              width: "100%",
-              background: "#FFFFFF",
-            }}
-          />
-          <br />
-          <TextField
-            id="outlined-basic"
-            label="Email Address"
-            variant="outlined"
+            type="email"
+            placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            sx={{
-              width: "100%",
-              background: "#FFFFFF",
-            }}
           />
-          <br />
           <TextField
-            id="outlined-basic"
-            label="Password"
-            variant="outlined"
+            type="password"
+            placeholder="Parol"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            sx={{
-              width: "100%",
-              background: "#FFFFFF",
-            }}
           />
-          <Button
-            variant="contained"
-            sx={{
-              marginTop: "20px",
-              padding: "15px 25px",
-              borderRadius: "23px",
-              marginBottom: "20px",
-            }}
-            onClick={handleSubmit}
-          >
-            Sign Up
-          </Button>
-          <Typography
-            variant="subtitle1"
-            textAlign={"center"}
-            margin={"20px 0 0 0"}
-          >
-            Already Have An Account?
-            <a href={ROUTES_PATH.LOG_IN}>Log in</a>
-          </Typography>
+          <TextField
+            type="text"
+            placeholder="Telefon raqam"
+            value={phonenumber}
+            onChange={(e) => setPhoneNumber(e.target.value)}
+          />
         </InputBox>
-        <CreateAcc></CreateAcc>
-        <ToastContainer />
+        <Button onClick={handleSignUp} disabled={loading}>
+          {loading ? "Yuklanmoqda..." : "Ro'yxatdan o'tish"}
+        </Button>
       </SignInWrapper>
+      <ToastContainer />
     </Container>
   );
-}
+};
 
 export default SignUp;

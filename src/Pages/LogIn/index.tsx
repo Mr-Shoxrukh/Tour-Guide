@@ -1,222 +1,111 @@
+import { useState, useEffect } from "react";
 import { createClient } from "@supabase/supabase-js";
-import { useNavigate } from "react-router-dom";
-import React, { useState, useEffect } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
+import { Box, Button, Container, TextField } from "@mui/material";
 
-import { Container } from "@mui/system";
-import { CreateAcc, InputBox, LogInWrapper } from "./LogIn";
-import {
-  Button,
-  TextField,
-  Typography,
-  FormControl,
-  InputLabel,
-  OutlinedInput,
-  InputAdornment,
-  IconButton,
-} from "@mui/material";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import Divider from "@mui/material/Divider";
-import Chip from "@mui/material/Chip";
-import { ROUTES_PATH } from "../../routes/path";
-
-interface Users {
-  user: string;
-  password: string;
-  email: string;
-  number: string;
-  name: string;
-}
-
-interface LogInProps {
-  onLoginSuccess?: (isLoggedIn: boolean) => void;
-}
-
-const LogIn: React.FC<LogInProps> = () => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [value, setValue] = useState<string>("");
-  const [error, setError] = useState<string | null>(null);
-  const [userData, setData] = useState<any>([]);
-  const [loading, setLoading] = useState(true);
-
-  const supabaseUrl = "https://mjcedactmdisysxnyusx.supabase.co";
-  const supabaseKey =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1qY2VkYWN0bWRpc3lzeG55dXN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk4NzE0MjksImV4cCI6MjA1NTQ0NzQyOX0.9slbpltg1VrHV4ZxI6gcXvP9zus0kXpQH6oqFmy_RO0";
-  const supabase = createClient(supabaseUrl, supabaseKey);
-
-  const FetchData = async () => {
-    setLoading(true);
-    try {
-      const { data, error } = await supabase.from("guides").select("*");
-      if (error) {
-        console.error("Error fetching data:");
-      } else {
-        setData(data || []);
-        localStorage.setItem("userData", JSON.stringify(data));
-      }
-    } catch (err) {
-      console.error("Unexpected error:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
+const supabaseUrl = "https://mjcedactmdisysxnyusx.supabase.co";
+const supabaseKey =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1qY2VkYWN0bWRpc3lzeG55dXN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk4NzE0MjksImV4cCI6MjA1NTQ0NzQyOX0.9slbpltg1VrHV4ZxI6gcXvP9zus0kXpQH6oqFmy_RO0";
+const supabase = createClient(supabaseUrl, supabaseKey);
+const Auth = () => {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [user, setUser] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    FetchData();
-  }, []);
-  const navigate = useNavigate();
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const inputValue = event.target.value;
-    if (inputValue.length > 50) {
-      setError("Qiymat 50 ta belgidan oshmasligi kerak!");
-      return;
-    }
-    {
-      setError(null);
-    }
-    setValue(inputValue);
-  };
-
-  const handleSubmit = async () => {
-    const notifyError = () =>
-      toast.error("Ma'lumot yuborishda xatolik yuz berdi!");
-
-    if (value.trim() === "") {
-      notifyError();
-      return;
-    }
-
-    if (value.trim() === "") {
-      setError("Emailni kiriting!");
-      return;
-    }
-    if (!value.endsWith("@gmail.com")) {
-      setError("Faqat Gmail manzillariga ruxsat berilgan!");
-      return;
-    }
-
-    try {
-      const { data: existingUser, error: checkError } = await supabase
-        .from("userData")
-        .select("*")
-        .eq("email name", value)
-        .single();
-
-      if (checkError) {
-        console.error("Error checking existing email:", checkError);
-        notifyError();
-        return;
-      }
-
-      if (existingUser) {
-        console.log("Bu email allaqachon ro'yxatdan o'tgan!");
-        navigate(ROUTES_PATH.HOME);
-        return;
-      }
-
-      const { data, error: insertError } = await supabase
-        .from("guides")
-        .insert([{ email: value }]);
-
-      if (insertError) {
-        console.error("Error inserting data:", insertError);
-        notifyError();
+    const checkUser = async () => {
+      const { data, error } = await supabase.auth.getUser();
+      if (data?.user) {
+        console.log("Foydalanuvchi ma’lumotlari:", data.user);
       } else {
-        console.log("Email muvaffaqiyatli ro'yxatga olindi:", data);
-        FetchData();
-        setValue("");
-        navigate("/home");
+        console.error("Foydalanuvchi topilmadi:", error);
       }
-    } catch (err) {
-      console.error("Kutilmagan xatolik yuz berdi:", err);
-      alert("Kutilmagan xatolik yuz berdi!");
+    };
+    checkUser();
+  }, []);
+
+  const handleSignUp = async () => {
+    if (password.length < 6) {
+      toast.error("Parol kamida 6 ta belgidan iborat bo‘lishi kerak!");
+      return;
     }
+
+    setLoading(true);
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+    });
+
+    if (error) {
+      toast.error("Ro‘yxatdan o‘tishda xatolik: " + error.message);
+    } else {
+      toast.success("Emailingizga tasdiqlash kodi yuborildi!");
+    }
+    setLoading(false);
   };
 
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleLogin = async () => {
+    setLoading(true);
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
 
-  const handleMouseDownPassword = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    event.preventDefault();
+    if (error) {
+      toast.error("Login xatosi: " + error.message);
+    } else {
+      toast.success("Muvaffaqiyatli tizimga kirdingiz!");
+      setUser(data.user);
+    }
+    setLoading(false);
   };
 
-  const handleMouseUpPassword = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    event.preventDefault();
+  // ✅ 4. Tizimdan chiqish
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    toast.success("Tizimdan chiqildi!");
+    setUser(null);
   };
 
   return (
-    <Container
-      maxWidth="xl"
-      sx={{
-        height: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <LogInWrapper>
-        <Typography variant="h1" fontSize={"29px"} marginBottom={"8px"}>
-          Hi, Welcome Back!
-        </Typography>
+    <Container maxWidth="xl">
+      <h2>Supabase Auth</h2>
 
-        <InputBox>
+      {!user ? (
+        <Box>
           <TextField
-            id="outlined-basic"
-            label="Email Address"
-            variant="outlined"
-            value={value}
-            onChange={handleChange}
-            error={!!error}
-            helperText={error}
-            sx={{
-              width: "100%",
-              background: "#FFFFFF",
-            }}
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            style={{ margin: "10px", padding: "10px", width: "250px" }}
           />
           <br />
-          <FormControl sx={{ width: "100%" }} variant="outlined">
-            <InputLabel htmlFor="outlined-adornment-password">
-              Password
-            </InputLabel>
-            <OutlinedInput
-              id="outlined-adornment-password"
-              type={showPassword ? "text" : "password"}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label={
-                      showPassword
-                        ? "hide the password"
-                        : "display the password"
-                    }
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                    onMouseUp={handleMouseUpPassword}
-                    edge="end"
-                  >
-                    {showPassword ? <Visibility /> : <VisibilityOff />}
-                  </IconButton>
-                </InputAdornment>
-              }
-              label="Password"
-            />
-          </FormControl>
-          <Divider>
-            <Chip label="or" size="small" />
-          </Divider>
-        </InputBox>
-        <CreateAcc>
-          <Button variant="contained" onClick={handleSubmit}>
-            Login
+          <TextField
+            type="password"
+            placeholder="Parol"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            style={{ margin: "10px", padding: "10px", width: "250px" }}
+          />
+          <br />
+          <Button onClick={handleSignUp} disabled={loading}>
+            Ro‘yxatdan o‘tish
           </Button>
-          <ToastContainer />
-        </CreateAcc>
-      </LogInWrapper>
+          <Button onClick={handleLogin} disabled={loading}>
+            Kirish
+          </Button>
+        </Box>
+      ) : (
+        <Box>
+          <h3>Xush kelibsiz, {user.email}!</h3>
+          <Button onClick={handleLogout}>Chiqish</Button>
+        </Box>
+      )}
+      <ToastContainer />
     </Container>
   );
 };
-export default LogIn;
+
+export default Auth;

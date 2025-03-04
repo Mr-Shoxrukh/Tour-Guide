@@ -15,6 +15,7 @@ import { Logo__wr } from ".";
 import { useNavigate, useParams } from "react-router-dom";
 import { createClient } from "@supabase/supabase-js";
 import { ROUTES_PATH } from "../../../routes/path";
+import { User } from "@supabase/supabase-js";
 const pages = [
   "Home",
   "About",
@@ -25,7 +26,41 @@ const pages = [
 ];
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [user, setUser] = React.useState<User | null>(null);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
   const navigate = useNavigate();
+
+  const supabaseUrl = "https://mjcedactmdisysxnyusx.supabase.co";
+  const supabaseKey =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1qY2VkYWN0bWRpc3lzeG55dXN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk4NzE0MjksImV4cCI6MjA1NTQ0NzQyOX0.9slbpltg1VrHV4ZxI6gcXvP9zus0kXpQH6oqFmy_RO0";
+  const supabase = createClient(supabaseUrl, supabaseKey);
+
+  React.useEffect(() => {
+    const fetchUser = async () => {
+      const { data, error } = await supabase.auth.getUser();
+      if (data?.user) {
+        setUser(data.user);
+      } else {
+        setUser(null);
+      }
+    };
+
+    fetchUser();
+
+    const { data: authListener } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        if (session?.user) {
+          setUser(session.user);
+        } else {
+          setUser(null);
+        }
+      }
+    );
+
+    return () => {
+      authListener.subscription.unsubscribe();
+    };
+  }, []);
 
   const handleOpenNavMenu = (event: any) => {
     setAnchorElNav(event.currentTarget);
@@ -33,13 +68,16 @@ function ResponsiveAppBar() {
 
   const handleCloseNavMenu = (page?: string) => {
     setAnchorElNav(null);
-    if (page) navigate(`/${page.toLowerCase().replace(/\s+/g, "-")}`); // Sahifaga yo‘naltirish
+    if (page) navigate(`/${page.toLowerCase().replace(/\s+/g, "-")}`);
   };
-  const handelSigin = () => {
-    navigate(ROUTES_PATH.SIGN_UP);
-  };
-  const handleLogin = () => {
-    navigate(ROUTES_PATH.LOG_IN);
+
+  const handleSignUp = () => navigate("/signup");
+  const handleLogin = () => navigate("/log-in");
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    setUser(null);
+    navigate("/");
   };
   return (
     <AppBar sx={{ background: "#dd2c00" }} position="static">
@@ -111,7 +149,7 @@ function ResponsiveAppBar() {
               gap: 1,
             }}
           >
-            <Button variant="contained" onClick={handelSigin}>
+            <Button variant="contained" onClick={handleSignUp}>
               Sign in
             </Button>
             <Button variant="contained" onClick={handleLogin}>
