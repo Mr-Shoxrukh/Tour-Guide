@@ -46,6 +46,8 @@ const Auth = () => {
   };
 
   const handleLogin = async () => {
+    console.log("login urunish", email, password);
+
     setLoading(true);
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
@@ -61,7 +63,6 @@ const Auth = () => {
     setLoading(false);
   };
 
-  // ✅ 4. Tizimdan chiqish
   const handleLogout = async () => {
     await supabase.auth.signOut();
     toast.success("Tizimdan chiqildi!");

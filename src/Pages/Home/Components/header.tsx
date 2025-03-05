@@ -16,6 +16,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { createClient } from "@supabase/supabase-js";
 import { ROUTES_PATH } from "../../../routes/path";
 import { User } from "@supabase/supabase-js";
+import supabase from "../../../db/supabase";
+import { Avatar } from "@mui/material";
 const pages = [
   "Home",
   "About",
@@ -27,38 +29,44 @@ const pages = [
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [user, setUser] = React.useState<User | null>(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const navigate = useNavigate();
+  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
+    null
+  );
 
-  const supabaseUrl = "https://mjcedactmdisysxnyusx.supabase.co";
-  const supabaseKey =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1qY2VkYWN0bWRpc3lzeG55dXN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk4NzE0MjksImV4cCI6MjA1NTQ0NzQyOX0.9slbpltg1VrHV4ZxI6gcXvP9zus0kXpQH6oqFmy_RO0";
-  const supabase = createClient(supabaseUrl, supabaseKey);
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     const fetchUser = async () => {
+      // 1️⃣ Sessiyani tekshiramiz
+      const { data: sessionData, error: sessionError } =
+        await supabase.auth.getSession();
+      if (sessionError || !sessionData.session) {
+        console.error("Sessiya topilmadi!", sessionError);
+        setUser(null);
+        return;
+      }
+
+      // 2️⃣ Agar sessiya bo‘lsa, foydalanuvchini olamiz
       const { data, error } = await supabase.auth.getUser();
       if (data?.user) {
         setUser(data.user);
       } else {
+        console.error("Foydalanuvchi topilmadi:", error);
         setUser(null);
       }
     };
 
     fetchUser();
 
+    // 3️⃣ Foydalanuvchi auth state o‘zgarsa, yangilash
     const { data: authListener } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        if (session?.user) {
-          setUser(session.user);
-        } else {
-          setUser(null);
-        }
+      (_event, session) => {
+        setUser(session?.user ?? null);
       }
     );
 
     return () => {
-      authListener.subscription.unsubscribe();
+      authListener?.subscription?.unsubscribe();
     };
   }, []);
 
@@ -77,7 +85,7 @@ function ResponsiveAppBar() {
   const handleLogout = async () => {
     await supabase.auth.signOut();
     setUser(null);
-    navigate("/");
+    navigate("/home");
   };
   return (
     <AppBar sx={{ background: "#dd2c00" }} position="static">
@@ -143,19 +151,34 @@ function ResponsiveAppBar() {
               <Typography variant="body1">📞 +998 99 927 22 11</Typography>
             </Tooltip>
           </Box>
-          <Box
-            sx={{
-              display: "flex",
-              gap: 1,
-            }}
-          >
-            <Button variant="contained" onClick={handleSignUp}>
-              Sign in
-            </Button>
-            <Button variant="contained" onClick={handleLogin}>
-              Login
-            </Button>
-          </Box>
+          {user ? (
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <IconButton
+                onClick={(event) => setAnchorElUser(event.currentTarget)}
+              >
+                <Avatar
+                  src={`https://api.dicebear.com/6.x/adventurer/svg?seed=${user.email}`}
+                  alt="User Avatar"
+                />
+              </IconButton>
+              <Menu
+                anchorEl={anchorElUser}
+                open={Boolean(anchorElUser)}
+                onClose={() => setAnchorElUser(null)}
+              >
+                <MenuItem onClick={handleLogout}>Chiqish</MenuItem>
+              </Menu>
+            </Box>
+          ) : (
+            <Box>
+              <Button color="inherit" onClick={handleLogin}>
+                Kirish
+              </Button>
+              <Button color="inherit" onClick={handleSignUp}>
+                Ro‘yxatdan o‘tish
+              </Button>
+            </Box>
+          )}
         </Toolbar>
       </Container>
     </AppBar>

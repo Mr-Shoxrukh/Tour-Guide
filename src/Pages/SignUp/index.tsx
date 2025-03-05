@@ -4,11 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { Button, Container, TextField } from "@mui/material";
 import { InputBox, SignInWrapper } from "./SignUp";
-
-const supabaseUrl = "https://mjcedactmdisysxnyusx.supabase.co";
-const supabaseKey =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1qY2VkYWN0bWRpc3lzeG55dXN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk4NzE0MjksImV4cCI6MjA1NTQ0NzQyOX0.9slbpltg1VrHV4ZxI6gcXvP9zus0kXpQH6oqFmy_RO0"; // 🔒 API kalitingizni oshkor qilmang!
-const supabase = createClient(supabaseUrl, supabaseKey);
+import supabase from "../../db/supabase";
 
 const SignUp = () => {
   const [email, setEmail] = useState<string>("");
@@ -44,10 +40,9 @@ const SignUp = () => {
         return;
       }
 
-      // 🔹 2. Foydalanuvchi yaratildi, endi qo‘shimcha ma'lumotlarni saqlaymiz
       const { error: dbError } = await supabase.from("userdata").insert([
         {
-          id: authData.user?.id, // Foydalanuvchi ID
+          id: authData.user?.id,
           email,
           name,
           phonenumber,
@@ -65,7 +60,7 @@ const SignUp = () => {
       toast.success(
         "Ro'yxatdan muvaffaqiyatli o'tdingiz! Emailingizni tasdiqlang."
       );
-      navigate("/home"); // 🔹 Email tasdiqlash sahifasiga o'tkazish
+      navigate("/home");
     } catch (err) {
       console.error("Kutilmagan xatolik:", err);
       toast.error("Kutilmagan xatolik yuz berdi!");
