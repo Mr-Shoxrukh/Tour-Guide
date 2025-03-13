@@ -1,6 +1,11 @@
 import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
-import { createClient } from "@supabase/supabase-js";
+import {
+  getAuth,
+  onAuthStateChanged,
+  signInWithEmailLink,
+  sendSignInLinkToEmail,
+} from "firebase/auth";
 import axios from "axios";
 import Header from "../../Pages/Home/Components/header";
 import {
@@ -23,7 +28,8 @@ import emailjs from "emailjs-com";
 import { BookingCard, BookingFrom, BookingWrapper } from "./style";
 import { ToastContainer, toast } from "react-toastify";
 import Footer from "../Home/Components/footer";
-import { stringify } from "querystring";
+import { initializeApp } from "firebase/app";
+import { doc, getDoc, getFirestore } from "firebase/firestore";
 interface Guide {
   id: string;
   guideName: string;
@@ -31,16 +37,19 @@ interface Guide {
   guideExperience: string;
   guideImg: string;
 }
-const supabaseUrl = "https://mjcedactmdisysxnyusx.supabase.co";
-const supabaseKey =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1qY2VkYWN0bWRpc3lzeG55dXN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk4NzE0MjksImV4cCI6MjA1NTQ0NzQyOX0.9slbpltg1VrHV4ZxI6gcXvP9zus0kXpQH6oqFmy_RO0";
-const supabase = createClient(supabaseUrl, supabaseKey, {
-  auth: {
-    persistSession: true, // Sessiyani saqlash
-    autoRefreshToken: true, // Tokenni avtomatik yangilash
-    detectSessionInUrl: true,
-  },
-});
+const firebaseConfig = {
+  apiKey: "AIzaSyCutT4fqmFDFZFhYe7sk4TLehREDj00rts",
+  authDomain: "tour-guide-4e299.firebaseapp.com",
+  projectId: "tour-guide-4e299",
+  storageBucket: "tour-guide-4e299.firebasestorage.app",
+  messagingSenderId: "307189665267",
+  appId: "1:307189665267:web:845106fabd76bc44731686",
+};
+
+// Firebase va Firestore ni ishga tushirish
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
 function Booking() {
   const { guideId } = useParams();
@@ -49,84 +58,82 @@ function Booking() {
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [generatedCode, setGeneratedCode] = useState<string | null>(null);
-  const [formData, setFormData] = useState({
-    peopleCount: "",
-    email: "",
-    transport: "",
-  });
   const [userEmail, setUserEmail] = useState<string | null>(null);
+  const [transport, setTransport] = useState("car");
   const [numberOfPeople, setnumberOfPeople] = useState<string>("");
-  const [otpInput, setOtpInput] = useState<string>("");
 
-  const [transport, setTransport] = React.useState("car");
-
+  // 🔥 Foydalanuvchini tekshirish
   useEffect(() => {
-    const fetchUser = async () => {
-      const { data, error } = await supabase.auth.getUser();
-
-      if (error) {
-        console.error("Foydalanuvchi ma'lumotlarini olishda xatolik:", error);
-        return;
-      }
-
-      if (data?.user?.email) {
-        setUserEmail(data.user.email ?? null);
-        // sendVerificationCode(data.user.email);
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user?.email) {
+        setUserEmail(user.email);
+        console.log("✅ Foydalanuvchi tizimga kirgan:", user.email);
       } else {
         console.log("⚠️ Foydalanuvchi tizimga kirmagan.");
       }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  // 🔥 Firestore-dan ma'lumot olish
+  useEffect(() => {
+    const fetchGuideData = async () => {
+      if (!guideId) return;
+
+      const guideRef = doc(db, "guides", guideId);
+      const guideSnap = await getDoc(guideRef);
+
+      if (guideSnap.exists()) {
+        setGuide(guideSnap.data());
+      } else {
+        console.log("🚫 Guide ma'lumoti topilmadi");
+      }
+      setLoading(false);
     };
 
-    fetchUser();
-  }, []);
-  const checkUser = async () => {
-    const { data: sessionData } = await supabase.auth.getSession();
+    fetchGuideData();
+  }, [guideId]);
 
-    if (!sessionData?.session) {
-      console.error("Sessiya topilmadi ❌");
-      return;
-    }
-
-    const { data: userData, error } = await supabase.auth.getUser();
-
-    if (error) {
-      console.error("Foydalanuvchi ma'lumotlarini olishda xatolik:", error);
-    } else {
-      console.log("Foydalanuvchi:", userData.user);
-    }
-  };
-
-  checkUser();
-  const checkSession = async () => {
-    const { data, error } = await supabase.auth.getSession();
-
-    if (!data.session) {
-      console.log(
-        "Sessiya yo‘q ❌, foydalanuvchi qayta tizimga kirishi kerak."
-      );
-    } else {
-      console.log("✅ Sessiya bor:", data.session);
-    }
-  };
-
-  checkSession();
-
+  // 🔥 OTP orqali tizimga kirish
   const signInWithOTP = async (email: string) => {
-    const { error } = await supabase.auth.signInWithOtp({ email });
+    const actionCodeSettings = {
+      url: "http://your-app.com", // O'zingizning URL'ingiz
+      handleCodeInApp: true,
+    };
 
-    if (error) {
+    try {
+      await sendSignInLinkToEmail(auth, email, actionCodeSettings);
+      window.localStorage.setItem("emailForSignIn", email);
+      console.log("✅ Emailga tasdiqlash kodi yuborildi:", email);
+    } catch (error) {
       console.error("❌ OTP yuborishda xatolik:", error);
-      return;
     }
-
-    console.log("✅ Emailga tasdiqlash kodi yuborildi:", email);
   };
-  const handleTransportChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setFormData({ ...formData, transport: event.target.value });
-  };
+  const auth = getAuth();
+  const emailLink = window.location.href;
+  // 🔥 Avtomatik tizimga kirish
+  useEffect(() => {
+    async function signInWithEmail() {
+      if (await signInWithEmailLink(auth, window.location.href)) {
+        let email = window.localStorage.getItem("emailForSignIn");
 
+        if (!email) {
+          email = window.prompt("Iltimos, email kiriting:");
+        }
+
+        if (email) {
+          try {
+            await signInWithEmailLink(auth, email, window.location.href);
+            console.log("✅ Muvaffaqiyatli tizimga kirildi");
+            window.localStorage.removeItem("emailForSignIn");
+          } catch (error) {
+            console.error("❌ Tizimga kirishda xatolik:", error);
+          }
+        }
+      }
+    }
+  }, []);
   const sendVerificationCode = async () => {
     if (!email.trim()) {
       toast.warning("Iltimos, email kiriting!");
@@ -164,6 +171,11 @@ function Booking() {
       toast.error(`Kod yuborishda xatolik yuz berdi: ${error.text}`);
     }
   };
+  // const handleTransportChange = (
+  //   event: React.ChangeEvent<HTMLInputElement>
+  // ) => {
+  //   setFormData({ ...formData, transport: event.target.value });
+  // };
   const verifyCode = () => {
     if (code === generatedCode) {
       toast.success("✅ Email tasdiqlandi! Jarayon muvaffaqiyatli tugadi.");
@@ -201,31 +213,32 @@ function Booking() {
     }
 
     try {
-      const { data, error } = await supabase.auth.verifyOtp({
-        email: email,
-        token: code,
-        type: "email",
-      });
-
-      if (error) {
-        console.error("Kod noto‘g‘ri:", error);
-        toast.error("Tasdiqlash kodi noto‘g‘ri!");
-        return;
+      let storedEmail = window.localStorage.getItem("emailForSignIn");
+      if (!storedEmail) {
+        storedEmail = window.prompt("Iltimos, email kiriting:");
       }
 
-      console.log("Tasdiqlash muvaffaqiyatli!");
+      if (storedEmail) {
+        // Firebase orqali OTP orqali tizimga kirish
+        await signInWithEmailLink(auth, storedEmail, window.location.href);
 
-      // Foydalanuvchi tanlagan ma'lumotlar
-      const selectedPeople = numberOfPeople; // Tanlangan turistik joy
-      const selectedTransport = transport; // Tanlangan sana
+        console.log("✅ Tasdiqlash muvaffaqiyatli!");
 
-      // Telegram botga ma'lumot yuborish
-      await sendToTelegramBot(email, selectedPeople, selectedTransport);
+        // Mahalliy saqlangan emailni o'chirib tashlash
+        window.localStorage.removeItem("emailForSignIn");
 
-      toast.success("Tasdiqlash muvaffaqiyatli va ma’lumot yuborildi!");
+        // Foydalanuvchi tanlagan ma'lumotlar
+        const selectedPeople = numberOfPeople;
+        const selectedTransport = transport;
+
+        // Telegram botga ma'lumot yuborish
+        await sendToTelegramBot(storedEmail, selectedPeople, selectedTransport);
+
+        toast.success("Tasdiqlash muvaffaqiyatli va ma’lumot yuborildi!");
+      }
     } catch (err) {
-      console.error("Xatolik:", err);
-      toast.error("Kutilmagan xatolik yuz berdi!");
+      console.error("❌ Xatolik:", err);
+      toast.error("Tasdiqlash kodi noto‘g‘ri yoki link eskirgan!");
     }
   };
 
@@ -295,16 +308,13 @@ function Booking() {
 
             {/* Odamlar soni */}
             <TextField
-              label="Odamlar soni"
               type="number"
-              fullWidth
-              margin="normal"
               value={numberOfPeople}
               onChange={(e) => setnumberOfPeople(e.target.value)}
             />
 
             {/* Transport turi tanlash */}
-            <RadioGroup value={transport} onChange={handleTransportChange}>
+            {/* <RadioGroup value={transport} onChange={handleTransportChange}>
               <FormControlLabel
                 value="car"
                 control={<Radio />}
@@ -320,7 +330,7 @@ function Booking() {
                 control={<Radio />}
                 label="Poyezd"
               />
-            </RadioGroup>
+            </RadioGroup> */}
 
             {/* Tasdiqlash tugmasi */}
             <Button variant="contained" color="secondary" onClick={verifyCode}>

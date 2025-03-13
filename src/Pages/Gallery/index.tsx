@@ -1,40 +1,33 @@
-import {
-  Box,
-  Card,
-  CardMedia,
-  CircularProgress,
-  Container,
-  Grid,
-} from "@mui/material";
-import React, { useEffect, useState } from "react";
-import Headers from "../Home/Components/header";
+import { useEffect, useState } from "react";
+import { Container, Box } from "@mui/material";
+import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { app } from "../../db/firebase"; // Firebase konfiguratsiyasini import qiling
 import { GalleryWrapper } from "./style";
-import { createClient } from "@supabase/supabase-js";
-type Props = {};
-const supabaseUrl = "https://mjcedactmdisysxnyusx.supabase.co";
-const supabaseKey =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1qY2VkYWN0bWRpc3lzeG55dXN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk4NzE0MjksImV4cCI6MjA1NTQ0NzQyOX0.9slbpltg1VrHV4ZxI6gcXvP9zus0kXpQH6oqFmy_RO0";
-const supabase = createClient(supabaseUrl, supabaseKey);
-function GalleryPage({}: Props) {
-  const [guide, setGuide] = useState<any>([]);
-  const [getData, steData] = useState<any>([]);
+import Headers from "../Home/Components/header";
+
+const db = getFirestore(app); // Firestore'ni o‘rnatamiz
+
+function GalleryPage() {
+  const [galleryData, setGalleryData] = useState<any[]>([]);
+
   useEffect(() => {
     const fetchDataByDB = async () => {
       try {
-        const { data, error } = await supabase.from("gallery").select("*");
-        if (error) {
-          console.error("Supabase xatosi:", error.message);
-        } else {
-          console.log("Ma’lumotlar:", data);
-        }
-        steData(data);
-      } catch (err) {
-        console.error("Unique error:", err);
+        const querySnapshot = await getDocs(collection(db, "gallery")); // Firestore'dan ma'lumotlarni olish
+        const galleryItems = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        console.log("📸 Ma’lumotlar:", galleryItems);
+        setGalleryData(galleryItems);
+      } catch (error) {
+        console.error("🔥 Firebase xatosi:", error);
       }
     };
 
     fetchDataByDB();
   }, []);
+
   return (
     <Container maxWidth="xl">
       <Headers />
@@ -48,7 +41,7 @@ function GalleryPage({}: Props) {
             padding: "16px",
           }}
         >
-          {getData.map((item: any, index: number) => (
+          {galleryData.map((item, index) => (
             <Box
               key={index}
               component="img"

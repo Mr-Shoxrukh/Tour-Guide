@@ -12,12 +12,12 @@ import MenuItem from "@mui/material/MenuItem";
 import CallIcon from "@mui/icons-material/Call";
 import Logo from "./img/Logo.jpg";
 import { Logo__wr } from ".";
-import { useNavigate, useParams } from "react-router-dom";
-import { createClient } from "@supabase/supabase-js";
-import { ROUTES_PATH } from "../../../routes/path";
-import { User } from "@supabase/supabase-js";
-import supabase from "../../../db/supabase";
+import { useNavigate } from "react-router-dom";
 import { Avatar } from "@mui/material";
+import { getAuth, onAuthStateChanged, signOut, User } from "firebase/auth";
+import { app } from "../../../db/firebase";
+const auth = getAuth(app);
+
 const pages = [
   "Home",
   "About",
@@ -27,7 +27,7 @@ const pages = [
   "Happy Clients :)",
 ];
 function ResponsiveAppBar() {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElNav, setAnchorElNav] = React.useState<null>(null);
   const [user, setUser] = React.useState<User | null>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
@@ -36,37 +36,13 @@ function ResponsiveAppBar() {
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    const fetchUser = async () => {
-      // 1️⃣ Sessiyani tekshiramiz
-      const { data: sessionData, error: sessionError } =
-        await supabase.auth.getSession();
-      if (sessionError || !sessionData.session) {
-        console.error("Sessiya topilmadi!", sessionError);
-        setUser(null);
-        return;
-      }
-
-      // 2️⃣ Agar sessiya bo‘lsa, foydalanuvchini olamiz
-      const { data, error } = await supabase.auth.getUser();
-      if (data?.user) {
-        setUser(data.user);
-      } else {
-        console.error("Foydalanuvchi topilmadi:", error);
-        setUser(null);
-      }
-    };
-
-    fetchUser();
-
-    // 3️⃣ Foydalanuvchi auth state o‘zgarsa, yangilash
-    const { data: authListener } = supabase.auth.onAuthStateChange(
-      (_event, session) => {
-        setUser(session?.user ?? null);
-      }
-    );
+    // Foydalanuvchi sessiyasini kuzatish
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
 
     return () => {
-      authListener?.subscription?.unsubscribe();
+      unsubscribe(); // Komponent unmount bo‘lsa, listenerni tozalash
     };
   }, []);
 
@@ -83,7 +59,7 @@ function ResponsiveAppBar() {
   const handleLogin = () => navigate("/log-in");
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
+    await signOut(auth);
     setUser(null);
     navigate("/home");
   };
