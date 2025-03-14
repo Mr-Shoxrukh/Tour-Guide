@@ -25,11 +25,11 @@ import {
   Typography,
 } from "@mui/material";
 import emailjs from "emailjs-com";
-import { BookingCard, BookingFrom, BookingWrapper } from "./style";
+import { BookingCard, BookingWrapper } from "./style";
 import { ToastContainer, toast } from "react-toastify";
 import Footer from "../Home/Components/footer";
-import { initializeApp } from "firebase/app";
-import { doc, getDoc, getFirestore } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../db/firebase";
 interface Guide {
   id: string;
   guideName: string;
@@ -37,19 +37,6 @@ interface Guide {
   guideExperience: string;
   guideImg: string;
 }
-const firebaseConfig = {
-  apiKey: "AIzaSyCutT4fqmFDFZFhYe7sk4TLehREDj00rts",
-  authDomain: "tour-guide-4e299.firebaseapp.com",
-  projectId: "tour-guide-4e299",
-  storageBucket: "tour-guide-4e299.firebasestorage.app",
-  messagingSenderId: "307189665267",
-  appId: "1:307189665267:web:845106fabd76bc44731686",
-};
-
-// Firebase va Firestore ni ishga tushirish
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
 
 function Booking() {
   const { guideId } = useParams();

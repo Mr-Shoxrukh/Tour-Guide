@@ -4,7 +4,7 @@ import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { app } from "../../db/firebase"; // Firebase konfiguratsiyasini import qiling
 import { GalleryWrapper } from "./style";
 import Headers from "../Home/Components/header";
-
+import { auth } from "../../db/firebase";
 const db = getFirestore(app); // Firestore'ni o‘rnatamiz
 
 function GalleryPage() {
@@ -18,6 +18,8 @@ function GalleryPage() {
           id: doc.id,
           ...doc.data(),
         }));
+        console.log("bu db", auth);
+
         console.log("📸 Ma’lumotlar:", galleryItems);
         setGalleryData(galleryItems);
       } catch (error) {

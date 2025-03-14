@@ -10,12 +10,9 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import CardActionArea from "@mui/material/CardActionArea";
 import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
-import { createClient } from "@supabase/supabase-js";
-import React, { useEffect, useState } from "react";
-import Stepper from "@mui/material/Stepper";
-import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
-import Footer from "../footer";
+import { useEffect, useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../../../db/firebase";
 interface GuideData {
   id: string;
   cityName: string;
@@ -24,28 +21,28 @@ interface GuideData {
 }
 
 function UltimateTour() {
-  const [tourData, setTourData] = useState<any>([]);
+  const [tourData, setTourData] = useState<any[]>([]);
 
-  const supabaseUrl = "https://mjcedactmdisysxnyusx.supabase.co";
-  const supabaseKey =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1qY2VkYWN0bWRpc3lzeG55dXN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk4NzE0MjksImV4cCI6MjA1NTQ0NzQyOX0.9slbpltg1VrHV4ZxI6gcXvP9zus0kXpQH6oqFmy_RO0";
-  const supabase = createClient(supabaseUrl, supabaseKey);
   useEffect(() => {
     const fetchGuides = async () => {
-      const { data, error } = await supabase.from("toursCard").select("*");
-      if (error) {
-        console.error("Supabase Error:", error);
-      } else {
-        setTourData(data as GuideData[]);
+      try {
+        const querySnapshot = await getDocs(collection(db, "toursCard"));
+        const data = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setTourData(data);
+      } catch (error) {
+        console.error("Firebase Firestore Error:", error);
       }
     };
 
     fetchGuides();
   }, []);
-  const handleClick = function () {
+
+  const handleClick = () => {
     console.log("clicked");
   };
-
   return (
     <>
       <UltimateTour__Wrapper>

@@ -1,30 +1,39 @@
 import { useState, useEffect } from "react";
-import { createClient } from "@supabase/supabase-js";
 import { toast, ToastContainer } from "react-toastify";
 import { Box, Button, Container, TextField } from "@mui/material";
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signOut,
+} from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { auth } from "../../db/firebase";
+import { Navigate } from "react-router-dom";
+import Home from "../Home";
 
-const supabaseUrl = "https://mjcedactmdisysxnyusx.supabase.co";
-const supabaseKey =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1qY2VkYWN0bWRpc3lzeG55dXN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk4NzE0MjksImV4cCI6MjA1NTQ0NzQyOX0.9slbpltg1VrHV4ZxI6gcXvP9zus0kXpQH6oqFmy_RO0";
-const supabase = createClient(supabaseUrl, supabaseKey);
-const Auth = () => {
+const Login = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(false);
-
+  const navigate = useNavigate();
   useEffect(() => {
-    const checkUser = async () => {
-      const { data, error } = await supabase.auth.getUser();
-      if (data?.user) {
-        console.log("Foydalanuvchi ma’lumotlari:", data.user);
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        console.log("Foydalanuvchi ma’lumotlari:", currentUser);
+        setUser(currentUser);
+        console.log(auth);
       } else {
-        console.error("Foydalanuvchi topilmadi:", error);
+        console.log("Foydalanuvchi tizimga kirmagan.");
+        setUser(null);
       }
-    };
-    checkUser();
+    });
+
+    return () => unsubscribe();
   }, []);
 
+  // 🔥 Ro‘yxatdan o‘tish funksiyasi
   const handleSignUp = async () => {
     if (password.length < 6) {
       toast.error("Parol kamida 6 ta belgidan iborat bo‘lishi kerak!");
@@ -32,41 +41,50 @@ const Auth = () => {
     }
 
     setLoading(true);
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-    });
-
-    if (error) {
-      toast.error("Ro‘yxatdan o‘tishda xatolik: " + error.message);
-    } else {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       toast.success("Emailingizga tasdiqlash kodi yuborildi!");
+      console.log("Ro‘yxatdan o‘tgan foydalanuvchi:", userCredential.user);
+    } catch (error: any) {
+      toast.error("Ro‘yxatdan o‘tishda xatolik: " + error.message);
     }
     setLoading(false);
   };
 
+  // 🔥 Login funksiyasi
   const handleLogin = async () => {
     console.log("login urunish", email, password);
-
     setLoading(true);
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
 
-    if (error) {
-      toast.error("Login xatosi: " + error.message);
-    } else {
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       toast.success("Muvaffaqiyatli tizimga kirdingiz!");
-      setUser(data.user);
+      navigate(`/home`);
+      setUser(userCredential.user);
+    } catch (error: any) {
+      toast.error("Login xatosi: " + error.message);
     }
+
     setLoading(false);
   };
 
+  // 🔥 Logout funksiyasi
   const handleLogout = async () => {
-    await supabase.auth.signOut();
-    toast.success("Tizimdan chiqildi!");
-    setUser(null);
+    try {
+      await signOut(auth);
+      toast.success("Tizimdan chiqildi!");
+      setUser(null);
+    } catch (error: any) {
+      toast.error("Tizimdan chiqishda xatolik: " + error.message);
+    }
   };
 
   return (
@@ -99,14 +117,11 @@ const Auth = () => {
           </Button>
         </Box>
       ) : (
-        <Box>
-          <h3>Xush kelibsiz, {user.email}!</h3>
-          <Button onClick={handleLogout}>Chiqish</Button>
-        </Box>
+        <Home />
       )}
       <ToastContainer />
     </Container>
   );
 };
 
-export default Auth;
+export default Login;
