@@ -89,8 +89,6 @@ const Login = () => {
 
   return (
     <Container maxWidth="xl">
-      <h2>Supabase Auth</h2>
-
       {!user ? (
         <Box>
           <TextField

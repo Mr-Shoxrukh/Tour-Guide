@@ -28,7 +28,7 @@ import emailjs from "emailjs-com";
 import { BookingCard, BookingWrapper } from "./style";
 import { ToastContainer, toast } from "react-toastify";
 import Footer from "../Home/Components/footer";
-import { doc, getDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { db } from "../../db/firebase";
 interface Guide {
   id: string;
@@ -48,8 +48,8 @@ function Booking() {
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [transport, setTransport] = useState("car");
   const [numberOfPeople, setnumberOfPeople] = useState<string>("");
+  console.log(guideId);
 
-  // 🔥 Foydalanuvchini tekshirish
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user?.email) {
@@ -62,26 +62,33 @@ function Booking() {
 
     return () => unsubscribe();
   }, []);
-
-  // 🔥 Firestore-dan ma'lumot olish
   useEffect(() => {
+    if (!guideId) {
+      console.log("🚨 Xatolik: guideId yo‘q!");
+      return;
+    }
+
     const fetchGuideData = async () => {
-      if (!guideId) return;
+      try {
+        const guidesCollection = collection(db, "guides");
+        const guideSnapshot = await getDocs(guidesCollection);
 
-      const guideRef = doc(db, "guides", guideId);
-      const guideSnap = await getDoc(guideRef);
+        const guides = guideSnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
 
-      if (guideSnap.exists()) {
-        setGuide(guideSnap.data());
-      } else {
-        console.log("🚫 Guide ma'lumoti topilmadi");
+        console.log("Barcha Guide ID'lar:", guides);
+      } catch (error) {
+        console.error("Xatolik yuz berdi:", error);
+      } finally {
+        setLoading(false);
+        if (!guideId) return <p>Guide ma'lumoti topilmadi</p>;
       }
-      setLoading(false);
     };
 
     fetchGuideData();
-  }, [guideId]);
-
+  }, [guide]);
   // 🔥 OTP orqali tizimga kirish
   const signInWithOTP = async (email: string) => {
     const actionCodeSettings = {

@@ -133,7 +133,7 @@ function ResponsiveAppBar() {
                 onClick={(event) => setAnchorElUser(event.currentTarget)}
               >
                 <Avatar
-                  src={`https://api.dicebear.com/6.x/adventurer/svg?seed=${user.email}`}
+                  src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
                   alt="User Avatar"
                 />
               </IconButton>
@@ -142,16 +142,25 @@ function ResponsiveAppBar() {
                 open={Boolean(anchorElUser)}
                 onClose={() => setAnchorElUser(null)}
               >
-                <MenuItem onClick={handleLogout}>Chiqish</MenuItem>
+                <MenuItem onClick={handleLogout}>Log out</MenuItem>
               </Menu>
             </Box>
           ) : (
-            <Box>
-              <Button color="inherit" onClick={handleLogin}>
-                Kirish
+            <Box
+              sx={{
+                display: "flex",
+                gap: 2,
+              }}
+            >
+              <Button variant="contained" color="inherit" onClick={handleLogin}>
+                Login
               </Button>
-              <Button color="inherit" onClick={handleSignUp}>
-                Ro‘yxatdan o‘tish
+              <Button
+                variant="contained"
+                color="inherit"
+                onClick={handleSignUp}
+              >
+                Sign up
               </Button>
             </Box>
           )}

@@ -47,7 +47,7 @@ function Home() {
   const [getData, steData] = useState<any>([]);
   const [youtobeShorts, setYoutobeShorts] = useState<YoutobeShorts[]>([]);
   const [currentIndex, setCurrentIndex] = useState(1);
-  const [guide, setGuide] = useState<any>([]);
+  const [guide, setGuide] = useState<GuideData[]>([]);
   const [step, setStep] = useState(1);
   const [galleryData, setGalleryData] = useState<any[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -107,8 +107,8 @@ function Home() {
       setStep(1);
     }
   };
-  const handleBooking = (guide: string) => {
-    navigate(`/booking/${guide}`);
+  const handleBooking = (guideId: any) => {
+    navigate(`/booking/:guideId`);
   };
   return (
     <>
