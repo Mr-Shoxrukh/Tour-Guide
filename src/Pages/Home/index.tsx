@@ -36,7 +36,7 @@ import Footer from "./Components/footer";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../db/firebase";
 interface GuideData {
-  id: any;
+  id: string;
   guideImg: string;
   guideName: string;
 }
@@ -56,7 +56,10 @@ function Home() {
   useEffect(() => {
     const fetchGuides = async () => {
       const querySnapshot = await getDocs(collection(db, "guides"));
-      const guidesData = querySnapshot.docs.map((doc) => doc.data());
+      const guidesData = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
       setGuide(guidesData as GuideData[]);
     };
 
@@ -107,8 +110,8 @@ function Home() {
       setStep(1);
     }
   };
-  const handleBooking = (guideId: any) => {
-    navigate(`/booking/:guideId`);
+  const handleBooking = (guideId: string) => {
+    navigate(`/booking/${guideId}`);
   };
   return (
     <>

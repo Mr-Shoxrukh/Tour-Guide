@@ -64,7 +64,7 @@ function ResponsiveAppBar() {
     navigate("/home");
   };
   return (
-    <AppBar sx={{ background: "#dd2c00" }} position="static">
+    <AppBar sx={{ background: "#dd2c00c6" }} position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography

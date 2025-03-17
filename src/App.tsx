@@ -1,5 +1,5 @@
 import "./App.css";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Home from "./Pages/Home";
 import Booking from "./Pages/Booking";
 import GalleryPage from "./Pages/Gallery";
@@ -8,7 +8,6 @@ import ContactPage from "./Pages/Contact";
 import HappyClientsPage from "./Pages/HappyClients";
 import ToursPage from "./Pages/Tours";
 import SignUp from "./Pages/SignUp";
-import { ROUTES_PATH } from "./routes/path";
 import LogIn from "./Pages/LogIn";
 function App() {
   return (

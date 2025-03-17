@@ -48,7 +48,6 @@ function Booking() {
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [transport, setTransport] = useState("car");
   const [numberOfPeople, setnumberOfPeople] = useState<string>("");
-  console.log(guideId);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -77,7 +76,7 @@ function Booking() {
           id: doc.id,
           ...doc.data(),
         }));
-
+        setGuide(guides as Guide[]);
         console.log("Barcha Guide ID'lar:", guides);
       } catch (error) {
         console.error("Xatolik yuz berdi:", error);
@@ -88,7 +87,7 @@ function Booking() {
     };
 
     fetchGuideData();
-  }, [guide]);
+  }, [guideId]);
   // 🔥 OTP orqali tizimga kirish
   const signInWithOTP = async (email: string) => {
     const actionCodeSettings = {
@@ -139,16 +138,16 @@ function Booking() {
       toast.error("Noto‘g‘ri email formati! To‘g‘ri email kiriting.");
       return;
     }
-    const verificationCode = Math.floor(
+    const verification_code = Math.floor(
       100000 + Math.random() * 900000
     ).toString();
-    setGeneratedCode(verificationCode);
+    setGeneratedCode(verification_code);
 
     const templateParams = {
       to_email: email.trim(),
-      verification_code: verificationCode,
+      verification_code: verification_code,
     };
-    console.log(verificationCode);
+    console.log(verification_code);
 
     try {
       const response = await emailjs.send(
@@ -165,11 +164,12 @@ function Booking() {
       toast.error(`Kod yuborishda xatolik yuz berdi: ${error.text}`);
     }
   };
-  // const handleTransportChange = (
-  //   event: React.ChangeEvent<HTMLInputElement>
-  // ) => {
-  //   setFormData({ ...formData, transport: event.target.value });
-  // };
+  const handleTransportChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setTransport(event.target.value);
+    console.log("Tanlangan transport turi:", event.target.value);
+  };
   const verifyCode = () => {
     if (code === generatedCode) {
       toast.success("✅ Email tasdiqlandi! Jarayon muvaffaqiyatli tugadi.");
@@ -213,19 +213,15 @@ function Booking() {
       }
 
       if (storedEmail) {
-        // Firebase orqali OTP orqali tizimga kirish
         await signInWithEmailLink(auth, storedEmail, window.location.href);
 
         console.log("✅ Tasdiqlash muvaffaqiyatli!");
 
-        // Mahalliy saqlangan emailni o'chirib tashlash
         window.localStorage.removeItem("emailForSignIn");
 
-        // Foydalanuvchi tanlagan ma'lumotlar
         const selectedPeople = numberOfPeople;
         const selectedTransport = transport;
 
-        // Telegram botga ma'lumot yuborish
         await sendToTelegramBot(storedEmail, selectedPeople, selectedTransport);
 
         toast.success("Tasdiqlash muvaffaqiyatli va ma’lumot yuborildi!");
@@ -260,13 +256,12 @@ function Booking() {
         <Header />
         <BookingWrapper>
           <BookingCard>
-            <img src={guide.guideImg} alt={guide.title} width="300" />
+            <img src={guide.guideImg} alt={guide.guideName} width="300" />
             <Typography variant="body1">{guide.guideExperience}</Typography>
           </BookingCard>
           <Box sx={{ maxWidth: "400px", margin: "auto", textAlign: "center" }}>
             <h2>Email tasdiqlash</h2>
 
-            {/* Email kiritish maydoni */}
             <TextField
               label="Email"
               type="email"
@@ -283,7 +278,6 @@ function Booking() {
               Tasdiqlash kodini yuborish
             </Button>
 
-            {/* Tasdiqlash kodi */}
             <TextField
               label="Tasdiqlash kodi"
               type="text"
@@ -300,15 +294,13 @@ function Booking() {
               Kodni tekshirish
             </Button>
 
-            {/* Odamlar soni */}
             <TextField
               type="number"
               value={numberOfPeople}
               onChange={(e) => setnumberOfPeople(e.target.value)}
             />
 
-            {/* Transport turi tanlash */}
-            {/* <RadioGroup value={transport} onChange={handleTransportChange}>
+            <RadioGroup value={transport} onChange={handleTransportChange}>
               <FormControlLabel
                 value="car"
                 control={<Radio />}
@@ -324,9 +316,8 @@ function Booking() {
                 control={<Radio />}
                 label="Poyezd"
               />
-            </RadioGroup> */}
+            </RadioGroup>
 
-            {/* Tasdiqlash tugmasi */}
             <Button variant="contained" color="secondary" onClick={verifyCode}>
               Tasdiqlash
             </Button>
