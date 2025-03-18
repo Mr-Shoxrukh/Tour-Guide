@@ -4,8 +4,7 @@ export const UltimateTour__Wrapper = styled.section`
   width: 100%;
   padding: 20px;
   border-radius: 20px;
-  margin-top: 50px;
-  background-color: white;
+  margin-top: 90px;
 `;
 export const UltimateTitle = styled.div`
   width: 100%;

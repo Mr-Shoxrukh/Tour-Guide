@@ -97,7 +97,7 @@ export const ExperienceTitle = styled.div`
 `;
 export const ExperienceWithTourests__wrapper = styled.section`
   width: 100%;
-  background-color: rgb(255, 255, 255);
+  background-color: #f2f2f2;
   margin-top: 50px;
   padding: 30px 0;
   border-radius: 20px;

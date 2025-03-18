@@ -30,12 +30,10 @@ import { ToastContainer, toast } from "react-toastify";
 import Footer from "../Home/Components/footer";
 import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { db } from "../../db/firebase";
-interface Guide {
+interface GuideData {
   id: string;
-  guideName: string;
-  title: string;
-  guideExperience: string;
   guideImg: string;
+  guideName: string;
 }
 
 function Booking() {
@@ -72,12 +70,12 @@ function Booking() {
         const guidesCollection = collection(db, "guides");
         const guideSnapshot = await getDocs(guidesCollection);
 
-        const guides = guideSnapshot.docs.map((doc) => ({
+        const guidesData = guideSnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
-        setGuide(guides as Guide[]);
-        console.log("Barcha Guide ID'lar:", guides);
+        setGuide(guidesData as GuideData[]);
+        console.log("Barcha Guide ID'lar:", guidesData);
       } catch (error) {
         console.error("Xatolik yuz berdi:", error);
       } finally {
@@ -88,10 +86,9 @@ function Booking() {
 
     fetchGuideData();
   }, [guideId]);
-  // 🔥 OTP orqali tizimga kirish
   const signInWithOTP = async (email: string) => {
     const actionCodeSettings = {
-      url: "http://your-app.com", // O'zingizning URL'ingiz
+      url: "http://your-app.com",
       handleCodeInApp: true,
     };
 
@@ -105,7 +102,6 @@ function Booking() {
   };
   const auth = getAuth();
   const emailLink = window.location.href;
-  // 🔥 Avtomatik tizimga kirish
   useEffect(() => {
     async function signInWithEmail() {
       if (await signInWithEmailLink(auth, window.location.href)) {

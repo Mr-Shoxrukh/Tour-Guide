@@ -44,7 +44,6 @@ interface YoutobeShorts {
   video: string;
 }
 function Home() {
-  const [getData, steData] = useState<any>([]);
   const [youtobeShorts, setYoutobeShorts] = useState<YoutobeShorts[]>([]);
   const [currentIndex, setCurrentIndex] = useState(1);
   const [guide, setGuide] = useState<GuideData[]>([]);
@@ -67,7 +66,6 @@ function Home() {
       const querySnapshot = await getDocs(collection(db, "youtobeShorts"));
       const youtubeData = querySnapshot.docs.map((doc) => doc.data());
       setYoutobeShorts(youtubeData as YoutobeShorts[]);
-      console.log(youtobeShorts);
     };
 
     const fetchGalleryData = async () => {
