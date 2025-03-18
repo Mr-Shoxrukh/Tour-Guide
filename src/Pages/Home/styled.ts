@@ -15,6 +15,7 @@ export const Registan__wrapper = styled.section`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-top: 80px;
 `;
 
 export const BookingGuide = styled.div`

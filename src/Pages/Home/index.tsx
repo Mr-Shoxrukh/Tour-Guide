@@ -64,9 +64,10 @@ function Home() {
     };
 
     const fetchYoutubeVideos = async () => {
-      const querySnapshot = await getDocs(collection(db, "youtubeShorts"));
+      const querySnapshot = await getDocs(collection(db, "youtobeShorts"));
       const youtubeData = querySnapshot.docs.map((doc) => doc.data());
       setYoutobeShorts(youtubeData as YoutobeShorts[]);
+      console.log(youtobeShorts);
     };
 
     const fetchGalleryData = async () => {
@@ -94,19 +95,19 @@ function Home() {
     );
   }
   const nextCard = () => {
-    if (step === 1) {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % getData.length);
-      setActiveIndex((prev) => (prev + 1) % getData.length);
+    if (step === 1 && guide.length > 0) {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % guide.length);
+      setActiveIndex((prev) => (prev + 1) % guide.length);
       setStep(2);
     }
   };
 
   const prevCard = () => {
-    if (step === 2) {
+    if (step === 2 && guide.length > 0) {
       setCurrentIndex(
-        (prevIndex) => (prevIndex - 1 + getData.length) % getData.length
+        (prevIndex) => (prevIndex - 1 + guide.length) % guide.length
       );
-      setActiveIndex((prev) => (prev + 1) % getData.length);
+      setActiveIndex((prev) => (prev - 1 + guide.length) % guide.length);
       setStep(1);
     }
   };

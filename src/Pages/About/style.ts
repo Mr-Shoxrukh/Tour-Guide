@@ -5,17 +5,17 @@ export const About__wrapper = styled.section`
 `;
 export const About__content = styled.div`
   width: 100%;
-  margin-top: 30px;
+  margin-top: 70px;
   background-color: white;
-  padding: 20px;
+  /* padding: 20px; */
   border-radius: 20px;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
 `;
 export const AboutTitle = styled.div`
   h1 {
-    width: 370px;
+    width: 100%;
     font-size: 30px;
     font-weight: bold;
     margin-bottom: 20px;
@@ -54,10 +54,11 @@ export const BenifietBox = styled.div`
   }
 `;
 export const AboutImage = styled.div`
-  max-width: 500px;
+  max-width: 450px;
   img {
     width: 100%;
     border-radius: 20px;
+    margin-top: 60px;
   }
 `;
 export const Results = styled.div`

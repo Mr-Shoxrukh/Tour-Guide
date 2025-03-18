@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { Avatar } from "@mui/material";
 import { getAuth, onAuthStateChanged, signOut, User } from "firebase/auth";
 import { app } from "../../../db/firebase";
+
 const auth = getAuth(app);
 
 const pages = [
@@ -32,20 +33,34 @@ function ResponsiveAppBar() {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
-
+  const [showHeader, setShowHeader] = React.useState(true);
+  const [lastScrollY, setLastScrollY] = React.useState(0);
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    // Foydalanuvchi sessiyasini kuzatish
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
     });
 
     return () => {
-      unsubscribe(); // Komponent unmount bo‘lsa, listenerni tozalash
+      unsubscribe();
     };
   }, []);
+  React.useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > lastScrollY) {
+        setShowHeader(false);
+      } else {
+        setShowHeader(true);
+      }
+      setLastScrollY(window.scrollY);
+    };
 
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [lastScrollY]);
   const handleOpenNavMenu = (event: any) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -64,7 +79,16 @@ function ResponsiveAppBar() {
     navigate("/home");
   };
   return (
-    <AppBar sx={{ background: "#dd2c00c6" }} position="static">
+    <AppBar
+      sx={{
+        backgroundColor: "#F2F2F2",
+        width: "100%",
+        position: "fixed",
+        top: showHeader ? 0 : "-80px",
+        transition: "top 0.3s ease-in-out",
+        color: "#2c2b39",
+      }}
+    >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
@@ -109,13 +133,23 @@ function ResponsiveAppBar() {
             </Menu>
           </Box>
 
-          {/* Desktop menyu */}
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
                 key={page}
                 onClick={() => handleCloseNavMenu(page)}
-                sx={{ my: 2, color: "white", display: "block" }}
+                sx={{
+                  my: 2,
+
+                  display: "block",
+                  fontFamily: "Rubik",
+                  background: "transparent",
+                  transition: "0.3s",
+                  color: "#2c2b39",
+                  "&:hover": {
+                    color: "#d63f1f",
+                  },
+                }}
               >
                 {page}
               </Button>
@@ -124,7 +158,7 @@ function ResponsiveAppBar() {
 
           <Box sx={{ padding: "10px", display: "flex", alignItems: "center" }}>
             <Tooltip title="Tolipov Olimjon">
-              <Typography variant="body1">📞 +998 99 927 22 11</Typography>
+              <Typography variant="body1"> +998 99 927 22 11</Typography>
             </Tooltip>
           </Box>
           {user ? (
