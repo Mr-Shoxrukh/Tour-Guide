@@ -25,7 +25,7 @@ function Footer({}: Props) {
 
   return (
     <Footer__wr>
-      <Container>
+      <Container maxWidth="xl">
         <ScrollToTop />
         <FooterLogo>
           <img src={Logo} alt="" />

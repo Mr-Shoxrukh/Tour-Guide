@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const BookingWrapper = styled.div`
   width: 100%;
   padding: 20px;
-  margin-top: 50px;
+  margin-top: 90px;
   border-radius: 20px;
   background-color: white;
   display: flex;

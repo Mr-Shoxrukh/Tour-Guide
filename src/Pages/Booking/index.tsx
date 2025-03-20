@@ -74,6 +74,7 @@ function Booking() {
           id: doc.id,
           ...doc.data(),
         }));
+
         setGuide(guidesData as GuideData[]);
         console.log("Barcha Guide ID'lar:", guidesData);
       } catch (error) {
@@ -134,6 +135,7 @@ function Booking() {
       toast.error("Noto‘g‘ri email formati! To‘g‘ri email kiriting.");
       return;
     }
+
     const verification_code = Math.floor(
       100000 + Math.random() * 900000
     ).toString();
@@ -143,14 +145,15 @@ function Booking() {
       to_email: email.trim(),
       verification_code: verification_code,
     };
-    console.log(verification_code);
+
+    console.log("Yuborilayotgan ma'lumotlar:", templateParams);
 
     try {
       const response = await emailjs.send(
-        "service_nm2wz8o",
-        "template_rtz6uqi",
+        "service_nm2wz8o", // ✅ service ID to‘g‘riligini tekshiring
+        "template_rtz6uqi", // ✅ template ID to‘g‘riligini tekshiring
         templateParams,
-        "Rl8mSc2VDDwj4Unh0"
+        "Rl8mSc2VDDwj4Unh0" // ✅ public API key to‘g‘riligini tekshiring
       );
 
       console.log("✅ Email yuborildi:", response);
@@ -160,6 +163,7 @@ function Booking() {
       toast.error(`Kod yuborishda xatolik yuz berdi: ${error.text}`);
     }
   };
+
   const handleTransportChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -180,7 +184,7 @@ function Booking() {
     selectedTransport: string
   ) => {
     const botToken = "7716014519:AAFB5XdsTar9a_jkMNIa5Yu-Ck3hkra5eUs";
-    const chatId = "5639461053"; // Guide botining chat ID sini oling
+    const chatId = "5639461053";
     const message = `🆕 Yangi buyurtma:\n📧 Email: ${email}\n🌍 Tanlangan tur: ${selectedPeople}\n📅 Sana: ${selectedTransport}`;
 
     const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
@@ -200,31 +204,6 @@ function Booking() {
     if (code.trim() === "") {
       toast.error("Tasdiqlash kodini kiriting!");
       return;
-    }
-
-    try {
-      let storedEmail = window.localStorage.getItem("emailForSignIn");
-      if (!storedEmail) {
-        storedEmail = window.prompt("Iltimos, email kiriting:");
-      }
-
-      if (storedEmail) {
-        await signInWithEmailLink(auth, storedEmail, window.location.href);
-
-        console.log("✅ Tasdiqlash muvaffaqiyatli!");
-
-        window.localStorage.removeItem("emailForSignIn");
-
-        const selectedPeople = numberOfPeople;
-        const selectedTransport = transport;
-
-        await sendToTelegramBot(storedEmail, selectedPeople, selectedTransport);
-
-        toast.success("Tasdiqlash muvaffaqiyatli va ma’lumot yuborildi!");
-      }
-    } catch (err) {
-      console.error("❌ Xatolik:", err);
-      toast.error("Tasdiqlash kodi noto‘g‘ri yoki link eskirgan!");
     }
   };
 
@@ -269,7 +248,7 @@ function Booking() {
             <Button
               variant="contained"
               color="primary"
-              onClick={sendVerificationCode}
+              onClick={sendVerificationCode.bind(setGeneratedCode)}
             >
               Tasdiqlash kodini yuborish
             </Button>
