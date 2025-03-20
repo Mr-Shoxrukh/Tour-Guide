@@ -46,7 +46,7 @@ function Booking() {
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [transport, setTransport] = useState("car");
   const [numberOfPeople, setnumberOfPeople] = useState<string>("");
-
+  const [isSent, setIsSent] = useState(false);
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user?.email) {
@@ -59,32 +59,29 @@ function Booking() {
 
     return () => unsubscribe();
   }, []);
-  useEffect(() => {
-    if (!guideId) {
-      console.log("🚨 Xatolik: guideId yo‘q!");
-      return;
-    }
+  const fetchGuideData = async () => {
+    if (!guideId) return; // guideId bo'lmasa, ishlatmaymiz
 
-    const fetchGuideData = async () => {
-      try {
-        const guidesCollection = collection(db, "guides");
-        const guideSnapshot = await getDocs(guidesCollection);
+    try {
+      const guideDocRef = doc(db, "guides", guideId); // Faqat bitta hujjat olish
+      const guideSnapshot = await getDoc(guideDocRef);
 
-        const guidesData = guideSnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-
-        setGuide(guidesData as GuideData[]);
-        console.log("Barcha Guide ID'lar:", guidesData);
-      } catch (error) {
-        console.error("Xatolik yuz berdi:", error);
-      } finally {
-        setLoading(false);
-        if (!guideId) return <p>Guide ma'lumoti topilmadi</p>;
+      if (guideSnapshot.exists()) {
+        setGuide({
+          id: guideSnapshot.id,
+          ...guideSnapshot.data(),
+        } as GuideData);
+      } else {
+        console.log("Guide ma'lumoti topilmadi");
       }
-    };
+    } catch (error) {
+      console.error("Xatolik yuz berdi:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchGuideData();
   }, [guideId]);
   const signInWithOTP = async (email: string) => {
@@ -125,14 +122,13 @@ function Booking() {
     }
   }, []);
   const sendVerificationCode = async () => {
-    if (!email.trim()) {
-      toast.warning("Iltimos, email kiriting!");
-      return;
-    }
-
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email.trim())) {
       toast.error("Noto‘g‘ri email formati! To‘g‘ri email kiriting.");
+      return;
+    }
+    if (!email.trim() || !emailRegex.test(email.trim())) {
+      toast.error("Noto‘g‘ri yoki bo‘sh email manzil! To‘g‘ri email kiriting.");
       return;
     }
 
@@ -150,8 +146,8 @@ function Booking() {
 
     try {
       const response = await emailjs.send(
-        "service_nm2wz8o", // ✅ service ID to‘g‘riligini tekshiring
-        "template_rtz6uqi", // ✅ template ID to‘g‘riligini tekshiring
+        "service_nm2wz8o",
+        "template_rtz6uqi",
         templateParams,
         "Rl8mSc2VDDwj4Unh0" // ✅ public API key to‘g‘riligini tekshiring
       );
@@ -183,9 +179,13 @@ function Booking() {
     selectedPeople: string,
     selectedTransport: string
   ) => {
+    if (isSent) {
+      toast.warning(" Xabar allaqachon yuborilgan!");
+      return;
+    }
     const botToken = "7716014519:AAFB5XdsTar9a_jkMNIa5Yu-Ck3hkra5eUs";
-    const chatId = "5639461053";
-    const message = `🆕 Yangi buyurtma:\n📧 Email: ${email}\n🌍 Tanlangan tur: ${selectedPeople}\n📅 Sana: ${selectedTransport}`;
+    const chatId = "6287309235";
+    const message = `🆕 Yangi buyurtma:\n📧 From: ${email}\n🌍 Tanlangan tur: ${selectedPeople}\n📅 Sana: ${selectedTransport}`;
 
     const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
 
@@ -196,11 +196,13 @@ function Booking() {
       });
 
       console.log("Ma'lumot Telegram botga yuborildi!");
+      setIsSent(true);
     } catch (error) {
       console.error("Telegram botga xabar yuborishda xatolik:", error);
     }
   };
   const handleVerifyCode = async () => {
+    sendToTelegramBot(email, numberOfPeople, transport);
     if (code.trim() === "") {
       toast.error("Tasdiqlash kodini kiriting!");
       return;

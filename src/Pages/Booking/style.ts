@@ -7,14 +7,15 @@ export const BookingWrapper = styled.div`
   border-radius: 20px;
   background-color: white;
   display: flex;
+  align-items: center;
+  justify-content: space-evenly;
 `;
 export const BookingCard = styled.div`
-  max-width: 777px;
+  max-width: 877px;
+  width: 100%;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  row-gap: 20px;
+  gap: 20px;
   padding: 20px;
   border-radius: 20px;
   background-color: #f5f5f5;

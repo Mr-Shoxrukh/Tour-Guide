@@ -1,7 +1,7 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import Home from "./Pages/Home";
-import Booking from "./Pages/Booking";
+import Booking  from "./Pages/Booking";
 import GalleryPage from "./Pages/Gallery";
 import AboutPage from "./Pages/About";
 import ContactPage from "./Pages/Contact";
