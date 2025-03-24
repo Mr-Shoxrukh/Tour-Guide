@@ -7,7 +7,7 @@ import {
   sendSignInLinkToEmail,
 } from "firebase/auth";
 import axios from "axios";
-import Header from "../../Pages/Home/Components/header";
+import Header from "../../../../../Home/Components/header";
 import {
   Box,
   Button,
@@ -25,11 +25,11 @@ import {
   Typography,
 } from "@mui/material";
 import emailjs from "emailjs-com";
-import { BookingCard, BookingWrapper } from "./style";
+import { BookingCard, BookingWrapper } from "../../../../../Booking/style";
 import { ToastContainer, toast } from "react-toastify";
-import Footer from "../Home/Components/footer";
+import Footer from "../../../../../Home/Components/footer";
 import { doc, getDoc } from "firebase/firestore";
-import { db } from "../../db/firebase";
+import { db } from "../../../../../../db/firebase";
 interface GuideData {
   id: string;
   guideImg: string;
@@ -55,7 +55,7 @@ function Booking() {
       setUser(user);
       if (!user) {
         toast.error("Booking qilish uchun ro‘yxatdan o‘ting!");
-        navigate("/signup"); 
+        navigate("/signup");
       }
     });
 
@@ -138,7 +138,7 @@ function Booking() {
         "service_nm2wz8o",
         "template_rtz6uqi",
         templateParams,
-        "Rl8mSc2VDDwj4Unh0" 
+        "Rl8mSc2VDDwj4Unh0"
       );
 
       toast.success("Tasdiqlash kodi emailga yuborildi! ");
