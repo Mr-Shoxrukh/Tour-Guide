@@ -55,7 +55,7 @@ function Booking() {
       setUser(user);
       if (!user) {
         toast.error("Booking qilish uchun ro‘yxatdan o‘ting!");
-        navigate("/signup"); 
+        navigate("/signup");
       }
     });
 
@@ -138,7 +138,7 @@ function Booking() {
         "service_nm2wz8o",
         "template_rtz6uqi",
         templateParams,
-        "Rl8mSc2VDDwj4Unh0" 
+        "Rl8mSc2VDDwj4Unh0"
       );
 
       toast.success("Tasdiqlash kodi emailga yuborildi! ");

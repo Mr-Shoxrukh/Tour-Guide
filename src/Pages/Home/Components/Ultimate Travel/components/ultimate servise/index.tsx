@@ -28,6 +28,7 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import { toast } from "react-toastify";
+import Home from "../../../..";
 const UltimateService = () => {
   const { tourId } = useParams();
   const [tour, setTour] = useState<any>(null);
@@ -107,7 +108,19 @@ const UltimateService = () => {
       <Headers />
       <Container maxWidth="xl">
         <UltimateServise__wrapper>
-          <Box>
+          <Box
+            sx={{
+              width: "100%",
+              height: "800px",
+              padding: "40px 0 0 0",
+              overflow: "auto",
+              borderRadius: "1px",
+              scrollbarWidth: "none",
+              "&::-webkit-scrollbar": {
+                display: "none",
+              },
+            }}
+          >
             <CityName_title>
               <Typography variant="h1">{tour.cityName}</Typography>
             </CityName_title>
@@ -117,8 +130,6 @@ const UltimateService = () => {
 
             <Box
               sx={{
-                maxWidth: "849px",
-                width: "100%",
                 typography: "body1",
                 padding: 0,
               }}

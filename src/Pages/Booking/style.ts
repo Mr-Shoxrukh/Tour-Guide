@@ -7,6 +7,9 @@ export const BookingWrapper = styled.div`
   border-radius: 20px;
   background-color: white;
   display: flex;
+
+
+
   align-items: center;
   justify-content: space-evenly;
 `;

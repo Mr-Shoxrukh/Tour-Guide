@@ -143,7 +143,7 @@ export const SpotTourst = styled.section`
 `;
 export const MApImg = styled.div`
   max-width: 1650px;
-  height: 700px;
+  height: 600px;
   padding: 20px;
   background: linear-gradient(rgba(0, 0, 0, 0.88), rgba(0, 0, 0, 0.88)),
     url("https://www.pngplay.com/wp-content/uploads/2/World-Map-Free-PNG.png");

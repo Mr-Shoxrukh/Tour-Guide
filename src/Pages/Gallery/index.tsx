@@ -1,26 +1,23 @@
 import { useEffect, useState } from "react";
 import { Container, Box } from "@mui/material";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
-import { app } from "../../db/firebase"; // Firebase konfiguratsiyasini import qiling
+import { app } from "../../db/firebase";
 import { GalleryWrapper } from "./style";
 import Headers from "../Home/Components/header";
 import { auth } from "../../db/firebase";
-const db = getFirestore(app); // Firestore'ni o‘rnatamiz
-
+const db = getFirestore(app);
 function GalleryPage() {
   const [galleryData, setGalleryData] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchDataByDB = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, "gallery")); // Firestore'dan ma'lumotlarni olish
+        const querySnapshot = await getDocs(collection(db, "gallery"));
         const galleryItems = querySnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
-        console.log("bu db", auth);
 
-        console.log("📸 Ma’lumotlar:", galleryItems);
         setGalleryData(galleryItems);
       } catch (error) {
         console.error("🔥 Firebase xatosi:", error);
