@@ -12,7 +12,7 @@ import MenuItem from "@mui/material/MenuItem";
 import CallIcon from "@mui/icons-material/Call";
 import Logo from "./img/Logo.jpg";
 import { Logo__wr } from ".";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Avatar } from "@mui/material";
 import { getAuth, onAuthStateChanged, signOut, User } from "firebase/auth";
 import { app } from "../../../db/firebase";
@@ -36,7 +36,7 @@ function ResponsiveAppBar() {
   const [showHeader, setShowHeader] = React.useState(true);
   const [lastScrollY, setLastScrollY] = React.useState(0);
   const navigate = useNavigate();
-
+  const location = useLocation();
   React.useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -134,26 +134,30 @@ function ResponsiveAppBar() {
           </Box>
 
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={() => handleCloseNavMenu(page)}
-                sx={{
-                  my: 2,
+            {pages.map((page) => {
+              const pagePath = `/${page.toLowerCase().replace(/\s+/g, "-")}`;
+              const isActive = location.pathname === pagePath;
 
-                  display: "block",
-                  fontFamily: "Rubik",
-                  background: "transparent",
-                  transition: "0.3s",
-                  color: "#2c2b39",
-                  "&:hover": {
-                    color: "#d63f1f",
-                  },
-                }}
-              >
-                {page}
-              </Button>
-            ))}
+              return (
+                <Button
+                  key={page}
+                  onClick={() => handleCloseNavMenu(page)}
+                  sx={{
+                    fontFamily: "Rubik",
+                    background: "transparent",
+                    transition: "0.3s",
+                    color: isActive ? "#FF9800" : "#2c2b39",
+                    borderRadius: 0,
+                    borderBottom: isActive ? "2px solid #FF9800" : "none", // 🟠 faqat aktiv sahifa uchun chiziq
+                    "&:hover": {
+                      color: "#FF9800",
+                    },
+                  }}
+                >
+                  {page}
+                </Button>
+              );
+            })}
           </Box>
 
           <Box sx={{ padding: "10px", display: "flex", alignItems: "center" }}>

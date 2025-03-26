@@ -117,20 +117,10 @@ function Home() {
       <Container maxWidth="xl">
         <Header />
         <Registan__wrapper>
-          <Box
-            sx={{
-              width: "560px",
-              paddingLeft: "20px",
-            }}
-          >
-            <Typography variant="h1" color="#fff" fontSize={44}>
-              Uzbekistan Tours <br /> Explore Every Region with Expert Guides
-            </Typography>
-            <GetStart_btn>
-              <Button variant="contained">Buy</Button>
-            </GetStart_btn>
-          </Box>
           <BookingGuide>
+            <Typography variant="body1" className="guide-badge">
+              📍 Certified Guide
+            </Typography>
             <Box
               sx={{
                 display: "flex",
@@ -152,8 +142,7 @@ function Home() {
               ) : (
                 <p>Loading...</p>
               )}
-
-              <Typography variant="h1" fontSize={22}>
+              <Typography variant="h1" fontSize={26} fontWeight={"bold"}>
                 {guide[activeIndex].guideName}
               </Typography>
 
@@ -165,13 +154,31 @@ function Home() {
                   marginTop: 2,
                 }}
               >
-                <Button variant="contained" onClick={prevCard}>
+                <Button
+                  variant="contained"
+                  onClick={prevCard}
+                  sx={{
+                    backgroundColor: "#FF9800",
+                  }}
+                >
                   Prev
                 </Button>
-                <Button onClick={() => handleBooking(guide[activeIndex].id)}>
+                <Button
+                  variant="contained"
+                  onClick={() => handleBooking(guide[activeIndex].id)}
+                  sx={{
+                    backgroundColor: "#4CAF50",
+                  }}
+                >
                   Book now
                 </Button>
-                <Button variant="contained" onClick={nextCard}>
+                <Button
+                  variant="contained"
+                  onClick={nextCard}
+                  sx={{
+                    backgroundColor: "#FF9800",
+                  }}
+                >
                   Next
                 </Button>
               </Box>
@@ -180,9 +187,7 @@ function Home() {
         </Registan__wrapper>
         <Tour_Actives>
           <TourActTitle>
-            <Typography variant="h1" fontWeight={"bold"}>
-              Exploring Tour Activities
-            </Typography>
+            <Typography variant="h1">Exploring Tour Activities</Typography>
           </TourActTitle>
           <TourGallery>
             {youtobeShorts.map((item: any) => (
@@ -191,7 +196,7 @@ function Home() {
                   url={item.video}
                   controls
                   width="100%"
-                  height="400px"
+                  height="530px"
                 />
               </Box>
             ))}
@@ -215,16 +220,18 @@ function Home() {
                 experience.
               </Typography>
               <Box
+                borderRadius={1}
                 sx={{
                   width: "600px",
                   display: "flex",
                   flexWrap: "wrap",
-                  gap: "10px",
+                  gap: "20px",
                   alignItems: "center",
-                  marginTop: "30px",
+                  marginTop: "78px",
+                  transform: "rotate(-4deg)",
                 }}
               >
-                <Box boxShadow={3}>
+                <Box borderRadius={1}>
                   <GoodSides>
                     <GoodSidesIcon>
                       <HealthAndSafetyIcon />
@@ -232,7 +239,7 @@ function Home() {
                     Safety First Always
                   </GoodSides>
                 </Box>
-                <Box boxShadow={3}>
+                <Box borderRadius={1}>
                   <GoodSides>
                     <GoodSidesIcon>
                       <HourglassBottomIcon />
@@ -240,7 +247,7 @@ function Home() {
                     Safety First Always
                   </GoodSides>
                 </Box>
-                <Box boxShadow={3}>
+                <Box borderRadius={1}>
                   <GoodSides>
                     <GoodSidesIcon>
                       <HealthAndSafetyIcon />
@@ -248,7 +255,7 @@ function Home() {
                     Safety First Always
                   </GoodSides>
                 </Box>
-                <Box boxShadow={3}>
+                <Box borderRadius={1}>
                   <GoodSides>
                     <GoodSidesIcon>
                       <HealthAndSafetyIcon />
