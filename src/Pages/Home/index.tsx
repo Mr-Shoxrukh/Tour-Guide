@@ -270,10 +270,10 @@ function Home() {
         </ExperienceWithTourests__wrapper>
         <SpotTourst>
           <MApImg>
+            <SpotTitle>
+              <Typography variant="h1">Finest Tourist Spot</Typography>
+            </SpotTitle>
             <CardCity__wrapper>
-              <SpotTitle>
-                <Typography variant="h1">Finest Tourist Spot</Typography>
-              </SpotTitle>
               <CityBox>
                 <img
                   src="https://mjcedactmdisysxnyusx.supabase.co/storage/v1/object/sign/gallery/registan.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYWxsZXJ5L3JlZ2lzdGFuLnBuZyIsImlhdCI6MTczOTk3MTM3OSwiZXhwIjoxNzcxNTA3Mzc5fQ.FHYhfbfIUNzKCtNWN_XkTe2rSMdcgu-FQXonC8QC1ac"

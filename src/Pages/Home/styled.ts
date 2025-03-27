@@ -161,32 +161,34 @@ export const SpotTourst = styled.section`
   justify-content: center;
 `;
 export const MApImg = styled.div`
-  max-width: 1650px;
-  height: 600px;
-  padding: 20px;
-  background: linear-gradient(rgba(0, 0, 0, 0.88), rgba(0, 0, 0, 0.88)),
+  padding: 120px 20px;
+  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
     url("https://www.pngplay.com/wp-content/uploads/2/World-Map-Free-PNG.png");
   position: static;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
   border-radius: 19px;
+  display: flex;
+  flex-direction: column;
 `;
 export const SpotTitle = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
+  margin-bottom: 40px;
   h1 {
     font-size: 42px;
-    color: #dd2c00;
+    color: #fff;
+    font-weight: bold;
   }
 `;
 export const CardCity__wrapper = styled.div`
   width: 100%;
-  height: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  gap: 20px;
   flex-wrap: wrap;
 `;
 export const CityBox = styled.div`
