@@ -10,6 +10,7 @@ import ToursPage from "./Pages/Tours";
 import SignUp from "./Pages/SignUp";
 import LogIn from "./Pages/LogIn";
 import UltimateServise from "./Pages/Home/Components/Ultimate Travel/components/ultimate servise";
+import BookingPage from "./Pages/Home/Components/Ultimate Travel/components/ultimate travel book";
 function App() {
   return (
     <Routes>
@@ -22,6 +23,7 @@ function App() {
       <Route path="/happy-clients" element={<HappyClientsPage />} />
       <Route path="/tours" element={<ToursPage />} />
       <Route path="/ultimate-service/:tourId" element={<UltimateServise />} />
+      <Route path="/ultimate-servise-book" element={<BookingPage />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/log-in" element={<LogIn />} />
     </Routes>

@@ -35,6 +35,7 @@ const UltimateService = () => {
   const [loading, setLoading] = useState(true);
   const [value, setValue] = useState("1");
   const navigate = useNavigate();
+  const [guide, setGuide] = useState<any>(null);
   const currencies = [
     {
       label: "1",
@@ -81,13 +82,16 @@ const UltimateService = () => {
 
     fetchTour();
   }, [tourId]);
-  const handelBook = () => {
-    if (currencies) {
-      navigate("/booking");
+  console.log(tourId);
+
+  const handleBook = () => {
+    if (tour?.id) {
+      navigate(`/ultimate-servise-book`); // ✅ toursCard kolleksiyasidagi ID bilan yo‘naltiradi
     } else {
-      toast.error("Please select your currency");
+      toast.error("Tour ID topilmadi!");
     }
   };
+
   if (loading)
     return (
       <Box
@@ -313,7 +317,7 @@ const UltimateService = () => {
                 sx={{
                   marginTop: "20px",
                 }}
-                onClick={handelBook}
+                onClick={handleBook}
               >
                 Book Now
               </Button>
