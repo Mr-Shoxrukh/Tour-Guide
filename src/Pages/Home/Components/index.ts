@@ -20,8 +20,10 @@ export const Footer__wr = styled.footer`
 `;
 export const FooterLogo = styled.div`
   width: 200px;
+  height: 400px;
   display: flex;
   flex-direction: column;
+  align-items: center;
   row-gap: 20px;
   img {
     width: 100%;

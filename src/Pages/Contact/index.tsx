@@ -22,7 +22,7 @@ import {
   ReachUs,
 } from "./style";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 
 type Props = {};
 
@@ -40,8 +40,8 @@ function ContactPage({}: Props) {
     message: false,
   });
   const sendToTelegramBot = async (message: string) => {
-    const botToken = "7716014519:AAFB5XdsTar9a_jkMNIa5Yu-Ck3hkra5eUs";
-    const chatId = "5639461053";
+    const botToken = "7997508632:AAFKuyfBTItJ_csI2kVFdtH8PIQILX3VACs";
+    const chatId = "880681928";
 
     const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
 
@@ -50,7 +50,7 @@ function ContactPage({}: Props) {
         chat_id: chatId,
         text: message,
       });
-      console.log("Xabar yuborildi!");
+      toast.success("Xabar yuborildi!");
     } catch (error) {
       console.error("Xatolik yuz berdi:", error);
     }
@@ -184,6 +184,7 @@ function ContactPage({}: Props) {
           </ReachUs>
         </Contact__wrapper>
       </Container>
+      <ToastContainer />
       <Footer />
     </>
   );

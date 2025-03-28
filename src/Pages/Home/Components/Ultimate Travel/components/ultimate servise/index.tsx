@@ -86,7 +86,7 @@ const UltimateService = () => {
 
   const handleBook = () => {
     if (tour?.id) {
-      navigate(`/ultimate-servise-book`); // ✅ toursCard kolleksiyasidagi ID bilan yo‘naltiradi
+      navigate(`/contact`);
     } else {
       toast.error("Tour ID topilmadi!");
     }
@@ -294,24 +294,7 @@ const UltimateService = () => {
                 }}
               />
 
-              <TextField
-                id="outlined-select-currency-native"
-                select
-                label="Native select"
-                defaultValue="EUR"
-                slotProps={{
-                  select: {
-                    native: true,
-                  },
-                }}
-                helperText="Please select your currency"
-              >
-                {currencies.map((option) => (
-                  <option key={option.label} value={option.label}>
-                    {option.label}
-                  </option>
-                ))}
-              </TextField>
+              
               <Button
                 variant="contained"
                 sx={{
