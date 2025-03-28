@@ -15,3 +15,13 @@ body {
   transform: translateY(0);
   opacity: 1;
 }
+.link{
+  text-decoration: none;
+  color: #fff;
+  opacity: 50%;
+  transition: 0.3s;
+}
+.link:hover {
+  opacity: 100%; /* Hover bo‘lganda rangni o‘zgartiradi */
+
+}

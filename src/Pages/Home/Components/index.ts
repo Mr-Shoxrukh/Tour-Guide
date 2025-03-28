@@ -20,7 +20,6 @@ export const Footer__wr = styled.footer`
 `;
 export const FooterLogo = styled.div`
   width: 200px;
-  height: 400px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -39,6 +38,14 @@ export const FooterLogo = styled.div`
   }
 `;
 
-export const FooterQuiclLinks = styled.div``;
+export const FooterQuiclLinks = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  h2 {
+    color: white;
+    font-size: 24px;
+  }
+`;
 export const FooterContact = styled.div``;
 export const FooterSocial = styled.div``;

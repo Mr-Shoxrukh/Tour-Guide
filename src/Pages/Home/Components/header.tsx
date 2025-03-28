@@ -13,7 +13,7 @@ import CallIcon from "@mui/icons-material/Call";
 import Logo from "./img/Logo.jpg";
 import { Logo__wr } from ".";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Avatar } from "@mui/material";
+import { Avatar, Divider } from "@mui/material";
 import { getAuth, onAuthStateChanged, signOut, User } from "firebase/auth";
 import { app } from "../../../db/firebase";
 
@@ -70,14 +70,6 @@ function ResponsiveAppBar() {
     if (page) navigate(`/${page.toLowerCase().replace(/\s+/g, "-")}`);
   };
 
-  const handleSignUp = () => navigate("/signup");
-  const handleLogin = () => navigate("/log-in");
-
-  const handleLogout = async () => {
-    await signOut(auth);
-    setUser(null);
-    navigate("/home");
-  };
   return (
     <AppBar
       sx={{
@@ -160,48 +152,53 @@ function ResponsiveAppBar() {
             })}
           </Box>
 
-          <Box sx={{ padding: "10px", display: "flex", alignItems: "center" }}>
-            <Tooltip title="Tolipov Olimjon">
-              <Typography variant="body1"> +998 99 927 22 11</Typography>
-            </Tooltip>
-          </Box>
-          {user ? (
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              <IconButton
-                onClick={(event) => setAnchorElUser(event.currentTarget)}
-              >
-                <Avatar
-                  src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-                  alt="User Avatar"
-                />
-              </IconButton>
-              <Menu
-                anchorEl={anchorElUser}
-                open={Boolean(anchorElUser)}
-                onClose={() => setAnchorElUser(null)}
-              >
-                <MenuItem onClick={handleLogout}>Log out</MenuItem>
-              </Menu>
-            </Box>
-          ) : (
-            <Box
+          <Box
+            sx={{
+              padding: "10px",
+              display: "flex",
+              gap: "10px",
+              alignItems: "center",
+            }}
+          >
+            <CallIcon
               sx={{
-                display: "flex",
-                gap: 2,
+                fontSize: "30px",
+                color: "#55bd00",
+                cursor: "pointer",
               }}
-            >
-              <Button variant="contained" color="inherit" onClick={handleLogin}>
-                Login
-              </Button>
-              <Button
-                variant="contained"
-                color="inherit"
-                onClick={handleSignUp}
+            />{" "}
+            <Divider orientation="vertical" flexItem />
+            <Box>
+              <Typography
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: "bold",
+                }}
               >
-                Sign up
-              </Button>
+                To More Inquiry
+              </Typography>
+              <Tooltip
+                title="Tolipov Olimjon"
+                sx={{
+                  fontSize: "24px",
+                }}
+              >
+                <Typography variant="body1" sx={{}}>
+                  <a
+                    href="https://api.whatsapp.com/send/?phone=998999272211&text&type=phone_number&app_absent=0"
+                    style={{
+                      textDecoration: "none",
+                      color: "#55bd00",
+                      fontSize: "24px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    +998 90 123 45 67
+                  </a>
+                </Typography>
+              </Tooltip>
             </Box>
-          )}
+          </Box>
         </Toolbar>
       </Container>
     </AppBar>

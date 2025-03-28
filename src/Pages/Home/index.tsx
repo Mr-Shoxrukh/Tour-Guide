@@ -109,8 +109,8 @@ function Home() {
       setStep(1);
     }
   };
-  const handleBooking = (guideId: string) => {
-    navigate(`/booking/${guideId}`);
+  const handleBooking = () => {
+    navigate(`/contact`);
   };
   return (
     <>
@@ -165,7 +165,7 @@ function Home() {
                 </Button>
                 <Button
                   variant="contained"
-                  onClick={() => handleBooking(guide[activeIndex].id)}
+                  onClick={() => handleBooking()}
                   sx={{
                     backgroundColor: "#4CAF50",
                   }}

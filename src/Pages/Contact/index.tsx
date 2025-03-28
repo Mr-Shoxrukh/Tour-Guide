@@ -55,7 +55,9 @@ function ContactPage({}: Props) {
       console.error("Xatolik yuz berdi:", error);
     }
   };
-
+  const handelEmailLink = () => {
+    window.location.href = "mailto:olimjontolipov8@gmail.com";
+  };
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -104,14 +106,26 @@ function ContactPage({}: Props) {
               <PhoneIcon>
                 <LocalPhoneIcon />
               </PhoneIcon>
-              <Typography variant="body1">+998 99 927 22 11</Typography> or
               <Typography variant="body1">+998 99 927 22 11</Typography>
             </NumberBox>
-            <NumberBox>
+            <NumberBox
+              onClick={handelEmailLink}
+              style={{
+                cursor: "pointer",
+              }}
+            >
               <PhoneIcon>
                 <AlternateEmailIcon />
               </PhoneIcon>
-              <Typography variant="body1">olimjontolipov8@gmail.com</Typography>
+              <Typography
+                variant="body1"
+                sx={{
+                  cursor: "pointer",
+                }}
+                onClick={handelEmailLink}
+              >
+                olimjontolipov8@gmail.com
+              </Typography>
             </NumberBox>
             <NumberBox>
               <PhoneIcon>
@@ -178,8 +192,9 @@ function ContactPage({}: Props) {
                 value={form.message}
               />
 
-              {/* ✅ Tugmani submit qilish uchun ishlatamiz */}
-              <button type="submit">Yuborish</button>
+              <Button type="submit" variant="contained">
+                Send
+              </Button>
             </form>
           </ReachUs>
         </Contact__wrapper>

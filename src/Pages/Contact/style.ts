@@ -54,7 +54,7 @@ export const ReachUs = styled.div`
     font-size: 18px;
     background-color: #4caf50;
   }
-  .form {
+  form {
     display: flex;
     gap: 30px;
     flex-direction: column;
