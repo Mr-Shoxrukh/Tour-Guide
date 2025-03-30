@@ -1,7 +1,7 @@
 import { FirebaseApp, getApp, getApps, initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
-
+import { getStorage } from "firebase/storage";
 export const firebaseConfig = {
   apiKey: "AIzaSyCutT4fqmFDFZFhYe7sk4TLehREDj00rts",
   authDomain: "tour-guide-4e299.firebaseapp.com",
@@ -21,6 +21,7 @@ if (!getApps().length) {
   app = getApp(); // if already initialized, use that one
 }
 
+const storage = getStorage(app);
 const auth = getAuth(app);
 const db = getFirestore(app);
-export { app, auth, db };
+export { app, auth, db, storage };

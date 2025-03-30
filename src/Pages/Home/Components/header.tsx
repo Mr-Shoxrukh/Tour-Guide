@@ -19,14 +19,7 @@ import { app } from "../../../db/firebase";
 
 const auth = getAuth(app);
 
-const pages = [
-  "Home",
-  "About",
-  "Tours",
-  "GAllery",
-  "Contact",
-  "Happy Clients :)",
-];
+const pages = ["Home", "About", "Tours", "Gallery", "Contact", "happy-clients"];
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null>(null);
   const [user, setUser] = React.useState<User | null>(null);
@@ -193,7 +186,7 @@ function ResponsiveAppBar() {
                       fontWeight: "bold",
                     }}
                   >
-                    +998 90 123 45 67
+                    +998999272211
                   </a>
                 </Typography>
               </Tooltip>

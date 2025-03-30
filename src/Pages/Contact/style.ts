@@ -2,16 +2,21 @@ import styled from "styled-components";
 
 export const Contact__wrapper = styled.div`
   width: 100%;
-  margin-top: 120px;
-  height: 50vh;
+  margin-top: 160px;
   display: flex;
+  flex-wrap: wrap;
   gap: 30px;
+  @media (max-width: 900px) {
+  }
 `;
 export const ContactNumber = styled.div`
   width: 50%;
   display: flex;
   flex-direction: column;
   gap: 20px;
+  @media (max-width: 900px) {
+    width: 100%;
+  }
 `;
 export const NumberBox = styled.div`
   width: 100%;
@@ -50,7 +55,7 @@ export const ReachUs = styled.div`
   }
   button {
     width: 200px;
-    padding: 15px;
+    padding: 13px 10px;
     font-size: 18px;
     background-color: #4caf50;
   }
@@ -59,6 +64,9 @@ export const ReachUs = styled.div`
     gap: 30px;
     flex-direction: column;
     row-gap: 30px;
+  }
+  @media (max-width: 600px) {
+    padding: 20px;
   }
 `;
 export const InputWrapper = styled.form`

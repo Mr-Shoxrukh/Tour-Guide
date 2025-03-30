@@ -137,7 +137,7 @@ function AboutPage({}: Props) {
                 <Typography variant="body1">Happy Customers</Typography>
               </Box>
             </ResBox>
-            <Divider orientation="vertical" flexItem />
+
             <ResBox>
               <Box>
                 <HowToRegRoundedIcon
@@ -152,7 +152,7 @@ function AboutPage({}: Props) {
                 <Typography variant="body1">Tours Success</Typography>
               </Box>
             </ResBox>
-            <Divider orientation="vertical" />
+
             <ResBox>
               <Box>
                 <SensorOccupiedRoundedIcon
@@ -167,7 +167,6 @@ function AboutPage({}: Props) {
                 <Typography variant="body1">Travel Guide</Typography>
               </Box>
             </ResBox>
-            <Divider />
           </Results>
           <WhyGuideTour>
             <TourTitle>

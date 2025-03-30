@@ -2,9 +2,15 @@ import {
   CardPrice,
   UltimateCardWrapper,
   UltimateTitle,
-  UltimateTour__Wrapper,
+  UltimateTourWrapper,
 } from "./style";
-import { Box, Container, Divider, Typography } from "@mui/material";
+import {
+  Box,
+  CircularProgress,
+  Container,
+  Divider,
+  Typography,
+} from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -43,21 +49,40 @@ function UltimateTour() {
     fetchGuides();
   }, [guidesData]);
 
-  if (!tour) return <p>Loading...</p>;
+  if (!tour)
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          height: "70vh",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
 
   const handleClick = (guidesData: string) => {
     navigate(`/ultimate-service/${guidesData}`);
   };
   return (
     <>
-      <Container maxWidth="xl">
-        <UltimateTour__Wrapper>
-          <UltimateTitle>
-            <Typography variant="h1">Ultimate Travel Experience</Typography>
-          </UltimateTitle>
+      <Container maxWidth="xl" sx={{ padding: "0" }}>
+        <UltimateTitle>
+          <Typography variant="h1">Ultimate Travel Experience</Typography>
+        </UltimateTitle>
+        <UltimateTourWrapper>
           <UltimateCardWrapper>
             {tour.map((item: GuideData) => (
-              <Card sx={{ maxWidth: 400, minWidth: 400, boxShadow: 3 }}>
+              <Card
+                sx={{
+                  maxWidth: 400,
+                  minWidth: { xs: 350, sm: 400 },
+                  boxShadow: 3,
+                  padding: "0",
+                }}
+              >
                 <CardActionArea onClick={() => handleClick(item.id)}>
                   <CardMedia
                     component="img"
@@ -104,7 +129,7 @@ function UltimateTour() {
               </Card>
             ))}
           </UltimateCardWrapper>
-        </UltimateTour__Wrapper>
+        </UltimateTourWrapper>
       </Container>
     </>
   );

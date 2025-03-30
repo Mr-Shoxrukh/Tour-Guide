@@ -11,7 +11,7 @@ export const Logo__wr = styled.div`
 `;
 export const Footer__wr = styled.footer`
   width: 100%;
-  padding: 40px;
+  padding: 40px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;

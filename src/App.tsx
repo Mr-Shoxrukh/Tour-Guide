@@ -7,8 +7,8 @@ import ContactPage from "./Pages/Contact";
 import HappyClientsPage from "./Pages/HappyClients";
 import ToursPage from "./Pages/Tours";
 
-import UltimateServise from "./Pages/Home/Components/Ultimate Travel/components/ultimate servise";
-import BookingPage from "./Pages/Home/Components/Ultimate Travel/components/ultimate travel book";
+import UltimateServise from "./Pages/Home/Components/Ultimate Travel/ultimate servise";
+
 function App() {
   return (
     <Routes>
@@ -20,7 +20,6 @@ function App() {
       <Route path="/happy-clients" element={<HappyClientsPage />} />
       <Route path="/tours" element={<ToursPage />} />
       <Route path="/ultimate-service/:tourId" element={<UltimateServise />} />
-      <Route path="/ultimate-servise-book" element={<BookingPage />} />
     </Routes>
   );
 }

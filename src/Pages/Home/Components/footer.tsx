@@ -108,7 +108,7 @@ function Footer({}: Props) {
                       fontWeight: "bold",
                     }}
                   >
-                    +998 90 123 45 67
+                    +998999272211
                   </a>
                 </Typography>
               </Box>

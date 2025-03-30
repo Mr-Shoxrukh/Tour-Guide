@@ -16,11 +16,15 @@ export const UltimateServiseImg = styled.div`
     height: 470px;
     border-radius: 14px;
   }
+  @media (max-width: 400px) {
+    margin-top: 40px;
+    gap: 20px;
+  }
 `;
 export const CityName_title = styled.div`
   h1 {
     font-size: 30px;
-    margin-bottom: 10px;
+    margin-bottom: 40px;
     font-weight: 500;
   }
 `;
@@ -28,7 +32,7 @@ export const Itinerary = styled.div`
   width: 100%;
   padding: 20px 15px;
   border: 1px solid #e0e0e0;
-  margin-top: 20px;
+  margin-top: 80px;
   border-radius: 0.5rem;
 `;
 export const CostItem = styled.div`

@@ -5,23 +5,32 @@ export const About__wrapper = styled.section`
 `;
 export const About__content = styled.div`
   width: 100%;
-  margin-top: 70px;
+  margin-top: 110px;
   background-color: white;
-  /* padding: 20px; */
   border-radius: 20px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: space-around;
+  gap: 20px;
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+    flex-direction: column-reverse;
+    justify-content: center;
+    gap: 20px;
+    img {
+      display: none;
+    }
+  }
 `;
 export const AboutTitle = styled.div`
+  max-width: 800px;
   h1 {
-    width: 100%;
     font-size: 30px;
     font-weight: bold;
-    margin-bottom: 20px;
   }
   p {
-    width: 580px;
+    max-width: 100%;
+    width: 100%;
     font-size: 20px;
     line-height: 1.5;
     opacity: 50%;
@@ -29,23 +38,31 @@ export const AboutTitle = styled.div`
   }
 `;
 export const Benifiets = styled.div`
+  width: 100%;
   padding: 40px 0 0 0;
-  width: 750px;
-  padding-right: 30px;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  gap: 20px;
   row-gap: 20px;
+  @media (max-width: 840px) {
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 export const BenifietBox = styled.div`
   display: flex;
-  width: 350px;
+  max-width: 350px;
+  width: 100%;
   gap: 10px;
   align-items: center;
   padding: 27px 15px;
   background-color: #f4efca;
   border-radius: 16px;
+
   p {
+    width: 100%;
     margin: 0;
     font-size: 20px;
     color: #f66432;
@@ -63,14 +80,19 @@ export const AboutImage = styled.div`
 `;
 export const Results = styled.div`
   width: 100%;
-  height: 130px;
   padding: 20px;
   background-color: white;
   border-radius: 20px;
-  margin-top: 30px;
+  margin-top: 80px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  @media (max-width: 720px) {
+    flex-direction: column;
+    row-gap: 80px;
+    margin: 0;
+    padding: 0;
+  }
 `;
 export const ResBox = styled.div`
   width: 300px;
@@ -91,13 +113,22 @@ export const ResBox = styled.div`
 export const WhyGuideTour = styled.div`
   width: 100%;
   margin-top: 30px;
-  background-color: white;
-  padding: 20px;
+  padding: 20px 0;
   border-radius: 20px;
   display: flex;
+  gap: 20px;
   justify-content: space-around;
   flex-direction: column;
   align-items: center;
+  @media (max-width: 936px) {
+    padding: 0;
+    justify-content: space-between;
+  }
+  @media (max-width: 895px) {
+    flex-direction: column;
+    justify-content: center;
+    gap: 30px;
+  }
 `;
 export const TourTitle = styled.div`
   padding: 30px 0;
@@ -114,14 +145,16 @@ export const TourTitle = styled.div`
   }
 `;
 export const Cards__Wrapper = styled.div`
-  max-width: 1300px;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  row-gap: 25px;
+  gap: 25px;
   border-radius: 20px;
+  @media (max-width: 877px) {
+    display: flex;
+  }
 `;
 export const Cards__content = styled.div`
   max-width: 415px;

@@ -24,6 +24,7 @@ export const BookingGuide = styled.div`
   width: 100%;
   padding: 20px;
   margin-right: 10px;
+  margin-left: 10px;
   background: rgba(0, 0, 0, 0.61);
   backdrop-filter: blur(12px);
   border: 1px solid #e0e0e0;
@@ -113,6 +114,18 @@ export const ExperienceWithTourests__wrapper = styled.section`
   width: 100%;
   margin-top: 50px;
   padding: 30px 0;
+  @media (max-width: 1300px) {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  p {
+    width: 100%;
+    @media (max-width: 1300px) {
+      width: 100%;
+      color: red;
+    }
+  }
 `;
 export const WithTourestyImg = styled.div`
   width: 100%;
@@ -121,6 +134,10 @@ export const WithTourestyImg = styled.div`
   gap: 40px;
   flex-direction: row-reverse;
   justify-content: center;
+
+  @media (max-width: 1300px) {
+    display: none;
+  }
   img {
     max-width: 500px;
     width: 100%;

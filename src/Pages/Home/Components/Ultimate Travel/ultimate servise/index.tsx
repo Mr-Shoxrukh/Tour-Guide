@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
-import { db } from "../../../../../../db/firebase";
+import { db } from "../../../../../db/firebase";
 import {
   Box,
   Button,
@@ -14,8 +14,8 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import Headers from "../../../../../Home/Components/header";
-import Footer from "../../../footer";
+import Headers from "../../header";
+import Footer from "../../footer";
 import {
   CityName_title,
   CostItem,
@@ -28,7 +28,7 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import { toast } from "react-toastify";
-import Home from "../../../..";
+import Home from "../../..";
 const UltimateService = () => {
   const { tourId } = useParams();
   const [tour, setTour] = useState<any>(null);
@@ -82,7 +82,6 @@ const UltimateService = () => {
 
     fetchTour();
   }, [tourId]);
-  console.log(tourId);
 
   const handleBook = () => {
     if (tour?.id) {
@@ -105,7 +104,19 @@ const UltimateService = () => {
         <CircularProgress />
       </Box>
     );
-  if (!tour) return <p>Tour not found</p>;
+  if (!tour)
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          height: "70vh",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
 
   return (
     <>
@@ -294,7 +305,6 @@ const UltimateService = () => {
                 }}
               />
 
-              
               <Button
                 variant="contained"
                 sx={{
