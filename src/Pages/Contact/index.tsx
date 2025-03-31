@@ -13,7 +13,7 @@ import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import DateRangeIcon from "@mui/icons-material/DateRange";
 import {
-  Contact__wrapper,
+  ContactWrapper,
   ContactNumber,
   EmailInput,
   InputWrapper,
@@ -100,7 +100,7 @@ function ContactPage({}: Props) {
     <>
       <Headers />
       <Container maxWidth="xl">
-        <Contact__wrapper>
+        <ContactWrapper>
           <ContactNumber>
             <NumberBox>
               <PhoneIcon>
@@ -181,13 +181,6 @@ function ContactPage({}: Props) {
                 maxRows={10}
                 placeholder="Message..."
                 name="message"
-                style={{
-                  width: "100%",
-                  maxWidth: "900px",
-                  padding: "10px",
-                  fontSize: "16px",
-                  border: errors.message ? "2px solid red" : "1px solid gray",
-                }}
                 onChange={handleChange}
                 value={form.message}
               />
@@ -197,7 +190,7 @@ function ContactPage({}: Props) {
               </Button>
             </form>
           </ReachUs>
-        </Contact__wrapper>
+        </ContactWrapper>
       </Container>
       <ToastContainer />
       <Footer />

@@ -20,27 +20,42 @@ interface DataItem {
   imgText: string;
   clientsImg: string;
   clentLocation: string;
+  imgName: string;
 }
 function HappyClientsPage({}: Props) {
   const [data, setData] = useState<DataItem[]>([]);
+  const [satisfiedClients, setSatisfiedClients] = useState<DataItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const [open, setOpen] = useState(false);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const querySnapshot = await getDocs(collection(db, "happyClients"));
-        const items: DataItem[] = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        })) as DataItem[];
-        setData(items);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching data: ", error);
-      }
-    };
 
+  const fetchData = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, "happyClients"));
+      const items: DataItem[] = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      })) as DataItem[];
+      setData(items);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+    }
+  };
+  const satisfiedClientsData = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, "satisfiedClients"));
+      const items: DataItem[] = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      })) as DataItem[];
+      setSatisfiedClients(items);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+    }
+  };
+  useEffect(() => {
     fetchData();
+    satisfiedClientsData();
   }, []);
 
   if (loading)
@@ -75,17 +90,24 @@ function HappyClientsPage({}: Props) {
                 {index !== data.length - 1 && ( // Oxirgi elementdan keyin div chiqmasligi uchun
                   <Box style={{ display: "none", height: 0, margin: 0 }}></Box>
                 )}
+                <Divider />
               </Box>
             ))}
           </ClienstImages>
           <SatisfiedClients>
-            {data.slice(1).map((item1) => (
+            {satisfiedClients.slice(1).map((item1) => (
               <Box>
                 <img
-                  src={item1.clientsImg}
+                  src={item1.img}
                   style={{ width: "100%", height: "auto" }}
                 />
-                <h1>{item1.clentLocation}</h1>
+                <h1>{item1.imgName}</h1>
+                <Divider
+                  sx={{
+                    marginTop: "20px",
+                    marginBottom: "20px",
+                  }}
+                />
               </Box>
             ))}
           </SatisfiedClients>

@@ -4,6 +4,7 @@ export const Registan__wrapper = styled.section`
   max-width: 1650px;
   width: 100%;
   height: 770px;
+
   background: url("https://mjcedactmdisysxnyusx.supabase.co/storage/v1/object/sign/gallery/IMG_5179%20(3).JPG?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYWxsZXJ5L0lNR181MTc5ICgzKS5KUEciLCJpYXQiOjE3Mzk5NTc5MzAsImV4cCI6MTc3MTQ5MzkzMH0.0Gs-6Eg240grUVDWdC4hmJQfTbY9NEEYZCBdoZnjszg");
   background-size: cover;
   background-attachment: static;
@@ -16,15 +17,22 @@ export const Registan__wrapper = styled.section`
   justify-content: end;
   float: right;
   margin-bottom: 80px;
+  @media (max-width: 520px) {
+    background-size: 100% 100%;
+    margin: 30px 0 0 0;
+    padding: 0 20px 0 20px;
+    height: 600px;
+  }
 `;
 
 export const BookingGuide = styled.div`
   max-width: 434px;
   height: 500px;
+  min-width: 300px;
   width: 100%;
   padding: 20px;
   margin-right: 10px;
-  margin-left: 10px;
+
   background: rgba(0, 0, 0, 0.61);
   backdrop-filter: blur(12px);
   border: 1px solid #e0e0e0;

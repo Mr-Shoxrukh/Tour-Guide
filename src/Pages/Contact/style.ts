@@ -1,26 +1,27 @@
 import styled from "styled-components";
 
-export const Contact__wrapper = styled.div`
-  width: 100%;
-  margin-top: 160px;
+export const ContactWrapper = styled.div`
+  margin-top: 180px;
+  margin-bottom: 50px;
   display: flex;
-  flex-wrap: wrap;
-  gap: 30px;
-  @media (max-width: 900px) {
+  justify-content: space-between;
+  row-gap: 30px;
+  @media (max-width: 850px) {
+    flex-wrap: wrap;
   }
 `;
 export const ContactNumber = styled.div`
-  width: 50%;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  row-gap: 30px;
+  padding: 0 30px 0 0;
+  /* background-color: red; */
   @media (max-width: 900px) {
     width: 100%;
   }
 `;
 export const NumberBox = styled.div`
-  width: 100%;
-  max-width: 460px;
+  max-width: 400px;
   padding: 10px 15px;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
@@ -43,8 +44,9 @@ export const PhoneIcon = styled.div`
   color: #fff;
 `;
 export const ReachUs = styled.div`
+  max-width: 1000px;
   width: 100%;
-  padding: 35px 50px;
+  padding: 25px 30px;
   background-color: rgb(255, 251, 235);
   border-radius: 8px;
   display: flex;
@@ -64,8 +66,18 @@ export const ReachUs = styled.div`
     gap: 30px;
     flex-direction: column;
     row-gap: 30px;
+    textArea {
+      padding: 10px 0 0 10px;
+      max-width: 400px;
+      font-size: 16px;
+      border: 1px solid gray;
+    }
   }
   @media (max-width: 600px) {
+    padding: 20px;
+  }
+  @media (max-width: 500px) {
+    min-height: 300px;
     padding: 20px;
   }
 `;

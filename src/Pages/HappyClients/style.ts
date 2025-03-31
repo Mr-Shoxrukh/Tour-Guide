@@ -1,17 +1,20 @@
 import styled from "styled-components";
-
+import "react-slideshow-image/dist/styles.css";
 export const Clients__wrapper = styled.section`
   width: 100%;
   margin-top: 80px;
   display: flex;
   justify-content: space-around;
   gap: 40px;
+  @media (max-width: 666px) {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
 `;
 export const ClienstImages = styled.div`
   max-width: 900px;
   width: 100%;
   display: flex;
-  justify-content: center;
   flex-direction: column;
   img {
     width: 100%;
@@ -35,9 +38,8 @@ export const SatisfiedClients = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  h1 {
-    margin: 0;
-  }
+  margin-top: 18px;
+
   img {
     border-radius: 6px;
     margin-bottom: 10px;
