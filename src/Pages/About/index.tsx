@@ -170,7 +170,7 @@ function AboutPage({}: Props) {
           </Results>
           <WhyGuideTour>
             <TourTitle>
-              <Typography variant="h1">
+              <Typography variant="h1" fontSize={"90px"}>
                 Why GuideTour Uzbekistan Is The Best?
               </Typography>
             </TourTitle>
@@ -191,10 +191,9 @@ function AboutPage({}: Props) {
                   />
                 </Box>
                 <CardTitle>
-                  <Typography variant="h1">Local Expert Guides</Typography>
+                  <Typography variant="h1">Worldwide Coverage</Typography>
                   <Typography variant="body1">
-                    Our guides are experienced and knowledgeable about the
-                    history and culture of Uzbekistan.
+                    Curabitur convallis enim atnora ullamcorper sagittis.
                   </Typography>
                 </CardTitle>
               </Cards__content>
@@ -214,10 +213,10 @@ function AboutPage({}: Props) {
                   />
                 </Box>
                 <CardTitle>
-                  <Typography variant="h1">Local Expert Guides</Typography>
+                  <Typography variant="h1">Competitive Pricing</Typography>
                   <Typography variant="body1">
-                    Our guides are experienced and knowledgeable about the
-                    history and culture of Uzbekistan.
+                    Burabitur convallis enim atnora. Morbi nug scelerisque for
+                    thana.
                   </Typography>
                 </CardTitle>
               </Cards__content>
@@ -237,10 +236,9 @@ function AboutPage({}: Props) {
                   />
                 </Box>
                 <CardTitle>
-                  <Typography variant="h1">Local Expert Guides</Typography>
+                  <Typography variant="h1">Fast Booking</Typography>
                   <Typography variant="body1">
-                    Our guides are experienced and knowledgeable about the
-                    history and culture of Uzbekistan.
+                    Fermentum eitorx quis maximum Etiam urnan posuere convallis.
                   </Typography>
                 </CardTitle>
               </Cards__content>
@@ -260,10 +258,9 @@ function AboutPage({}: Props) {
                   />
                 </Box>
                 <CardTitle>
-                  <Typography variant="h1">Local Expert Guides</Typography>
+                  <Typography variant="h1">Guided Tours</Typography>
                   <Typography variant="body1">
-                    Our guides are experienced and knowledgeable about the
-                    history and culture of Uzbekistan.
+                    Fermentum eitorx quis maximum Etiam urnan posuere convallis.
                   </Typography>
                 </CardTitle>
               </Cards__content>
@@ -283,10 +280,9 @@ function AboutPage({}: Props) {
                   />
                 </Box>
                 <CardTitle>
-                  <Typography variant="h1">Local Expert Guides</Typography>
+                  <Typography variant="h1">Best Support 24/7</Typography>
                   <Typography variant="body1">
-                    Our guides are experienced and knowledgeable about the
-                    history and culture of Uzbekistan.
+                    Fermentum eitorx quis maximum Etiam urnan posuere convallis.
                   </Typography>
                 </CardTitle>
               </Cards__content>
@@ -306,10 +302,9 @@ function AboutPage({}: Props) {
                   />
                 </Box>
                 <CardTitle>
-                  <Typography variant="h1">Local Expert Guides</Typography>
+                  <Typography variant="h1">Ultimate Flexibility</Typography>
                   <Typography variant="body1">
-                    Our guides are experienced and knowledgeable about the
-                    history and culture of Uzbekistan.
+                    Fermentum eitorx quis maximum Etiam urnan posuere convallis.
                   </Typography>
                 </CardTitle>
               </Cards__content>

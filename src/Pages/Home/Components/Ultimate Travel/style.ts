@@ -16,7 +16,7 @@ export const UltimateTitle = styled.div`
   margin-top: 120px;
   justify-content: center;
   h1 {
-    font-size: 30px;
+    font-size: 50px;
     font-weight: bold;
     margin-bottom: 20px;
   }
@@ -47,5 +47,5 @@ export const CardPrice = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: end;
 `;

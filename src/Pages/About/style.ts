@@ -133,7 +133,7 @@ export const WhyGuideTour = styled.div`
 export const TourTitle = styled.div`
   padding: 30px 0;
   h1 {
-    font-size: 30px;
+    font-size: 40px;
     font-weight: bold;
     margin-bottom: 20px;
   }

@@ -1,22 +1,56 @@
 import styled from "styled-components";
 import registan from "./Components/img/registan.png";
 export const Registan__wrapper = styled.section`
-  max-width: 1650px;
+  max-width: 1950px;
   width: 100%;
-  height: 770px;
+  .slider-container {
+    width: 100%;
+    display: flex;
+    position: relative;
+    margin-top: 80px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 0 0 10px 10px;
+  }
+  .slide {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: opacity 0.5s ease-in-out;
+  }
 
-  background: url("https://mjcedactmdisysxnyusx.supabase.co/storage/v1/object/sign/gallery/IMG_5179%20(3).JPG?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYWxsZXJ5L0lNR181MTc5ICgzKS5KUEciLCJpYXQiOjE3Mzk5NTc5MzAsImV4cCI6MTc3MTQ5MzkzMH0.0Gs-6Eg240grUVDWdC4hmJQfTbY9NEEYZCBdoZnjszg");
-  background-size: cover;
-  background-attachment: static;
-  background-repeat: no-repeat;
-  border-radius: 10px;
-  border-top-right-radius: 0;
-  border-top-left-radius: 0;
-  display: flex;
-  align-items: center;
-  justify-content: end;
-  float: right;
-  margin-bottom: 80px;
+  .fade {
+    animation: fadeEffect 1s;
+  }
+  @keyframes fadeEffect {
+    from {
+      opacity: 0.5;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  button {
+    position: absolute;
+    top: 45%;
+    padding: 20px 30px;
+    color: #fff;
+    background: transparent;
+    font-size: 40px;
+  }
+  .next {
+    right: 0;
+  }
+  .prev {
+    left: 0;
+  }
+  img {
+    width: 100%;
+    height: 800px;
+    object-fit: cover;
+    border-radius: 0 0 10px 10px;
+  }
   @media (max-width: 520px) {
     background-size: 100% 100%;
     margin: 30px 0 0 0;
@@ -99,9 +133,6 @@ export const TourGallery = styled.div`
   img {
     width: 400px;
     transition: 0.3s;
-  }
-  img:hover {
-    scale: 0.9;
   }
 `;
 export const ExperienceTitle = styled.div`

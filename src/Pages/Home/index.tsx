@@ -43,15 +43,25 @@ interface GuideData {
 interface YoutobeShorts {
   video: string;
 }
+const images = [
+  "https://mjcedactmdisysxnyusx.supabase.co/storage/v1/object/sign/gallery/IMG_5179%20(3).JPG?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYWxsZXJ5L0lNR181MTc5ICgzKS5KUEciLCJpYXQiOjE3Mzk5NTc5MzAsImV4cCI6MTc3MTQ5MzkzMH0.0Gs-6Eg240grUVDWdC4hmJQfTbY9NEEYZCBdoZnjszg",
+  "https://mjcedactmdisysxnyusx.supabase.co/storage/v1/object/sign/gallery/Khiva.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYWxsZXJ5L0toaXZhLnBuZyIsImlhdCI6MTc0MzQ0MjM4NSwiZXhwIjoxNzc0OTc4Mzg1fQ.4CZZe7h_q86ErYFGnSF1NrVXih2bk12yzDy020uAFVE",
+];
 function Home() {
   const [youtobeShorts, setYoutobeShorts] = useState<YoutobeShorts[]>([]);
   const [currentIndex, setCurrentIndex] = useState(1);
   const [guide, setGuide] = useState<GuideData[]>([]);
-  const [step, setStep] = useState(1);
   const [galleryData, setGalleryData] = useState<any[]>([]);
-  const [activeIndex, setActiveIndex] = useState(0);
   const navigate = useNavigate();
+  const nextSlide = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+  };
 
+  const prevSlide = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? images.length - 1 : prevIndex - 1
+    );
+  };
   useEffect(() => {
     const fetchGuides = async () => {
       const querySnapshot = await getDocs(collection(db, "guides"));
@@ -92,98 +102,20 @@ function Home() {
       </Box>
     );
   }
-  const nextCard = () => {
-    if (step === 1 && guide.length > 0) {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % guide.length);
-      setActiveIndex((prev) => (prev + 1) % guide.length);
-      setStep(2);
-    }
-  };
-
-  const prevCard = () => {
-    if (step === 2 && guide.length > 0) {
-      setCurrentIndex(
-        (prevIndex) => (prevIndex - 1 + guide.length) % guide.length
-      );
-      setActiveIndex((prev) => (prev - 1 + guide.length) % guide.length);
-      setStep(1);
-    }
-  };
-  const handleBooking = () => {
-    navigate(`/contact`);
-  };
   return (
     <>
       <Container maxWidth="xl">
         <Header />
         <Registan__wrapper>
-          <BookingGuide>
-            <Typography variant="body1" className="guide-badge">
-              📍 Certified Guide
-            </Typography>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              {guide.length > 0 && guide[activeIndex]?.guideImg ? (
-                <motion.img
-                  src={guide[activeIndex].guideImg}
-                  alt="Guide"
-                  className="guide-image"
-                  initial={{ y: 100, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ duration: 0.5, ease: "easeOut" }}
-                  key={activeIndex}
-                  style={{ width: "300px" }}
-                />
-              ) : (
-                <p>Loading...</p>
-              )}
-              <Typography variant="h1" fontSize={26} fontWeight={"bold"}>
-                {guide[activeIndex].guideName}
-              </Typography>
-
-              <Box
-                sx={{
-                  width: "100%",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  marginTop: 2,
-                }}
-              >
-                <Button
-                  variant="contained"
-                  onClick={prevCard}
-                  sx={{
-                    backgroundColor: "#FF9800",
-                  }}
-                >
-                  Prev
-                </Button>
-                <Button
-                  variant="contained"
-                  onClick={() => handleBooking()}
-                  sx={{
-                    backgroundColor: "#4CAF50",
-                  }}
-                >
-                  Book now
-                </Button>
-                <Button
-                  variant="contained"
-                  onClick={nextCard}
-                  sx={{
-                    backgroundColor: "#FF9800",
-                  }}
-                >
-                  Next
-                </Button>
-              </Box>
-            </Box>
-          </BookingGuide>
+          <div className="slider-container">
+            <Button className="prev" onClick={prevSlide}>
+              ❮
+            </Button>
+            <img src={images[currentIndex]} alt={`Slide ${currentIndex + 1}`} />
+            <Button className="next" onClick={nextSlide}>
+              ❯
+            </Button>
+          </div>
         </Registan__wrapper>
         <Tour_Actives>
           <TourActTitle>

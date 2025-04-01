@@ -77,7 +77,8 @@ function UltimateTour() {
             {tour.map((item: GuideData) => (
               <Card
                 sx={{
-                  maxWidth: 400,
+                  maxWidth: 460,
+                  width: "100%",
                   minWidth: { xs: 350, sm: 400 },
                   boxShadow: 3,
                   padding: "0",
@@ -91,17 +92,27 @@ function UltimateTour() {
                     alt="green iguana"
                   />
                   <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
+                    <Typography
+                      gutterBottom
+                      variant="h5"
+                      component="div"
+                      fontWeight={"bold"}
+                    >
                       {item.cityName}
                     </Typography>
-                    <Divider />
+                    <Divider
+                      sx={{
+                        margin: "20px 0 20px 0",
+                      }}
+                    />
                     <CardPrice>
                       <Box>
                         <Typography fontSize={15}>Starts from:</Typography>
                         <Typography
                           variant="body1"
-                          fontSize={23}
+                          fontSize={28}
                           color="#68ae49"
+                          fontWeight={700}
                         >
                           ${item.cost}
                         </Typography>
@@ -118,6 +129,7 @@ function UltimateTour() {
                         sx={{
                           display: "flex",
                           opacity: "60%",
+                          gap: "10px",
                         }}
                       >
                         <AccessAlarmIcon />

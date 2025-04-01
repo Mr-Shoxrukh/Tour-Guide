@@ -5,6 +5,4 @@ export const GalleryWrapper = styled.section`
   margin: 100px 0 0 0;
   border-radius: 20px;
   display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
 `;
