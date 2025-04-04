@@ -47,5 +47,48 @@ export const FooterQuiclLinks = styled.div`
     font-size: 24px;
   }
 `;
-export const FooterContact = styled.div``;
-export const FooterSocial = styled.div``;
+export const FooterContact = styled.div`
+  display: flex;
+  flex-direction: column;
+  a {
+    opacity: 50%;
+  }
+  a:hover {
+    opacity: 100%;
+  }
+`;
+export const FooterSocial = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: #fff;
+  .icons {
+    font-size: 30px;
+  }
+  h1 {
+    font-size: 25px;
+    font-weight: bold;
+    color: #fff;
+  }
+
+  p {
+    opacity: 50%;
+    transition: 0.3s;
+  }
+
+  .icons,
+  p:hover {
+    opacity: 100%;
+    color: #fff;
+  }
+  div {
+    display: flex;
+    gap: 10px;
+    row-gap: 15px;
+    align-items: center;
+    cursor: pointer;
+    .icons {
+      opacity: 50%;
+    }
+  }
+`;

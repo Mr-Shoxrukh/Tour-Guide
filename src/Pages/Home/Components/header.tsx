@@ -10,7 +10,7 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import CallIcon from "@mui/icons-material/Call";
-import Logo from "./img/Logo.jpg";
+import Logo from "./img/Logo.png";
 import { Logo__wr } from ".";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Avatar, Divider } from "@mui/material";
@@ -112,7 +112,7 @@ function ResponsiveAppBar() {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={() => handleCloseNavMenu(page)}>
-                  <Typography color="#f4efca">{page}</Typography>
+                  <Typography>{page}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -176,13 +176,13 @@ function ResponsiveAppBar() {
                   fontSize: "24px",
                 }}
               >
-                <Typography variant="body1" sx={{}}>
+                <Typography variant="body1" sx={{ widows: "100%" }}>
                   <a
                     href="https://api.whatsapp.com/send/?phone=998999272211&text&type=phone_number&app_absent=0"
                     style={{
                       textDecoration: "none",
                       color: "#55bd00",
-                      fontSize: "24px",
+                      fontSize: "18px",
                       fontWeight: "bold",
                     }}
                   >

@@ -8,8 +8,6 @@ export const Registan__wrapper = styled.section`
     display: flex;
     position: relative;
     margin-top: 80px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    border-radius: 0 0 10px 10px;
   }
   .slide {
     width: 100%;
@@ -53,8 +51,6 @@ export const Registan__wrapper = styled.section`
   }
   @media (max-width: 520px) {
     background-size: 100% 100%;
-    margin: 30px 0 0 0;
-    padding: 0 20px 0 20px;
     height: 600px;
   }
 `;
@@ -196,13 +192,13 @@ export const GoodSidesIcon = styled.div`
   font-size: 25px;
 `;
 export const GoodSides = styled.div`
-  width: 280px;
   height: 60px;
   display: flex;
   padding-right: 40px;
   justify-content: space-between;
   font-weight: bold;
   border-radius: 10px;
+  gap: 20px;
   background-color: rgba(76, 175, 79, 0.22);
   font-size: 17px;
   align-items: center;

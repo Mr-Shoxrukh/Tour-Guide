@@ -2,13 +2,11 @@ import { Box, Button, Container, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import Header from "./Components/header";
 import {
-  BookingGuide,
   CardCity__wrapper,
   CityBox,
   CityName,
   ExperienceTitle,
   ExperienceWithTourests__wrapper,
-  GetStart_btn,
   GoodSides,
   GoodSidesIcon,
   MApImg,
@@ -29,7 +27,6 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import { useNavigate } from "react-router-dom";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { motion } from "framer-motion";
 import UltimateTour from "./Components/Ultimate Travel";
 import ReactPlayer from "react-player";
 import Footer from "./Components/footer";
@@ -44,8 +41,11 @@ interface YoutobeShorts {
   video: string;
 }
 const images = [
-  "https://mjcedactmdisysxnyusx.supabase.co/storage/v1/object/sign/gallery/IMG_5179%20(3).JPG?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYWxsZXJ5L0lNR181MTc5ICgzKS5KUEciLCJpYXQiOjE3Mzk5NTc5MzAsImV4cCI6MTc3MTQ5MzkzMH0.0Gs-6Eg240grUVDWdC4hmJQfTbY9NEEYZCBdoZnjszg",
   "https://mjcedactmdisysxnyusx.supabase.co/storage/v1/object/sign/gallery/Khiva.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYWxsZXJ5L0toaXZhLnBuZyIsImlhdCI6MTc0MzQ0MjM4NSwiZXhwIjoxNzc0OTc4Mzg1fQ.4CZZe7h_q86ErYFGnSF1NrVXih2bk12yzDy020uAFVE",
+  "https://media.meer.com/attachments/4261d95281125fa712800fadfc52ba8367222f85/store/fill/1090/613/4c88f9a416c6dc30eb898bebcaec6f0a164f764b5a4654262a08b2c9208e/Located-in-Zarafshan-Valley-the-Uzbek-region-of-Jizzakh-is-a-wonder-of-nature.jpg",
+  "https://www.aljazeera.com/wp-content/uploads/2023/07/Souvenir-vendors-in-Bukhara-Uzbekistan-with-one-of-the-citys-trading-domes-in-the-background.-David-Andreas_Al-Jazeera-1688616446.jpg?resize=1920%2C1080",
+  "https://adventuresoflilnicki.com/wp-content/uploads/2020/08/Bolshoi-Allo-Fann-Mountains-Tajikistan-8.jpg",
+  "https://www.hlbtj.com/wp-content/uploads/2022/07/dushanbe_cropped.jpg",
 ];
 function Home() {
   const [youtobeShorts, setYoutobeShorts] = useState<YoutobeShorts[]>([]);
@@ -104,31 +104,50 @@ function Home() {
   }
   return (
     <>
+      <Header />
+      <Registan__wrapper>
+        <Box
+          className="slider-container"
+          sx={{
+            background: `url(${images[currentIndex]})`,
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
+            height: "75vh",
+            boxShadow: "none !important",
+            width: "100%",
+          }}
+        >
+          <Button className="prev" onClick={prevSlide}>
+            ❮
+          </Button>
+          <Button className="next" onClick={nextSlide}>
+            ❯
+          </Button>
+        </Box>
+      </Registan__wrapper>
       <Container maxWidth="xl">
-        <Header />
-        <Registan__wrapper>
-          <div className="slider-container">
-            <Button className="prev" onClick={prevSlide}>
-              ❮
-            </Button>
-            <img src={images[currentIndex]} alt={`Slide ${currentIndex + 1}`} />
-            <Button className="next" onClick={nextSlide}>
-              ❯
-            </Button>
-          </div>
-        </Registan__wrapper>
         <Tour_Actives>
           <TourActTitle>
             <Typography variant="h1">Exploring Tour Activities</Typography>
           </TourActTitle>
           <TourGallery>
             {youtobeShorts.map((item: any) => (
-              <Box key={item.video}>
+              <Box
+                key={item.video}
+                sx={{
+                  borderRadius: "10px",
+                  overflow: "hidden",
+                }}
+              >
                 <ReactPlayer
                   url={item.video}
                   controls
-                  width="100%"
-                  height="530px"
+                  width="250px"
+                  height="450px"
+                  style={{
+                    borderRadius: "10px",
+                  }}
                 />
               </Box>
             ))}
@@ -160,7 +179,7 @@ function Home() {
                   gap: "20px",
                   alignItems: "center",
                   marginTop: "78px",
-                  transform: "rotate(-4deg)",
+                  // transform: "rotate(-4deg)",
                 }}
               >
                 <Box borderRadius={1}>
@@ -224,7 +243,11 @@ function Home() {
                     >
                       <Typography component="span">Samarkhand</Typography>
                     </AccordionSummary>
-                    <AccordionDetails>
+                    <AccordionDetails
+                      sx={{
+                        textAlign: "left",
+                      }}
+                    >
                       Samarkand is a city in Uzbekistan, famous for its mosques
                       and mausoleums. The Great Silk Road, a trade route that
                       connected China with the Mediterranean countries, ran
@@ -255,7 +278,11 @@ function Home() {
                     >
                       <Typography component="span">Bukhara</Typography>
                     </AccordionSummary>
-                    <AccordionDetails>
+                    <AccordionDetails
+                      sx={{
+                        textAlign: "left",
+                      }}
+                    >
                       Bukhara is an ancient Uzbek city through which the Great
                       Silk Road (the trade route connecting East and West) ran.
                       In the Middle Ages the city was a major center of Islamic
@@ -284,7 +311,11 @@ function Home() {
                     >
                       <Typography component="span">Khiva</Typography>
                     </AccordionSummary>
-                    <AccordionDetails>
+                    <AccordionDetails
+                      sx={{
+                        textAlign: "left",
+                      }}
+                    >
                       Khiva is a city in the Khorezm region of Uzbekistan, the
                       administrative center of the Khiva region. In 1997, Khiva
                       celebrated its 2500th anniversary. Surrounded by powerful
@@ -313,7 +344,7 @@ function Home() {
                     >
                       <Typography component="span">Tashkent</Typography>
                     </AccordionSummary>
-                    <AccordionDetails>
+                    <AccordionDetails sx={{ textAlign: "left" }}>
                       Tashkent is the capital of Uzbekistan, which is famous for
                       its numerous museums and combination of modern and Soviet
                       architecture. The Timurid History Museum houses

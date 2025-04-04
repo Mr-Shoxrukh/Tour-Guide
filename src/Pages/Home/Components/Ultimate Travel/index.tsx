@@ -77,7 +77,7 @@ function UltimateTour() {
             {tour.map((item: GuideData) => (
               <Card
                 sx={{
-                  maxWidth: 460,
+                  maxWidth: 500,
                   width: "100%",
                   minWidth: { xs: 350, sm: 400 },
                   boxShadow: 3,

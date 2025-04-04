@@ -35,7 +35,7 @@ export const UltimateCardWrapper = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   flex-wrap: wrap;
   margin-top: 30px;
   gap: 20px;

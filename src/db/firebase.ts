@@ -18,7 +18,7 @@ let app: FirebaseApp;
 if (!getApps().length) {
   app = initializeApp(firebaseConfig);
 } else {
-  app = getApp(); // if already initialized, use that one
+  app = getApp();
 }
 
 const storage = getStorage(app);
