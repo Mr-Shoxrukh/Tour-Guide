@@ -8,6 +8,7 @@ import Footer from "../Home/Components/footer";
 const db = getFirestore(app);
 function GalleryPage() {
   const [galleryData, setGalleryData] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
   useEffect(() => {
     const fetchDataByDB = async () => {
       try {
@@ -20,41 +21,55 @@ function GalleryPage() {
         setGalleryData(galleryItems);
       } catch (error) {
         console.error("🔥 Firebase xatosi:", error);
+      } finally {
+        setLoading(false); // ❌ loading tugadi
       }
     };
 
     fetchDataByDB();
   }, []);
-
+  if (!loading) {
+    <Box
+      sx={{
+        display: "flex",
+        height: "70vh",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <CircularProgress />
+    </Box>;
+  }
   return (
     <>
+      <Headers />
       <Container maxWidth="xl">
-        <Headers />
         <GalleryWrapper>
           <Box
             sx={{
-              display: "flex", // Ustunlarni yonma-yon joylashtirish
-              gap: "16px",
-              flexWrap: "wrap",
+              display: "flex",
+              gap: "20px",
               justifyContent: "center",
             }}
           >
-            {/* 1-ustun (1-5 rasmlar) */}
             <Box
               sx={{
                 width: "350px",
                 display: "flex",
                 flexDirection: "column",
                 gap: "20px",
-                rowGap: "10px",
               }}
             >
-              {galleryData.slice(0, 6).map((item, index) => (
+              {galleryData.slice(0, 5).map((item, index) => (
                 <Box
                   key={index}
                   component="img"
                   src={item.img}
                   alt={item.title}
+                  loading="lazy" // 👈 Lazy load
+                  decoding="async" // 👈 Better performance
+                  width="100%" // 👈 explicit width
+                  height="auto"
                   sx={{
                     width: "100%",
                     height: "auto",
@@ -65,15 +80,12 @@ function GalleryPage() {
                 />
               ))}
             </Box>
-
-            {/* 2-ustun (6-10 rasmlar) */}
             <Box
               sx={{
                 width: "350px",
                 display: "flex",
                 flexDirection: "column",
-                gap: "10px",
-                rowGap: "10px",
+                gap: "20px",
               }}
             >
               {galleryData.slice(7, 14).map((item, index) => (
@@ -82,6 +94,10 @@ function GalleryPage() {
                   component="img"
                   src={item.img}
                   alt={item.title}
+                  loading="lazy" // 👈 Lazy load
+                  decoding="async" // 👈 Better performance
+                  width="100%" // 👈 explicit width
+                  height="auto"
                   sx={{
                     width: "100%",
                     height: "auto",
@@ -94,11 +110,10 @@ function GalleryPage() {
             </Box>
             <Box
               sx={{
-                width: "350px",
+                width: "390px",
                 display: "flex",
                 flexDirection: "column",
-                gap: "10px",
-                rowGap: "10px",
+                gap: "20px",
               }}
             >
               {galleryData.slice(14, 19).map((item, index) => (
@@ -107,6 +122,10 @@ function GalleryPage() {
                   component="img"
                   src={item.img}
                   alt={item.title}
+                  loading="lazy" // 👈 Lazy load
+                  decoding="async" // 👈 Better performance
+                  width="100%" // 👈 explicit width
+                  height="auto"
                   sx={{
                     width: "100%",
                     height: "auto",
@@ -122,7 +141,7 @@ function GalleryPage() {
                 width: "350px",
                 display: "flex",
                 flexDirection: "column",
-                gap: "10px",
+                gap: "20px",
               }}
             >
               {galleryData.slice(19, 23).map((item, index) => (
@@ -131,6 +150,10 @@ function GalleryPage() {
                   component="img"
                   src={item.img}
                   alt={item.title}
+                  loading="lazy" // 👈 Lazy load
+                  decoding="async" // 👈 Better performance
+                  width="100%" // 👈 explicit width
+                  height="auto"
                   sx={{
                     width: "100%",
                     height: "auto",

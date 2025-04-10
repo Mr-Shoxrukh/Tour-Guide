@@ -42,9 +42,7 @@ interface YoutobeShorts {
 }
 const images = [
   "https://mjcedactmdisysxnyusx.supabase.co/storage/v1/object/sign/gallery/Khiva.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYWxsZXJ5L0toaXZhLnBuZyIsImlhdCI6MTc0MzQ0MjM4NSwiZXhwIjoxNzc0OTc4Mzg1fQ.4CZZe7h_q86ErYFGnSF1NrVXih2bk12yzDy020uAFVE",
-  "https://media.meer.com/attachments/4261d95281125fa712800fadfc52ba8367222f85/store/fill/1090/613/4c88f9a416c6dc30eb898bebcaec6f0a164f764b5a4654262a08b2c9208e/Located-in-Zarafshan-Valley-the-Uzbek-region-of-Jizzakh-is-a-wonder-of-nature.jpg",
   "https://www.aljazeera.com/wp-content/uploads/2023/07/Souvenir-vendors-in-Bukhara-Uzbekistan-with-one-of-the-citys-trading-domes-in-the-background.-David-Andreas_Al-Jazeera-1688616446.jpg?resize=1920%2C1080",
-  "https://adventuresoflilnicki.com/wp-content/uploads/2020/08/Bolshoi-Allo-Fann-Mountains-Tajikistan-8.jpg",
   "https://www.hlbtj.com/wp-content/uploads/2022/07/dushanbe_cropped.jpg",
 ];
 function Home() {

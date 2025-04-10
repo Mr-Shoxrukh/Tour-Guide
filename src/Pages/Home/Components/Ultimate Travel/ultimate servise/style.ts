@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
 export const UltimateServise__wrapper = styled.section`
-  margin-top: 60px;
+  margin-top: 80px;
+  padding: 0 20px;
   width: 100%;
   display: flex;
-  justify-content: space-evenly;
-  padding: 20px 0;
-  gap: 20px;
+  gap: 10px;
+  justify-content: space-between;
 `;
 export const UltimateServiseImg = styled.div`
   width: 100%;
@@ -29,19 +29,26 @@ export const CityName_title = styled.div`
   }
 `;
 export const Itinerary = styled.div`
-  width: 100%;
-  padding: 20px 15px;
+  width: 99%;
+  padding: 20px 0 20px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   border: 1px solid #e0e0e0;
-  margin-top: 80px;
+  margin-top: 20px;
   border-radius: 0.5rem;
+  h1 {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: "10px";
+  }
 `;
 export const CostItem = styled.div`
-  width: 100%;
   padding: 20px;
   border-radius: 0.5rem;
   border: 1px solid #e0e0e0;
   display: flex;
-  margin: 85px 0 0 0;
+  margin: 115px 0 0 0;
   flex-direction: column;
   h1 {
     font-size: 26px;

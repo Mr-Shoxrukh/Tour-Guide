@@ -177,7 +177,7 @@ function ContactPage({}: Props) {
               </EmailInput>
 
               <TextareaAutosize
-                minRows={3}
+                minRows={10}
                 maxRows={10}
                 placeholder="Message..."
                 name="message"

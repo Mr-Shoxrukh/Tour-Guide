@@ -104,19 +104,6 @@ const UltimateService = () => {
         <CircularProgress />
       </Box>
     );
-  if (!tour)
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          height: "70vh",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <CircularProgress />
-      </Box>
-    );
 
   return (
     <>
@@ -125,10 +112,9 @@ const UltimateService = () => {
         <UltimateServise__wrapper>
           <Box
             sx={{
-              width: "100%",
-              height: "800px",
-              padding: "40px 0 0 0",
-              overflow: "auto",
+              height: "760px",
+              padding: "40px 10px",
+              overflowY: "scroll",
               borderRadius: "1px",
               scrollbarWidth: "none",
               "&::-webkit-scrollbar": {
@@ -140,17 +126,21 @@ const UltimateService = () => {
               <Typography variant="h1">{tour.cityName}</Typography>
             </CityName_title>
             <UltimateServiseImg>
-              <img src={tour.img} alt="" />
+              <img loading="lazy" src={tour.img} alt="" />
             </UltimateServiseImg>
 
             <Box
               sx={{
                 typography: "body1",
-                padding: 0,
               }}
             >
               <TabContext value={value}>
-                <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+                <Box
+                  sx={{
+                    borderBottom: 1,
+                    borderColor: "divider",
+                  }}
+                >
                   <TabList
                     onChange={handleChange}
                     aria-label="lab API tabs example"
@@ -166,12 +156,7 @@ const UltimateService = () => {
                   }}
                 >
                   <Itinerary>
-                    <Typography
-                      variant="h1"
-                      fontSize={23}
-                      marginTop={0}
-                      fontWeight={"bold"}
-                    >
+                    <Typography variant="h1">
                       Day 1: Arrival in Tashkent
                     </Typography>
                     • Khast Imam Complexb <br />
@@ -181,12 +166,7 @@ const UltimateService = () => {
                     •Tashkent Metro (most beautiful stations) <br />
                     • Museum of Applied <br />
                     <br />
-                    <Typography
-                      variant="h1"
-                      fontSize={23}
-                      marginTop={0}
-                      fontWeight={"bold"}
-                    >
+                    <Typography variant="h1">
                       Arts Day 2 – Amirsay (Ski Resort)
                     </Typography>
                     • Amirsay Ski Resort (skiing, snowboarding, cable car ride){" "}
@@ -195,12 +175,7 @@ const UltimateService = () => {
                     (optional, depends on season)
                     <br />
                     <br />
-                    <Typography
-                      variant="h1"
-                      fontSize={23}
-                      marginTop={0}
-                      fontWeight={"bold"}
-                    >
+                    <Typography variant="h1">
                       Day 3: Arrival in Samarkhand
                     </Typography>
                     • Registan Square <br />
@@ -210,12 +185,7 @@ const UltimateService = () => {
                     • Shah-i-Zinda Necropolis <br />• Ulugh Beg Observatory
                     <br />
                     <br />
-                    <Typography
-                      variant="h1"
-                      fontSize={23}
-                      marginTop={0}
-                      fontWeight={"bold"}
-                    >
+                    <Typography variant="h1">
                       Day 4 – Samarkand (continued)
                     </Typography>
                     • Afrosiyab Museum & Ancient Settlement <br />
@@ -225,14 +195,7 @@ const UltimateService = () => {
                     Winery (optional)
                     <br />
                     <br />
-                    <Typography
-                      variant="h1"
-                      fontSize={23}
-                      marginTop={0}
-                      fontWeight={"bold"}
-                    >
-                      Day 5 – Bukhara
-                    </Typography>
+                    <Typography variant="h1">Day 5 – Bukhara</Typography>
                     • Lyab-i Hauz Ensemble <br />
                     • Nadir Divan-Begi Madrasah <br />
                     • Magoki-Attori Mosque <br />
@@ -241,12 +204,7 @@ const UltimateService = () => {
                     Madrasah
                     <br />
                     <br />
-                    <Typography
-                      variant="h1"
-                      fontSize={23}
-                      marginTop={0}
-                      fontWeight={"bold"}
-                    >
+                    <Typography variant="h1">
                       Day 6 – Bukhara (continued)
                     </Typography>
                     • Ark Fortress <br />
@@ -268,8 +226,6 @@ const UltimateService = () => {
                   }}
                 >
                   <Box
-                    width={600}
-                    p={0}
                     sx={{
                       width: "100%",
                       padding: "20px 15px",
@@ -290,7 +246,7 @@ const UltimateService = () => {
           </Box>
           <Box
             sx={{
-              maxWidth: "400px",
+              maxWidth: "350px",
               width: "100%",
             }}
           >

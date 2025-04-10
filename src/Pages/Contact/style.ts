@@ -68,7 +68,7 @@ export const ReachUs = styled.div`
     row-gap: 30px;
     textArea {
       padding: 10px 0 0 10px;
-      max-width: 400px;
+      max-width: 472px;
       font-size: 16px;
       border: 1px solid gray;
     }
