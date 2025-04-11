@@ -40,11 +40,30 @@ interface GuideData {
 interface YoutobeShorts {
   video: string;
 }
-const images = [
-  "https://mjcedactmdisysxnyusx.supabase.co/storage/v1/object/sign/gallery/Khiva.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJnYWxsZXJ5L0toaXZhLnBuZyIsImlhdCI6MTc0MzQ0MjM4NSwiZXhwIjoxNzc0OTc4Mzg1fQ.4CZZe7h_q86ErYFGnSF1NrVXih2bk12yzDy020uAFVE",
-  "https://www.aljazeera.com/wp-content/uploads/2023/07/Souvenir-vendors-in-Bukhara-Uzbekistan-with-one-of-the-citys-trading-domes-in-the-background.-David-Andreas_Al-Jazeera-1688616446.jpg?resize=1920%2C1080",
-  "https://www.hlbtj.com/wp-content/uploads/2022/07/dushanbe_cropped.jpg",
+const slides = [
+  {
+    image:
+      "https://mjcedactmdisysxnyusx.supabase.co/storage/v1/object/sign/gallery/Khiva.png?token=...",
+    title: "Wander Through the Timeless Walls of Khiva",
+    description:
+      "Step into a living museum where every brick tells a story. Discover ancient fortresses, narrow cobbled streets, and the rich history of this UNESCO-listed city frozen in time.",
+  },
+  {
+    image:
+      "https://www.aljazeera.com/wp-content/uploads/2023/07/Souvenir-vendors-in-Bukhara-Uzbekistan-with-one-of-the-citys-trading-domes-in-the-background.-David-Andreas_Al-Jazeera-1688616446.jpg?resize=1920%2C1080",
+    title: "Experience the Spirit of Bukhara",
+    description:
+      "Walk the streets once roamed by scholars, poets, and traders of the Silk Road. Bukhara invites you to uncover centuries of Islamic art, vibrant bazaars, and warm Uzbek hospitality.",
+  },
+  {
+    image:
+      "https://www.hlbtj.com/wp-content/uploads/2022/07/dushanbe_cropped.jpg",
+    title: "Explore the Modern Charm of Dushanbe",
+    description:
+      "Blending modern life with cultural heritage, Dushanbe welcomes you with its grand architecture, leafy avenues, and friendly atmosphere — a perfect gateway to Central Asia.",
+  },
 ];
+
 function Home() {
   const [youtobeShorts, setYoutobeShorts] = useState<YoutobeShorts[]>([]);
   const [currentIndex, setCurrentIndex] = useState(1);
@@ -52,12 +71,12 @@ function Home() {
   const [galleryData, setGalleryData] = useState<any[]>([]);
   const navigate = useNavigate();
   const nextSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % slides.length);
   };
 
   const prevSlide = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? images.length - 1 : prevIndex - 1
+      prevIndex === 0 ? slides.length - 1 : prevIndex - 1
     );
   };
   useEffect(() => {
@@ -107,15 +126,29 @@ function Home() {
         <Box
           className="slider-container"
           sx={{
-            background: `url(${images[currentIndex]})`,
+            background: `
+              linear-gradient(
+                rgba(0, 0, 0, 0.5), 
+                rgba(0, 0, 0, 0.5)
+              ),
+              url(${slides[currentIndex].image})
+            `,
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
+            loading: "lazy",
             backgroundSize: "cover",
             height: "75vh",
-            boxShadow: "none !important",
             width: "100%",
+            position: "relative",
+            color: "#fff",
           }}
         >
+          <Typography variant="h1" className="home-title">
+            {slides[currentIndex].title}
+          </Typography>
+          <Typography variant="h1" className="home-description">
+            {slides[currentIndex].description}
+          </Typography>
           <Button className="prev" onClick={prevSlide}>
             ❮
           </Button>

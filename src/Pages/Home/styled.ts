@@ -6,6 +6,7 @@ export const Registan__wrapper = styled.section`
   .slider-container {
     width: 100%;
     display: flex;
+    flex-direction: column;
     position: relative;
     margin-top: 80px;
   }
@@ -16,7 +17,14 @@ export const Registan__wrapper = styled.section`
     background-position: center;
     transition: opacity 0.5s ease-in-out;
   }
+  h1 {
+    font-size: 50px;
+    color: white;
 
+    margin-top: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    font-weight: bold;
+  }
   .fade {
     animation: fadeEffect 1s;
   }
