@@ -5,6 +5,7 @@ export const Logo__wr = styled.div`
   height: 80px;
   display: flex;
   align-items: center;
+  padding-right: 20px;
   img {
     width: 100%;
   }
@@ -15,6 +16,7 @@ export const Footer__wr = styled.footer`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 20px;
   margin-top: 30px;
   background-color: #000;
 `;

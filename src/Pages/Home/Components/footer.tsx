@@ -102,14 +102,18 @@ function Footer({}: Props) {
           <FooterContact>
             <Typography
               sx={{
-                fontSize: "16px",
+                fontSize: "25px",
                 fontWeight: "bold",
                 color: "#fff",
+                display: "flex",
+                gap: "13px",
+                alignItems: "center",
               }}
             >
               <CallIcon
                 sx={{
                   color: "#FF9800",
+                  fontSize: "30px",
                 }}
               />{" "}
               To More Inquiry
@@ -131,14 +135,18 @@ function Footer({}: Props) {
 
             <Typography
               sx={{
-                fontSize: "16px",
+                fontSize: "25px",
                 fontWeight: "bold",
                 color: "#fff",
+                display: "flex",
+                gap: "13px",
+                alignItems: "center",
               }}
             >
               <TelegramIcon
                 sx={{
                   color: "#FF9800",
+                  fontSize: "30px",
                 }}
               />{" "}
               Send Mail

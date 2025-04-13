@@ -17,6 +17,19 @@ export const Registan__wrapper = styled.section`
     background-position: center;
     transition: opacity 0.5s ease-in-out;
   }
+  .slideText {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    .home-description {
+      max-width: 700px;
+      width: 100%;
+      text-align: center;
+      font-size: 25px;
+    }
+  }
   h1 {
     font-size: 50px;
     color: white;

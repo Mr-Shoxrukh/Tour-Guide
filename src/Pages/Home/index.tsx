@@ -43,7 +43,7 @@ interface YoutobeShorts {
 const slides = [
   {
     image:
-      "https://mjcedactmdisysxnyusx.supabase.co/storage/v1/object/sign/gallery/Khiva.png?token=...",
+      "https://mjcedactmdisysxnyusx.supabase.co/storage/v1/object/public/bjjb//unnamed.jpg",
     title: "Wander Through the Timeless Walls of Khiva",
     description:
       "Step into a living museum where every brick tells a story. Discover ancient fortresses, narrow cobbled streets, and the rich history of this UNESCO-listed city frozen in time.",
@@ -57,7 +57,7 @@ const slides = [
   },
   {
     image:
-      "https://www.hlbtj.com/wp-content/uploads/2022/07/dushanbe_cropped.jpg",
+      "https://mjcedactmdisysxnyusx.supabase.co/storage/v1/object/public/bjjb//dushanbe_cropped.jpg",
     title: "Explore the Modern Charm of Dushanbe",
     description:
       "Blending modern life with cultural heritage, Dushanbe welcomes you with its grand architecture, leafy avenues, and friendly atmosphere — a perfect gateway to Central Asia.",
@@ -143,12 +143,14 @@ function Home() {
             color: "#fff",
           }}
         >
-          <Typography variant="h1" className="home-title">
-            {slides[currentIndex].title}
-          </Typography>
-          <Typography variant="h1" className="home-description">
-            {slides[currentIndex].description}
-          </Typography>
+          <Box className="slideText">
+            <Typography variant="h1" className="home-title">
+              {slides[currentIndex].title}
+            </Typography>
+            <Typography variant="h1" className="home-description">
+              {slides[currentIndex].description}
+            </Typography>
+          </Box>
           <Button className="prev" onClick={prevSlide}>
             ❮
           </Button>

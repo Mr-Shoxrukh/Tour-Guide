@@ -112,6 +112,7 @@ const UltimateService = () => {
         <UltimateServise__wrapper>
           <Box
             sx={{
+              width: "100%",
               height: "760px",
               padding: "40px 10px",
               overflowY: "scroll",
