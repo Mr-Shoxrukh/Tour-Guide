@@ -80,19 +80,20 @@ function ContactPage({}: Props) {
       toast.error("❌ Iltimos, barcha maydonlarni to‘ldiring!");
       return;
     }
-
-    // Telefon raqam "+" bilan boshlanishi kerak
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(form.email)) {
+      toast.error("❌ Email manzilingiz noto‘g‘ri formatda!");
+      return;
+    }
     if (!form.phone.startsWith("+")) {
-      alert("❌ Telefon raqamining boshida '+' belgisi bo‘lishi shart!");
+      toast.error("❌ Telefon raqamining boshida '+' belgisi bo‘lishi shart!");
       return;
     }
 
-    // Xabarni shakllantirish
     const message = `📩 Yangi xabar:\n👤 Ism: ${form.name}\n📧 Email: ${form.email}\n📞 Telefon: ${form.phone}\n💬 Xabar: ${form.message}`;
 
     await sendToTelegramBot(message);
 
-    // 🔄 Formni tozalash
     setForm({ name: "", phone: "", email: "", message: "" });
   };
 
