@@ -12,6 +12,8 @@ import Footer from "../Home/Components/footer";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import DateRangeIcon from "@mui/icons-material/DateRange";
+import PhoneInput, { CountryData } from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 import {
   ContactWrapper,
   ContactNumber,
@@ -33,6 +35,8 @@ function ContactPage({}: Props) {
     email: "",
     message: "",
   });
+  const [validate, setValidate] = useState<boolean>(false);
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [errors, setErrors] = useState({
     name: false,
     phone: false,
@@ -74,7 +78,7 @@ function ContactPage({}: Props) {
     if (
       !form.name.trim() ||
       !form.email.trim() ||
-      !form.phone.trim() ||
+      !phoneNumber.trim() ||
       !form.message.trim()
     ) {
       toast.error("❌ Iltimos, barcha maydonlarni to‘ldiring!");
@@ -85,16 +89,27 @@ function ContactPage({}: Props) {
       toast.error("❌ Email manzilingiz noto‘g‘ri formatda!");
       return;
     }
-    if (!form.phone.startsWith("+")) {
-      toast.error("❌ Telefon raqamining boshida '+' belgisi bo‘lishi shart!");
-      return;
-    }
 
-    const message = `📩 Yangi xabar:\n👤 Ism: ${form.name}\n📧 Email: ${form.email}\n📞 Telefon: ${form.phone}\n💬 Xabar: ${form.message}`;
+    const message = `📩 Yangi xabar:\n👤 Ism: ${form.name}\n📧 Email: ${form.email}\n📞 Telefon: +${phoneNumber}\n💬 Xabar: ${form.message}`;
 
     await sendToTelegramBot(message);
 
     setForm({ name: "", phone: "", email: "", message: "" });
+  };
+  const handleValidChange = (
+    value: string,
+    data: {} | CountryData,
+    event: React.ChangeEvent<HTMLInputElement>,
+    formattedValue: string
+  ) => {
+    const input = event.target.value;
+    setPhoneNumber(value);
+    setValidate(validatePhoneNumber(value));
+  };
+
+  const validatePhoneNumber = (phoneNumber: string): boolean => {
+    const phoneNumberPattern = /^\d{10}$/;
+    return phoneNumberPattern.test(phoneNumber);
   };
 
   return (
@@ -107,7 +122,7 @@ function ContactPage({}: Props) {
               <PhoneIcon>
                 <LocalPhoneIcon />
               </PhoneIcon>
-              <Typography variant="body1">+998 99 927 22 11</Typography>
+              <Typography variant="body1">+998(99)927 22 11</Typography>
             </NumberBox>
             <NumberBox
               onClick={handelEmailLink}
@@ -155,16 +170,26 @@ function ContactPage({}: Props) {
               />
 
               <EmailInput>
-                <TextField
-                  label="Phone Number"
-                  fullWidth
-                  name="phone"
-                  onChange={handleChange}
-                  value={form.phone}
-                  error={errors.phone}
-                  helperText={
-                    errors.phone ? "Telefon raqamini '+' bilan kiriting!" : ""
-                  }
+                <PhoneInput
+                  country={"us"}
+                  onChange={handleValidChange}
+                  value={phoneNumber}
+                  inputProps={{
+                    required: true,
+                  }}
+                  inputStyle={{
+                    padding: "27px 15px",
+                    width: "90%",
+                    border: "1px solid #e0e0e0",
+                    borderRadius: "5px",
+                    fontSize: "16px",
+                    marginLeft: "50px",
+                  }}
+                  buttonStyle={{
+                    borderRadius: "8px",
+
+                    padding: "10px",
+                  }}
                 />
                 <TextField
                   label="Email"
