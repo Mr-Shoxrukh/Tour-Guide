@@ -177,6 +177,7 @@ function ContactPage({}: Props) {
                   inputProps={{
                     required: true,
                   }}
+                  placeholder="Phone number"
                   inputStyle={{
                     padding: "27px 15px",
                     width: "90%",

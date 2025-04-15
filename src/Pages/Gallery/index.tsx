@@ -9,7 +9,6 @@ const db = getFirestore(app);
 function GalleryPage() {
   const [galleryData, setGalleryData] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [scrollY, setScrollY] = useState(0);
   useEffect(() => {
     const fetchDataByDB = async () => {
       try {
@@ -29,11 +28,6 @@ function GalleryPage() {
 
     fetchDataByDB();
   }, []);
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
   if (!loading) {
     <Box
       sx={{
@@ -51,30 +45,125 @@ function GalleryPage() {
       <Headers />
       <Container maxWidth="xl">
         <GalleryWrapper>
-          <Box sx={{ width: "100vw", overflowX: "hidden" }}>
-            {galleryData.map((item, index) => (
-              <Box
-                key={index}
-                sx={{
-                  position: "relative",
-                  height: "100vh",
-                  zIndex: index,
-                }}
-              >
+          <Box
+            sx={{
+              display: "flex",
+              gap: "20px",
+              justifyContent: "center",
+            }}
+          >
+            <Box
+              sx={{
+                width: "390px",
+                display: "flex",
+                flexDirection: "column",
+                gap: "20px",
+              }}
+            >
+              {galleryData.slice(0, 5).map((item, index) => (
                 <Box
+                  key={index}
                   component="img"
                   src={item.img}
                   alt={item.title}
+                  loading="lazy" // 👈 Lazy load
+                  decoding="async" // 👈 Better performance
+                  width="100%" // 👈 explicit width
+                  height="auto"
                   sx={{
-                    position: "sticky",
-                    top: 0,
-                    width: "100vw",
-                    height: "100vh",
+                    width: "100%",
+                    height: "auto",
                     objectFit: "cover",
+                    borderRadius: 2,
+                    boxShadow: 3,
                   }}
                 />
-              </Box>
-            ))}
+              ))}
+            </Box>
+            <Box
+              sx={{
+                width: "350px",
+                display: "flex",
+                flexDirection: "column",
+                gap: "20px",
+              }}
+            >
+              {galleryData.slice(7, 13).map((item, index) => (
+                <Box
+                  key={index}
+                  component="img"
+                  src={item.img}
+                  alt={item.title}
+                  loading="lazy" // 👈 Lazy load
+                  decoding="async" // 👈 Better performance
+                  width="100%" // 👈 explicit width
+                  height="auto"
+                  sx={{
+                    width: "100%",
+                    height: "auto",
+                    objectFit: "cover",
+                    borderRadius: 2,
+                    boxShadow: 3,
+                  }}
+                />
+              ))}
+            </Box>
+            <Box
+              sx={{
+                width: "390px",
+                display: "flex",
+                flexDirection: "column",
+                gap: "20px",
+              }}
+            >
+              {galleryData.slice(14, 18).map((item, index) => (
+                <Box
+                  key={index}
+                  component="img"
+                  src={item.img}
+                  alt={item.title}
+                  loading="lazy" // 👈 Lazy load
+                  decoding="async" // 👈 Better performance
+                  width="100%" // 👈 explicit width
+                  height="auto"
+                  sx={{
+                    width: "100%",
+                    height: "auto",
+                    objectFit: "cover",
+                    borderRadius: 2,
+                    boxShadow: 3,
+                  }}
+                />
+              ))}
+            </Box>
+            <Box
+              sx={{
+                width: "350px",
+                display: "flex",
+                flexDirection: "column",
+                gap: "20px",
+              }}
+            >
+              {galleryData.slice(19, 26).map((item, index) => (
+                <Box
+                  key={index}
+                  component="img"
+                  src={item.img}
+                  alt={item.title}
+                  loading="lazy" // 👈 Lazy load
+                  decoding="async" // 👈 Better performance
+                  width="100%" // 👈 explicit width
+                  height="auto"
+                  sx={{
+                    width: "100%",
+                    height: "auto",
+                    objectFit: "cover",
+                    borderRadius: 2,
+                    boxShadow: 3,
+                  }}
+                />
+              ))}
+            </Box>
           </Box>
         </GalleryWrapper>
       </Container>
