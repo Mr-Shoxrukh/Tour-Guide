@@ -80,6 +80,7 @@ function HappyClientsPage({}: Props) {
             {data.map((item, index) => (
               <Box>
                 <img
+                  loading="lazy"
                   src={item.img}
                   alt={item.imgTitle}
                   style={{ width: "100%", height: "auto" }}
@@ -99,6 +100,7 @@ function HappyClientsPage({}: Props) {
               <Box>
                 <img
                   src={item1.img}
+                  loading="lazy"
                   style={{ width: "100%", height: "auto" }}
                 />
                 <h1>{item1.imgName}</h1>

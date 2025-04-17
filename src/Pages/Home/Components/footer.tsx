@@ -3,11 +3,13 @@ import React, { useEffect } from "react";
 import Logo from "../../Home/Components/img/logo.jpg";
 import CallIcon from "@mui/icons-material/Call";
 import {
-  Footer__wr,
+  FooterWr,
+  FooterBottom,
   FooterContact,
   FooterLogo,
-  FooterQuiclLinks,
+  FooterQuickLinks,
   FooterSocial,
+  FooterContainer,
 } from ".";
 import TelegramIcon from "@mui/icons-material/Telegram";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
@@ -30,186 +32,88 @@ function Footer({}: Props) {
     window.open(url, "_blank");
   };
   return (
-    <Footer__wr>
-      <Container maxWidth="xl">
-        <Box
-          sx={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "space-between",
-          }}
-        >
-          <ScrollToTop />
-          <FooterLogo>
-            <img src={Logo} alt="" />
-            <Typography variant="h1">Want to Take Tour Packages?</Typography>
-            <Button variant="contained">Book a Tour</Button>
-          </FooterLogo>
+    <FooterWr>
+      <FooterContainer maxWidth="xl">
+        <FooterLogo>
+          <img src={Logo} alt="logo" />
+          <Typography variant="h6">Want to Take Tour Packages?</Typography>
+          <Button variant="contained">Book a Tour</Button>
+        </FooterLogo>
 
-          <FooterQuiclLinks>
-            <Typography
-              variant="h1"
-              fontSize={25}
-              fontWeight={"bold"}
-              color="#fff"
-            >
-              Quick Links
-            </Typography>
-            <Link
-              to="/home"
-              className="link"
-              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            >
-              Home
+        <FooterQuickLinks>
+          <Typography variant="h6">Quick Links</Typography>
+          {[
+            "Home",
+            "About",
+            "Tours",
+            "Gallery",
+            "Contact",
+            "Happy Clients",
+          ].map((item, i) => (
+            <Link key={i} to={`/${item.toLowerCase().replace(" ", "-")}`}>
+              {item}
             </Link>
-            <Link
-              to="/about"
-              className="link"
-              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            >
-              About
-            </Link>
-            <Link
-              to="/tours"
-              className="link"
-              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            >
-              Tours
-            </Link>
-            <Link
-              to="/gallery"
-              className="link"
-              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            >
-              Gallery
-            </Link>
-            <Link
-              to="/contact"
-              className="link"
-              style={{ textDecoration: "none" }}
-              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            >
-              Contact
-            </Link>
-            <Link
-              to="/happy-clients"
-              className="link"
-              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            >
-              Happy Clients
-            </Link>
-          </FooterQuiclLinks>
-          <FooterContact>
-            <Typography
-              sx={{
-                fontSize: "25px",
-                fontWeight: "bold",
-                color: "#fff",
-                display: "flex",
-                gap: "13px",
-                alignItems: "center",
-              }}
-            >
-              <CallIcon
-                sx={{
-                  color: "#FF9800",
-                  fontSize: "30px",
-                }}
-              />{" "}
-              To More Inquiry
-            </Typography>
+          ))}
+        </FooterQuickLinks>
 
-            <Typography variant="body1">
-              <a
-                href="https://api.whatsapp.com/send/?phone=998999272211&text&type=phone_number&app_absent=0"
-                style={{
-                  textDecoration: "none",
-                  color: "#fff",
-                  fontSize: "24px",
-                  fontWeight: "bold",
-                }}
-              >
-                +998(99)927-22-11
-              </a>
-            </Typography>
+        <FooterContact>
+          <Typography variant="h6">
+            <CallIcon /> To More Inquiry
+          </Typography>
+          <a href="tel:+998999272211">+998(99)927-22-11</a>
 
-            <Typography
-              sx={{
-                fontSize: "25px",
-                fontWeight: "bold",
-                color: "#fff",
-                display: "flex",
-                gap: "13px",
-                alignItems: "center",
-              }}
-            >
-              <TelegramIcon
-                sx={{
-                  color: "#FF9800",
-                  fontSize: "30px",
-                }}
-              />{" "}
-              Send Mail
+          <div className="section">
+            <Typography variant="h6">
+              <TelegramIcon /> Send Mail
             </Typography>
+            <a href="mailto:olimjontolipov8@gmail.com">
+              olimjontolipov8@gmail.com
+            </a>
+          </div>
+        </FooterContact>
 
-            <Typography variant="body1">
-              <a
-                href="https://api.whatsapp.com/send/?phone=998999272211&text&type=phone_number&app_absent=0"
-                style={{
-                  textDecoration: "none",
-                  color: "#fff",
-                  fontSize: "24px",
-                  fontWeight: "bold",
-                }}
-              >
-                olimjontolipov8@gmail.com
-              </a>
-            </Typography>
-          </FooterContact>
-          <FooterSocial>
-            <Typography
-              variant="h1"
-              fontSize={25}
-              fontWeight={"bold"}
-              color="#fff"
-            >
-              We Are Here
-            </Typography>
-            <Box
-              onClick={() =>
-                openLink(
-                  "https://api.whatsapp.com/send/?phone=998999272211&text&type=phone_number&app_absent=0"
-                )
-              }
-            >
-              <WhatsAppIcon className="icons" />{" "}
-              <Typography variant="body1">WhatsApp</Typography>
-            </Box>
-            <Box
-              onClick={() =>
-                openLink("https://www.instagram.com/olimjon_guide/")
-              }
-            >
-              <InstagramIcon className="icons" />
-              <Typography variant="body1">Instagram</Typography>
-            </Box>
-            <Box
-              onClick={() =>
-                openLink("https://www.youtube.com/@Uzbekistan.tourism")
-              }
-            >
-              <YouTubeIcon className="icons" />
-              <Typography variant="body1">Youtobe</Typography>
-            </Box>
-            <Box onClick={() => openLink("https://t.me/tolipov_olimjon")}>
-              <TelegramIcon className="icons" />
-              <Typography variant="body1">Telegram</Typography>
-            </Box>
-          </FooterSocial>
-        </Box>
-        <Divider />
-      </Container>
-    </Footer__wr>
+        <FooterSocial>
+          <Typography variant="h6">We Are Here</Typography>
+          <div
+            className="social-item"
+            onClick={() =>
+              openLink("https://api.whatsapp.com/send/?phone=998999272211")
+            }
+          >
+            <WhatsAppIcon />
+            <Typography>WhatsApp</Typography>
+          </div>
+          <div
+            className="social-item"
+            onClick={() => openLink("https://www.instagram.com/olimjon_guide/")}
+          >
+            <InstagramIcon />
+            <Typography>Instagram</Typography>
+          </div>
+          <div
+            className="social-item"
+            onClick={() =>
+              openLink("https://www.youtube.com/@Uzbekistan.tourism")
+            }
+          >
+            <YouTubeIcon />
+            <Typography>YouTube</Typography>
+          </div>
+          <div
+            className="social-item"
+            onClick={() => openLink("https://t.me/tolipov_olimjon")}
+          >
+            <TelegramIcon />
+            <Typography>Telegram</Typography>
+          </div>
+        </FooterSocial>
+      </FooterContainer>
+
+      <FooterBottom>
+        © Copyright 2024 | Developed by{" "}
+        <a href="https://giyozov.uz">Shuhrat Toshxujayiv</a>
+      </FooterBottom>
+    </FooterWr>
   );
 }
 

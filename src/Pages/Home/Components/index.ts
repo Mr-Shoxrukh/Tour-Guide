@@ -1,96 +1,122 @@
 import styled from "styled-components";
+import { Container } from "@mui/material";
 
-export const Logo__wr = styled.div`
-  width: 80px;
-  height: 80px;
-  display: flex;
-  align-items: center;
-  padding-right: 20px;
-  img {
-    width: 100%;
-  }
-`;
-export const Footer__wr = styled.footer`
-  width: 100%;
+export const FooterWr = styled.footer`
+  background-color: #101010;
+  color: white;
   padding: 40px 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
-  margin-top: 30px;
-  background-color: #000;
+  margin-top: 50px;
 `;
-export const FooterLogo = styled.div`
-  width: 200px;
+
+export const FooterContainer = styled(Container)`
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
   align-items: center;
-  row-gap: 20px;
-  img {
-    width: 100%;
-    height: 100px;
-  }
-  h1 {
-    font-size: 25px;
-    color: white;
-  }
-  button {
-    width: 100%;
-    background-color: #dd2c00;
+  gap: 32px;
+  text-align: center;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    text-align: left;
   }
 `;
 
-export const FooterQuiclLinks = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  h2 {
-    color: white;
-    font-size: 24px;
+export const FooterLogo = styled.div`
+  max-width: 300px;
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  h6 {
+    margin-top: 16px;
+  }
+
+  button {
+    margin-top: 16px;
   }
 `;
-export const FooterContact = styled.div`
+
+export const FooterQuickLinks = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 8px;
+
   a {
-    opacity: 50%;
+    color: #ccc;
+    text-decoration: none;
+
+    &:hover {
+      color: #fff;
+    }
   }
-  a:hover {
-    opacity: 100%;
+
+  h6 {
+    margin-bottom: 8px;
+    font-weight: bold;
   }
 `;
+
+export const FooterContact = styled.div`
+  h6 {
+    margin-bottom: 8px;
+    font-weight: bold;
+  }
+
+  a {
+    color: white;
+    text-decoration: none;
+
+    &:hover {
+      color: #ff9800;
+    }
+  }
+
+  .section {
+    margin-top: 24px;
+  }
+`;
+
 export const FooterSocial = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  color: #fff;
-  .icons {
-    font-size: 30px;
-  }
-  h1 {
-    font-size: 25px;
+
+  h6 {
+    margin-bottom: 8px;
     font-weight: bold;
-    color: #fff;
   }
 
-  p {
-    opacity: 50%;
-    transition: 0.3s;
-  }
-
-  .icons,
-  p:hover {
-    opacity: 100%;
-    color: #fff;
-  }
-  div {
+  .social-item {
     display: flex;
-    gap: 10px;
-    row-gap: 15px;
     align-items: center;
+    gap: 8px;
     cursor: pointer;
-    .icons {
-      opacity: 50%;
+    margin-top: 8px;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+`;
+
+export const FooterBottom = styled.div`
+  margin-top: 32px;
+  border-top: 1px solid #555;
+  padding-top: 16px;
+  text-align: center;
+  font-size: 14px;
+  color: gray;
+
+  a {
+    color: white;
+    text-decoration: none;
+
+    &:hover {
+      color: #ff9800;
     }
   }
 `;

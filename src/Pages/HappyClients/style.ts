@@ -2,13 +2,14 @@ import styled from "styled-components";
 import "react-slideshow-image/dist/styles.css";
 export const Clients__wrapper = styled.section`
   width: 100%;
-  margin-top: 80px;
+  margin-top: 120px;
   display: flex;
   justify-content: space-around;
   gap: 40px;
   @media (max-width: 666px) {
     flex-wrap: wrap;
     justify-content: flex-start;
+    margin-top: 120px;
   }
 `;
 export const ClienstImages = styled.div`

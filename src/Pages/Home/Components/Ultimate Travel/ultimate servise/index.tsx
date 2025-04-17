@@ -36,26 +36,6 @@ const UltimateService = () => {
   const [value, setValue] = useState("1");
   const navigate = useNavigate();
   const [guide, setGuide] = useState<any>(null);
-  const currencies = [
-    {
-      label: "1",
-    },
-    {
-      label: "2",
-    },
-    {
-      label: "3",
-    },
-    {
-      label: "4",
-    },
-    {
-      label: "5",
-    },
-    {
-      label: "6",
-    },
-  ];
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
@@ -148,6 +128,7 @@ const UltimateService = () => {
                   >
                     <Tab label="Overview" value="1" />
                     <Tab label="Itinerary" value="2" />
+                    <Tab label="Included" value="3" />
                   </TabList>
                 </Box>
                 <TabPanel
@@ -228,7 +209,7 @@ const UltimateService = () => {
                 >
                   <Box
                     sx={{
-                      width: "100%",
+                      width: "98%",
                       padding: "20px 15px",
                       border: "1px solid black",
                       borderColor: "divider",
@@ -240,6 +221,51 @@ const UltimateService = () => {
                     <br />
                     <br />
                     <Typography>{tour.date}</Typography>
+                  </Box>
+                </TabPanel>
+                <TabPanel value="3" sx={{ padding: "0" }}>
+                  <Box
+                    sx={{
+                      width: "98%",
+                      padding: "20px 15px",
+                      border: "1px solid black",
+                      borderColor: "divider",
+                      marginTop: "20px",
+                      borderRadius: "0.5rem",
+                    }}
+                  >
+                    <Box>
+                      <Typography
+                        fontWeight={"bold"}
+                        fontSize={23}
+                        marginBottom={1}
+                      >
+                        Include:
+                      </Typography>
+                    </Box>
+                    <Box>
+                      <Typography>
+                        ✅ Local guides in Tashkent, Samarkand, and Bukhara
+                      </Typography>
+                      <Typography>
+                        ✅ Private transportation within each city
+                      </Typography>
+                    </Box>
+                    <Box marginTop={3}>
+                      <Typography
+                        fontWeight={"bold"}
+                        fontSize={23}
+                        marginBottom={1}
+                      >
+                        Not Include:
+                      </Typography>
+                      <Box>
+                        <Typography>❌ International flights</Typography>
+                        <Typography>❌ Lunch & dinner</Typography>
+                        <Typography>❌ Lunch & dinner</Typography>
+                        <Typography>❌ Entrance tickets</Typography>
+                      </Box>
+                    </Box>
                   </Box>
                 </TabPanel>
               </TabContext>

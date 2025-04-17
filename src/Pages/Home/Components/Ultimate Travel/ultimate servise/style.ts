@@ -29,7 +29,7 @@ export const CityName_title = styled.div`
   }
 `;
 export const Itinerary = styled.div`
-  width: 99%;
+  width: 98%;
   padding: 20px 0 20px 10px;
   display: flex;
   flex-direction: column;
@@ -42,6 +42,10 @@ export const Itinerary = styled.div`
     font-weight: bold;
     margin-bottom: "10px";
   }
+`;
+export const IncludedItem = styled.div`
+  display: flex;
+  border: 1px solid #e0e0e0;
 `;
 export const CostItem = styled.div`
   padding: 20px;

@@ -126,6 +126,8 @@ function Home() {
         <Box
           className="slider-container"
           sx={{
+            width: "100%",
+            display: "none",
             background: `
               linear-gradient(
                 rgba(0, 0, 0, 0.5), 
@@ -138,8 +140,6 @@ function Home() {
             loading: "lazy",
             backgroundSize: "cover",
             height: "75vh",
-            width: "100%",
-            position: "relative",
             color: "#fff",
           }}
         >

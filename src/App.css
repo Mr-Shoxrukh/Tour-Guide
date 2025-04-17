@@ -15,3 +15,22 @@ body {
   opacity: 100%; /* Hover bo‘lganda rangni o‘zgartiradi */
 
 }
+
+@media screen and (max-width: 857px) {
+  .slideText{
+   max-width: 500px;
+   width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    color: red;
+  }
+  
+}
+.slider-container {
+  display: none;
+}
+@media screen and (max-width: 521px) {
+  .slider-container {
+  }
+  
+}

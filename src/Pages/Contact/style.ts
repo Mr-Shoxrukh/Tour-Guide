@@ -87,5 +87,5 @@ export const InputWrapper = styled.form`
 export const EmailInput = styled.div`
   width: 100%;
   display: flex;
-  gap: 30px;
+  gap: 60px;
 `;

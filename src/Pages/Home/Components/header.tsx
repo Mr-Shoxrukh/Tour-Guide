@@ -11,11 +11,11 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import CallIcon from "@mui/icons-material/Call";
 import Logo from "./img/Logo.png";
-import { Logo__wr } from ".";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Avatar, Divider } from "@mui/material";
 import { getAuth, onAuthStateChanged, signOut, User } from "firebase/auth";
 import { app } from "../../../db/firebase";
+import { FooterLogo } from ".";
 
 const auth = getAuth(app);
 
@@ -72,6 +72,7 @@ function ResponsiveAppBar() {
         top: showHeader ? 0 : "-80px",
         transition: "top 0.3s ease-in-out",
         color: "#2c2b39",
+        padding: "10px 0",
       }}
     >
       <Container maxWidth="xl">
@@ -89,9 +90,9 @@ function ResponsiveAppBar() {
               textDecoration: "none",
             }}
           >
-            <Logo__wr>
-              <img src={Logo} alt="Logo" />
-            </Logo__wr>
+            <FooterLogo>
+              <img width={"100px"} src={Logo} alt="Logo" />
+            </FooterLogo>
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
