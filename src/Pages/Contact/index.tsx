@@ -180,11 +180,11 @@ function ContactPage({}: Props) {
                   placeholder="Phone number"
                   inputStyle={{
                     padding: "27px 15px",
-                    width: "90%",
+                    width: "100%",
                     border: "1px solid #e0e0e0",
                     borderRadius: "5px",
                     fontSize: "16px",
-                    marginLeft: "50px",
+                    paddingLeft: "70px",
                   }}
                   buttonStyle={{
                     borderRadius: "8px",

@@ -1,3 +1,4 @@
+// ✅ YANGILANGAN styled-components responsive variantlari
 import styled from "styled-components";
 
 export const ContactWrapper = styled.div`
@@ -5,21 +6,19 @@ export const ContactWrapper = styled.div`
   margin-bottom: 50px;
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
   row-gap: 30px;
-  @media (max-width: 850px) {
-    flex-wrap: wrap;
-  }
 `;
+
 export const ContactNumber = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 30px;
-  padding: 0 30px 0 0;
-  /* background-color: red; */
-  @media (max-width: 900px) {
-    width: 100%;
-  }
+  padding-right: 30px;
+  flex: 1;
+  min-width: 280px;
 `;
+
 export const NumberBox = styled.div`
   max-width: 400px;
   padding: 10px 15px;
@@ -33,6 +32,7 @@ export const NumberBox = styled.div`
     font-weight: bold;
   }
 `;
+
 export const PhoneIcon = styled.div`
   width: 50px;
   height: 50px;
@@ -43,7 +43,10 @@ export const PhoneIcon = styled.div`
   align-items: center;
   color: #fff;
 `;
+
 export const ReachUs = styled.div`
+  flex: 2;
+  min-width: 300px;
   max-width: 1000px;
   width: 100%;
   padding: 25px 30px;
@@ -52,40 +55,50 @@ export const ReachUs = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+
   input {
     background-color: #fff;
   }
+
   button {
     width: 200px;
     padding: 13px 10px;
     font-size: 18px;
     background-color: #4caf50;
   }
+
   form {
     display: flex;
     gap: 30px;
     flex-direction: column;
     row-gap: 30px;
-    textArea {
-      padding: 10px 0 0 10px;
-      max-width: 472px;
+
+    textarea {
+      padding: 10px;
+      width: 100%;
       font-size: 16px;
       border: 1px solid gray;
+      border-radius: 5px;
+      resize: vertical;
     }
   }
-  @media (max-width: 600px) {
-    padding: 20px;
-  }
-  @media (max-width: 500px) {
-    min-height: 300px;
+
+  @media (max-width: 768px) {
     padding: 20px;
   }
 `;
+
 export const InputWrapper = styled.form`
   width: 100%;
 `;
+
 export const EmailInput = styled.div`
   width: 100%;
   display: flex;
-  gap: 60px;
+  gap: 30px;
+  flex-wrap: wrap;
+
+  @media (max-width: 768px) {
+    gap: 20px;
+  }
 `;

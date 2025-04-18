@@ -62,7 +62,9 @@ function ResponsiveAppBar() {
     setAnchorElNav(null);
     if (page) navigate(`/${page.toLowerCase().replace(/\s+/g, "-")}`);
   };
-
+  const openLink = (url: string) => {
+    window.open(url, "_blank");
+  };
   return (
     <AppBar
       sx={{
@@ -160,6 +162,9 @@ function ResponsiveAppBar() {
                 color: "#55bd00",
                 cursor: "pointer",
               }}
+              onClick={() =>
+                openLink("https://api.whatsapp.com/send/?phone=998999272211")
+              }
             />{" "}
             <Divider orientation="vertical" flexItem />
             <Box>
@@ -177,7 +182,14 @@ function ResponsiveAppBar() {
                   fontSize: "24px",
                 }}
               >
-                <Typography variant="body1" sx={{ widows: "100%" }}>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    "@media (min-width: 450px)": {
+                      display: "none",
+                    },
+                  }}
+                >
                   <a
                     href="https://api.whatsapp.com/send/?phone=998999272211&text&type=phone_number&app_absent=0"
                     style={{

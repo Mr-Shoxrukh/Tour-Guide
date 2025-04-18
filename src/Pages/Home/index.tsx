@@ -80,6 +80,13 @@ function Home() {
     );
   };
   useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % slides.length);
+    }, 7000); // har 5 soniyada o'zgaradi
+
+    return () => clearInterval(interval); // komponent unmount bo‘lsa, interval to‘xtasin
+  }, [slides.length]);
+  useEffect(() => {
     const fetchGuides = async () => {
       const querySnapshot = await getDocs(collection(db, "guides"));
       const guidesData = querySnapshot.docs.map((doc) => ({
@@ -127,34 +134,68 @@ function Home() {
           className="slider-container"
           sx={{
             width: "100%",
-            display: "none",
-            background: `
-              linear-gradient(
-                rgba(0, 0, 0, 0.5), 
-                rgba(0, 0, 0, 0.5)
-              ),
-              url(${slides[currentIndex].image})
-            `,
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-            loading: "lazy",
-            backgroundSize: "cover",
             height: "75vh",
-            color: "#fff",
+            position: "relative",
+            overflow: "hidden",
           }}
         >
-          <Box className="slideText">
-            <Typography variant="h1" className="home-title">
-              {slides[currentIndex].title}
-            </Typography>
-            <Typography variant="h1" className="home-description">
-              {slides[currentIndex].description}
-            </Typography>
-          </Box>
-          <Button className="prev" onClick={prevSlide}>
+          {slides.map((slide, index) => (
+            <Box
+              key={index}
+              sx={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                backgroundImage: `linear-gradient(
+            rgba(0, 0, 0, 0.5), 
+            rgba(0, 0, 0, 0.5)
+          ), url(${slide.image})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                transition: "opacity 1s ease-in-out",
+                opacity: index === currentIndex ? 1 : 0,
+                zIndex: index === currentIndex ? 1 : 0,
+              }}
+            >
+              <Box
+                className="slideText"
+                sx={{ textAlign: "center", color: "#fff", p: 15 }}
+              >
+                <Typography variant="h1">{slide.title}</Typography>
+                <Typography variant="h5" mt={2} fontSize={30}>
+                  {slide.description}
+                </Typography>
+              </Box>
+            </Box>
+          ))}
+
+          <Button
+            onClick={prevSlide}
+            sx={{
+              position: "absolute",
+              left: "20px",
+              top: "50%",
+              transform: "translateY(-50%)",
+              zIndex: 2,
+              color: "#fff",
+            }}
+          >
             ❮
           </Button>
-          <Button className="next" onClick={nextSlide}>
+
+          <Button
+            onClick={nextSlide}
+            sx={{
+              position: "absolute",
+              right: "20px",
+              top: "50%",
+              transform: "translateY(-50%)",
+              zIndex: 2,
+              color: "#fff",
+            }}
+          >
             ❯
           </Button>
         </Box>

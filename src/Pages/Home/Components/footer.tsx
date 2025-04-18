@@ -15,11 +15,16 @@ import TelegramIcon from "@mui/icons-material/Telegram";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import YouTubeIcon from "@mui/icons-material/YouTube";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 type Props = {};
 
 function Footer({}: Props) {
+  const navagate = useNavigate();
+
+  const handelEmailLink = () => {
+    window.location.href = "mailto:toshxujayivshuhrat7@gmail.com";
+  };
   const ScrollToTop = () => {
     const { pathname } = useLocation();
 
@@ -31,13 +36,18 @@ function Footer({}: Props) {
   const openLink = (url: string) => {
     window.open(url, "_blank");
   };
+  const handleBookTour = () => {
+    navagate("/contact");
+  };
   return (
     <FooterWr>
       <FooterContainer maxWidth="xl">
         <FooterLogo>
           <img src={Logo} alt="logo" />
           <Typography variant="h6">Want to Take Tour Packages?</Typography>
-          <Button variant="contained">Book a Tour</Button>
+          <Button variant="contained" onClick={handleBookTour}>
+            Book a Tour
+          </Button>
         </FooterLogo>
 
         <FooterQuickLinks>
@@ -111,7 +121,7 @@ function Footer({}: Props) {
 
       <FooterBottom>
         © Copyright 2024 | Developed by{" "}
-        <a href="https://giyozov.uz">Shuhrat Toshxujayiv</a>
+        <a onClick={handelEmailLink}>Shuhrat Toshxujayiv</a>
       </FooterBottom>
     </FooterWr>
   );

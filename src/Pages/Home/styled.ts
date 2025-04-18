@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import registan from "./Components/img/registan.png";
 export const Registan__wrapper = styled.section`
-  max-width: 1950px;
   width: 100%;
   .slider-container {
     width: 100%;
@@ -117,6 +116,9 @@ export const BookingGuide = styled.div`
 export const Tour_Actives = styled.section`
   width: 100%;
   margin-top: 50px;
+  @media screen and (max-width: 530px) {
+    margin-top: 290px;
+  }
 `;
 export const GetStart_btn = styled.div`
   margin-top: 70px;

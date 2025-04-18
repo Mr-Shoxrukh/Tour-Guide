@@ -65,6 +65,9 @@ export const FooterContact = styled.div`
   h6 {
     margin-bottom: 8px;
     font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
 
   a {
