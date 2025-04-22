@@ -75,7 +75,6 @@ export const ReachUs = styled.div`
 
     textarea {
       padding: 10px;
-      width: 100%;
       font-size: 16px;
       border: 1px solid gray;
       border-radius: 5px;

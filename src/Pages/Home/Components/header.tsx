@@ -172,7 +172,11 @@ function ResponsiveAppBar() {
                 sx={{
                   fontSize: "16px",
                   fontWeight: "bold",
+                  cursor: "pointer",
                 }}
+                onClick={() =>
+                  openLink("https://api.whatsapp.com/send/?phone=998999272211")
+                }
               >
                 To More Inquiry
               </Typography>

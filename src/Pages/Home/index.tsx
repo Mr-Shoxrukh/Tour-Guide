@@ -46,21 +46,21 @@ const slides = [
       "https://mjcedactmdisysxnyusx.supabase.co/storage/v1/object/public/bjjb//unnamed.jpg",
     title: "Wander Through the Timeless Walls of Khiva",
     description:
-      "Step into a living museum where every brick tells a story. Discover ancient fortresses, narrow cobbled streets, and the rich history of this UNESCO-listed city frozen in time.",
+      "Feel history beneath your feet — where old fortresses and narrow lanes whisper tales of the past.",
   },
   {
     image:
       "https://www.aljazeera.com/wp-content/uploads/2023/07/Souvenir-vendors-in-Bukhara-Uzbekistan-with-one-of-the-citys-trading-domes-in-the-background.-David-Andreas_Al-Jazeera-1688616446.jpg?resize=1920%2C1080",
     title: "Experience the Spirit of Bukhara",
     description:
-      "Walk the streets once roamed by scholars, poets, and traders of the Silk Road. Bukhara invites you to uncover centuries of Islamic art, vibrant bazaars, and warm Uzbek hospitality.",
+      "Walk the Silk Road’s paths where poets and traders once roamed. Discover Bukhara’s art, bazaars, and warm hospitality.",
   },
   {
     image:
       "https://mjcedactmdisysxnyusx.supabase.co/storage/v1/object/public/bjjb//dushanbe_cropped.jpg",
     title: "Explore the Modern Charm of Dushanbe",
     description:
-      "Blending modern life with cultural heritage, Dushanbe welcomes you with its grand architecture, leafy avenues, and friendly atmosphere — a perfect gateway to Central Asia.",
+      "Dushanbe blends modern charm with rich heritage — your welcoming gateway to Central Asia.",
   },
 ];
 
@@ -82,7 +82,7 @@ function Home() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % slides.length);
-    }, 7000); // har 5 soniyada o'zgaradi
+    }, 70000); // har 5 soniyada o'zgaradi
 
     return () => clearInterval(interval); // komponent unmount bo‘lsa, interval to‘xtasin
   }, [slides.length]);
@@ -131,45 +131,117 @@ function Home() {
       <Header />
       <Registan__wrapper>
         <Box
-          className="slider-container"
+          className="slider-wrapper"
           sx={{
             width: "100%",
-            height: "75vh",
-            position: "relative",
+            height: {
+              xs: "60vh", // telefon
+              sm: "65vh", // kichik planshet
+              md: "70vh", // planshet
+              lg: "75vh", // desktop
+            },
             overflow: "hidden",
+            position: "relative",
           }}
         >
-          {slides.map((slide, index) => (
-            <Box
-              key={index}
-              sx={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                width: "100%",
-                height: "100%",
-                backgroundImage: `linear-gradient(
-            rgba(0, 0, 0, 0.5), 
+          <Box
+            className="slider-track"
+            sx={{
+              display: "flex",
+              width: `${slides.length * 100}%`,
+              transform: `translateX(-${
+                currentIndex * (100 / slides.length)
+              }%)`,
+              transition: "transform 0.5s ease-in-out",
+            }}
+          >
+            {slides.map((slide, index) => (
+              <Box
+                key={index}
+                sx={{
+                  width: `${100 / slides.length}%`,
+                  height: {
+                    xs: "60vh",
+                    sm: "65vh",
+                    md: "70vh",
+                    lg: "75vh",
+                  },
+                  backgroundImage: `linear-gradient(
+            rgba(0, 0, 0, 0.5),
             rgba(0, 0, 0, 0.5)
           ), url(${slide.image})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                transition: "opacity 1s ease-in-out",
-                opacity: index === currentIndex ? 1 : 0,
-                zIndex: index === currentIndex ? 1 : 0,
-              }}
-            >
-              <Box
-                className="slideText"
-                sx={{ textAlign: "center", color: "#fff", p: 15 }}
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  flexShrink: 0,
+                }}
               >
-                <Typography variant="h1">{slide.title}</Typography>
-                <Typography variant="h5" mt={2} fontSize={30}>
-                  {slide.description}
-                </Typography>
+                <Box
+                  className="slideText"
+                  sx={{
+                    textAlign: "center",
+                    color: "#fff",
+                    px: { xs: 2, sm: 4, md: 8, lg: 15 },
+                    pt: { xs: 8, sm: 10, md: 12, lg: 15 },
+                  }}
+                >
+                  <Typography
+                    variant="h3"
+                    sx={{
+                      fontSize: {
+                        xs: "24px",
+                        sm: "30px",
+                        md: "40px",
+                        lg: "48px",
+                      },
+                      fontWeight: 700,
+                    }}
+                  >
+                    {slide.title}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: {
+                        xs: "14px",
+                        sm: "18px",
+                        md: "22px",
+                        lg: "30px",
+                      },
+                      mt: 2,
+                    }}
+                  >
+                    {slide.description}
+                  </Typography>
+                </Box>
               </Box>
-            </Box>
-          ))}
+            ))}
+          </Box>
+
+          {/* Dots indicator */}
+          <Box
+            sx={{
+              position: "absolute",
+              bottom: 20,
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              gap: 1,
+            }}
+          >
+            {slides.map((_, index) => (
+              <Box
+                key={index}
+                onClick={() => setCurrentIndex(index)}
+                sx={{
+                  width: 12,
+                  height: 12,
+                  borderRadius: "50%",
+                  backgroundColor: index === currentIndex ? "#fff" : "#888",
+                  cursor: "pointer",
+                  transition: "background-color 0.3s",
+                }}
+              />
+            ))}
+          </Box>
 
           <Button
             onClick={prevSlide}

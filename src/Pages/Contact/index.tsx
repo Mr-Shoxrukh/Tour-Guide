@@ -54,7 +54,8 @@ function ContactPage({}: Props) {
         chat_id: chatId,
         text: message,
       });
-      toast.success("Xabar yuborildi!");
+      toast.success("Your message has been sent successfully!");
+      toast.info("A guide will contact you shortly.");
     } catch (error) {
       console.error("Xatolik yuz berdi:", error);
     }
@@ -72,21 +73,16 @@ function ContactPage({}: Props) {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault(); // Formni default yuborilishini oldini olish
-
-    // Barcha maydonlarning to‘ldirilganligini tekshirish
-    if (
-      !form.name.trim() ||
-      !form.email.trim() ||
-      !phoneNumber.trim() ||
-      !form.message.trim()
-    ) {
-      toast.error("❌ Iltimos, barcha maydonlarni to‘ldiring!");
+    e.preventDefault();
+    if (!form.name.trim() || !form.email.trim() || !phoneNumber.trim()) {
+      toast.error("❌ Please fill out all the fields!");
       return;
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(form.email)) {
-      toast.error("❌ Email manzilingiz noto‘g‘ri formatda!");
+      toast.error(
+        "❌ The email format seems incorrect. Please check and try again."
+      );
       return;
     }
 

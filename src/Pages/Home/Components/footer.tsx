@@ -1,6 +1,6 @@
 import { Box, Button, Container, Divider, Typography } from "@mui/material";
 import React, { useEffect } from "react";
-import Logo from "../../Home/Components/img/logo.jpg";
+import Logo from "../../Home/Components/img/FooterBlackLogo.png";
 import CallIcon from "@mui/icons-material/Call";
 import {
   FooterWr,
@@ -11,6 +11,7 @@ import {
   FooterSocial,
   FooterContainer,
 } from ".";
+
 import TelegramIcon from "@mui/icons-material/Telegram";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import InstagramIcon from "@mui/icons-material/Instagram";
@@ -43,7 +44,7 @@ function Footer({}: Props) {
     <FooterWr>
       <FooterContainer maxWidth="xl">
         <FooterLogo>
-          <img src={Logo} alt="logo" />
+          <img width={200} src={Logo} alt="logo" />
           <Typography variant="h6">Want to Take Tour Packages?</Typography>
           <Button variant="contained" onClick={handleBookTour}>
             Book a Tour

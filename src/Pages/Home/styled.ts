@@ -7,7 +7,7 @@ export const Registan__wrapper = styled.section`
     display: flex;
     flex-direction: column;
     position: relative;
-    margin-top: 80px;
+    margin-top: 120px;
   }
   .slide {
     width: 100%;
@@ -22,8 +22,13 @@ export const Registan__wrapper = styled.section`
     justify-content: center;
     flex-direction: column;
     align-items: center;
+    text-align: center;
+    padding: 0 20px;
+    @media screen and (max-width: 508px) {
+      padding-left: 0;
+    }
     .home-description {
-      max-width: 700px;
+      max-width: 600px;
       width: 100%;
       text-align: center;
       font-size: 25px;
@@ -32,7 +37,6 @@ export const Registan__wrapper = styled.section`
   h1 {
     font-size: 50px;
     color: white;
-
     margin-top: 20px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     font-weight: bold;
@@ -56,6 +60,7 @@ export const Registan__wrapper = styled.section`
     color: #fff;
     background: transparent;
     font-size: 40px;
+    margin-top: 30px;
   }
   .next {
     right: 0;
@@ -71,7 +76,7 @@ export const Registan__wrapper = styled.section`
   }
   @media (max-width: 520px) {
     background-size: 100% 100%;
-    height: 600px;
+    margin-top: 110px;
   }
 `;
 
@@ -116,8 +121,8 @@ export const BookingGuide = styled.div`
 export const Tour_Actives = styled.section`
   width: 100%;
   margin-top: 50px;
-  @media screen and (max-width: 530px) {
-    margin-top: 290px;
+  @media screen and (max-width: 521px) {
+    margin-top: 120px;
   }
 `;
 export const GetStart_btn = styled.div`
