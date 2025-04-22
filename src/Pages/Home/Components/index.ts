@@ -117,9 +117,12 @@ export const FooterBottom = styled.div`
   a {
     color: white;
     text-decoration: none;
+    cursor: pointer;
+    transition: 0.3s;
 
     &:hover {
       color: #ff9800;
+      cursor: pointer;
     }
   }
 `;

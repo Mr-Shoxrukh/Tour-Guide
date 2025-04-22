@@ -163,13 +163,13 @@ export const ExperienceTitle = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+
   h1 {
     font-size: 30px;
     margin-bottom: 20px;
     font-weight: bold;
   }
   p {
-    width: 700px;
     font-size: 20px;
   }
 `;

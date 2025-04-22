@@ -18,6 +18,9 @@ import {
   TourGallery,
   WithTourestyImg,
 } from "./styled";
+import GradeIcon from "@mui/icons-material/Grade";
+import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
+import SelfImprovementIcon from "@mui/icons-material/SelfImprovement";
 import activeTourist from "./Components/img/activeTourist.jpg";
 import HealthAndSafetyIcon from "@mui/icons-material/HealthAndSafety";
 import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
@@ -325,7 +328,6 @@ function Home() {
                   gap: "20px",
                   alignItems: "center",
                   marginTop: "78px",
-                  // transform: "rotate(-4deg)",
                 }}
               >
                 <Box borderRadius={1}>
@@ -339,25 +341,25 @@ function Home() {
                 <Box borderRadius={1}>
                   <GoodSides>
                     <GoodSidesIcon>
-                      <HourglassBottomIcon />
+                      <WorkspacePremiumIcon />
                     </GoodSidesIcon>
-                    Safety First Always
+                    Trusted Travel Guide
                   </GoodSides>
                 </Box>
                 <Box borderRadius={1}>
                   <GoodSides>
                     <GoodSidesIcon>
-                      <HealthAndSafetyIcon />
+                      <SelfImprovementIcon />
                     </GoodSidesIcon>
-                    Safety First Always
+                    Time Stress SavingsSafety
                   </GoodSides>
                 </Box>
                 <Box borderRadius={1}>
                   <GoodSides>
                     <GoodSidesIcon>
-                      <HealthAndSafetyIcon />
+                      <GradeIcon />
                     </GoodSidesIcon>
-                    Safety First Always
+                    360+ Tour Success
                   </GoodSides>
                 </Box>
               </Box>

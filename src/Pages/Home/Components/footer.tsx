@@ -122,7 +122,7 @@ function Footer({}: Props) {
 
       <FooterBottom>
         © Copyright 2024 | Developed by{" "}
-        <a onClick={handelEmailLink}>Shuhrat Toshxujayiv</a>
+        <a onClick={handelEmailLink}>Shuxrat Toshxujayev</a>
       </FooterBottom>
     </FooterWr>
   );
