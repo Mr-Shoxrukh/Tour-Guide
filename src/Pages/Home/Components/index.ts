@@ -38,6 +38,9 @@ export const FooterLogo = styled.div`
 
   button {
     margin-top: 16px;
+    background-color: #ff9800;
+    /* color: #000; */
+    padding: 10px 20px;
   }
 `;
 
@@ -51,7 +54,8 @@ export const FooterQuickLinks = styled.div`
     text-decoration: none;
 
     &:hover {
-      color: #fff;
+      color: #ff9800;
+      transition: 0.3s;
     }
   }
 
@@ -73,6 +77,7 @@ export const FooterContact = styled.div`
   a {
     color: white;
     text-decoration: none;
+    transition: 0.3s;
 
     &:hover {
       color: #ff9800;
@@ -99,9 +104,10 @@ export const FooterSocial = styled.div`
     gap: 8px;
     cursor: pointer;
     margin-top: 8px;
-
+    transition: 0.3s;
     &:hover {
       opacity: 0.8;
+      color: #ff9800;
     }
   }
 `;

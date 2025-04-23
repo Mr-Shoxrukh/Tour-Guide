@@ -71,10 +71,10 @@ function ResponsiveAppBar() {
         backgroundColor: "#F2F2F2",
         width: "100%",
         position: "fixed",
-        top: showHeader ? 0 : "-80px",
+        top: showHeader ? 0 : "-120px",
         transition: "top 0.3s ease-in-out",
         color: "#2c2b39",
-        padding: "10px 0",
+        padding: "20px 0",
       }}
     >
       <Container maxWidth="xl">
@@ -189,7 +189,7 @@ function ResponsiveAppBar() {
                 <Typography
                   variant="body1"
                   sx={{
-                    "@media (min-width: 450px)": {
+                    "@media (max-width: 450px)": {
                       display: "none",
                     },
                   }}

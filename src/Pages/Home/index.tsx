@@ -1,5 +1,21 @@
-import { Box, Button, Container, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
+
+import ReactPlayer from "react-player";
+import { useNavigate } from "react-router-dom";
+
+import { Box, Button, Container, Typography } from "@mui/material";
+import GradeIcon from "@mui/icons-material/Grade";
+import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
+import SelfImprovementIcon from "@mui/icons-material/SelfImprovement";
+import activeTourist from "./Components/img/activeTourist.jpg";
+import HealthAndSafetyIcon from "@mui/icons-material/HealthAndSafety";
+import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
+import CircularProgress from "@mui/material/CircularProgress";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+
 import Header from "./Components/header";
 import {
   CardCity__wrapper,
@@ -18,20 +34,8 @@ import {
   TourGallery,
   WithTourestyImg,
 } from "./styled";
-import GradeIcon from "@mui/icons-material/Grade";
-import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
-import SelfImprovementIcon from "@mui/icons-material/SelfImprovement";
-import activeTourist from "./Components/img/activeTourist.jpg";
-import HealthAndSafetyIcon from "@mui/icons-material/HealthAndSafety";
-import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
-import CircularProgress from "@mui/material/CircularProgress";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import { useNavigate } from "react-router-dom";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+
 import UltimateTour from "./Components/Ultimate Travel";
-import ReactPlayer from "react-player";
 import Footer from "./Components/footer";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../db/firebase";
@@ -85,7 +89,7 @@ function Home() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % slides.length);
-    }, 70000); // har 5 soniyada o'zgaradi
+    }, 5000); // har 5 soniyada o'zgaradi
 
     return () => clearInterval(interval); // komponent unmount bo‘lsa, interval to‘xtasin
   }, [slides.length]);
@@ -389,7 +393,9 @@ function Home() {
                       aria-controls="panel1-content"
                       id="panel1-header"
                     >
-                      <Typography component="span">Samarkhand</Typography>
+                      <Typography component="span" fontWeight={"bold"}>
+                        Samarkhand
+                      </Typography>
                     </AccordionSummary>
                     <AccordionDetails
                       sx={{
@@ -424,7 +430,9 @@ function Home() {
                       aria-controls="panel1-content"
                       id="panel1-header"
                     >
-                      <Typography component="span">Bukhara</Typography>
+                      <Typography component="span" fontWeight={"bold"}>
+                        Bukhara
+                      </Typography>
                     </AccordionSummary>
                     <AccordionDetails
                       sx={{
@@ -457,7 +465,9 @@ function Home() {
                       aria-controls="panel1-content"
                       id="panel1-header"
                     >
-                      <Typography component="span">Khiva</Typography>
+                      <Typography component="span" fontWeight={"bold"}>
+                        Khiva
+                      </Typography>
                     </AccordionSummary>
                     <AccordionDetails
                       sx={{
@@ -490,7 +500,9 @@ function Home() {
                       aria-controls="panel1-content"
                       id="panel1-header"
                     >
-                      <Typography component="span">Tashkent</Typography>
+                      <Typography component="span" fontWeight={"bold"}>
+                        Tashkent
+                      </Typography>
                     </AccordionSummary>
                     <AccordionDetails sx={{ textAlign: "left" }}>
                       Tashkent is the capital of Uzbekistan, which is famous for

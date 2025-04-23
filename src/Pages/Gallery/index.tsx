@@ -35,7 +35,7 @@ const GalleryPage = () => {
       <Headers />
       <Container maxWidth="xl">
         {loading ? (
-          <Box sx={{ display: "flex", justifyContent: "center", mt: 120 }}>
+          <Box sx={{ display: "flex", justifyContent: "center", mt: 80 }}>
             <CircularProgress />
           </Box>
         ) : (
