@@ -64,10 +64,10 @@ const slides = [
   },
   {
     image:
-      "https://mjcedactmdisysxnyusx.supabase.co/storage/v1/object/public/bjjb//dushanbe_cropped.jpg",
-    title: "Explore the Modern Charm of Dushanbe",
+      "https://lh3.googleusercontent.com/p/AF1QipNjZB5eixJGUpiTnFA5G5Jq6nZN9fvsc5iQQvgb=w1080-h624-n-k-no",
+    title: "Samarkand: The Timeless Jewel",
     description:
-      "Dushanbe blends modern charm with rich heritage — your welcoming gateway to Central Asia.",
+      "DDiscover Samarkand — a city of ancient wonders, vibrant culture, and timeless beauty!",
   },
 ];
 
@@ -76,7 +76,6 @@ function Home() {
   const [currentIndex, setCurrentIndex] = useState(1);
   const [guide, setGuide] = useState<GuideData[]>([]);
   const [galleryData, setGalleryData] = useState<any[]>([]);
-  const navigate = useNavigate();
   const nextSlide = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % slides.length);
   };
