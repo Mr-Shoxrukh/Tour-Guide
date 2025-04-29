@@ -1,21 +1,18 @@
+import { db } from "../../db/firebase";
+import { collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
-
-import ReactPlayer from "react-player";
-import { useNavigate } from "react-router-dom";
-
 import { Box, Button, Container, Typography } from "@mui/material";
+import ReactPlayer from "react-player";
 import GradeIcon from "@mui/icons-material/Grade";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import SelfImprovementIcon from "@mui/icons-material/SelfImprovement";
 import activeTourist from "./Components/img/activeTourist.jpg";
 import HealthAndSafetyIcon from "@mui/icons-material/HealthAndSafety";
-import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
 import CircularProgress from "@mui/material/CircularProgress";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-
 import Header from "./Components/header";
 import {
   CardCity__wrapper,
@@ -34,11 +31,8 @@ import {
   TourGallery,
   WithTourestyImg,
 } from "./styled";
-
 import UltimateTour from "./Components/Ultimate Travel";
 import Footer from "./Components/footer";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../../db/firebase";
 interface GuideData {
   id: string;
   guideImg: string;
@@ -67,7 +61,7 @@ const slides = [
       "https://lh3.googleusercontent.com/p/AF1QipNjZB5eixJGUpiTnFA5G5Jq6nZN9fvsc5iQQvgb=w1080-h624-n-k-no",
     title: "Samarkand: The Timeless Jewel",
     description:
-      "DDiscover Samarkand — a city of ancient wonders, vibrant culture, and timeless beauty!",
+      "Discover Samarkand — a city of ancient wonders, vibrant culture!",
   },
 ];
 
@@ -88,9 +82,9 @@ function Home() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % slides.length);
-    }, 5000); // har 5 soniyada o'zgaradi
+    }, 5000);
 
-    return () => clearInterval(interval); // komponent unmount bo‘lsa, interval to‘xtasin
+    return () => clearInterval(interval);
   }, [slides.length]);
   useEffect(() => {
     const fetchGuides = async () => {
@@ -108,15 +102,8 @@ function Home() {
       setYoutobeShorts(youtubeData as YoutobeShorts[]);
     };
 
-    const fetchGalleryData = async () => {
-      const querySnapshot = await getDocs(collection(db, "gallery"));
-      const galleryItems = querySnapshot.docs.map((doc) => doc.data());
-      setGalleryData(galleryItems);
-    };
-
     fetchGuides();
     fetchYoutubeVideos();
-    fetchGalleryData();
   }, []);
   if (guide.length === 0) {
     return (
@@ -141,11 +128,12 @@ function Home() {
           sx={{
             width: "100%",
             height: {
-              xs: "60vh", // telefon
-              sm: "65vh", // kichik planshet
-              md: "70vh", // planshet
-              lg: "75vh", // desktop
+              xs: "60vh",
+              sm: "65vh",
+              md: "70vh",
+              lg: "75vh",
             },
+
             overflow: "hidden",
             position: "relative",
           }}
@@ -167,7 +155,7 @@ function Home() {
                 sx={{
                   width: `${100 / slides.length}%`,
                   height: {
-                    xs: "60vh",
+                    xs: "70vh",
                     sm: "65vh",
                     md: "70vh",
                     lg: "75vh",
@@ -179,6 +167,7 @@ function Home() {
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                   flexShrink: 0,
+                  marginTop: "-17px",
                 }}
               >
                 <Box
@@ -222,7 +211,6 @@ function Home() {
             ))}
           </Box>
 
-          {/* Dots indicator */}
           <Box
             sx={{
               position: "absolute",
@@ -248,34 +236,6 @@ function Home() {
               />
             ))}
           </Box>
-
-          <Button
-            onClick={prevSlide}
-            sx={{
-              position: "absolute",
-              left: "20px",
-              top: "50%",
-              transform: "translateY(-50%)",
-              zIndex: 2,
-              color: "#fff",
-            }}
-          >
-            ❮
-          </Button>
-
-          <Button
-            onClick={nextSlide}
-            sx={{
-              position: "absolute",
-              right: "20px",
-              top: "50%",
-              transform: "translateY(-50%)",
-              zIndex: 2,
-              color: "#fff",
-            }}
-          >
-            ❯
-          </Button>
         </Box>
       </Registan__wrapper>
       <Container maxWidth="xl">

@@ -152,8 +152,6 @@ function ContactPage({}: Props) {
                 Reach Us Anytime
               </Typography>
             </Box>
-
-            {/* ✅ Formni o'rab oldik */}
             <form onSubmit={handleSubmit}>
               <TextField
                 fullWidth

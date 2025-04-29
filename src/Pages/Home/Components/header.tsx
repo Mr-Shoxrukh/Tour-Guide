@@ -93,7 +93,7 @@ function ResponsiveAppBar() {
             }}
           >
             <FooterLogo>
-              <img width={"100px"} src={Logo} alt="Logo" />
+              <img width={"80px"} src={Logo} alt="Logo" />
             </FooterLogo>
           </Typography>
 
