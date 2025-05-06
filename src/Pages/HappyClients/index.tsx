@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from "react";
-import Headers from "../Home/Components/header";
+import { useEffect, useState } from "react";
+
+import { collection, getDocs } from "firebase/firestore";
+
 import {
   Box,
   CircularProgress,
@@ -7,10 +9,14 @@ import {
   Divider,
   Typography,
 } from "@mui/material";
-import { ClienstImages, Clients__wrapper, SatisfiedClients } from "./style";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../../db/firebase";
+
+import Headers from "../Home/Components/header";
 import Footer from "../Home/Components/footer";
+
+import { ClienstImages, Clients__wrapper, SatisfiedClients } from "./style";
+
+import { db } from "../../db/firebase";
+
 type Props = {};
 interface DataItem {
   id: string;

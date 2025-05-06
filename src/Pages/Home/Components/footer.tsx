@@ -80,6 +80,9 @@ function Footer({}: Props) {
             <a href="mailto:olimjontolipov8@gmail.com">
               olimjontolipov8@gmail.com
             </a>
+            <a href="mailto:berdiyevsanat5@gmail.com">
+              berdiyevsanat5@gmail.com
+            </a>
           </div>
         </FooterContact>
 

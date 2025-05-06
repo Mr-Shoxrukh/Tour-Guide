@@ -1,9 +1,8 @@
-import {
-  CardPrice,
-  UltimateCardWrapper,
-  UltimateTitle,
-  UltimateTourWrapper,
-} from "./style";
+import { useEffect, useState } from "react";
+
+import { useNavigate, useParams } from "react-router-dom";
+import { collection, getDocs } from "firebase/firestore";
+
 import {
   Box,
   CircularProgress,
@@ -12,15 +11,20 @@ import {
   Typography,
 } from "@mui/material";
 import Card from "@mui/material/Card";
+import CardActionArea from "@mui/material/CardActionArea";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import CardActionArea from "@mui/material/CardActionArea";
+
 import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
-import { useEffect, useState } from "react";
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+
 import { db } from "../../../../db/firebase";
-import { useNavigate, useParams } from "react-router-dom";
-import BoyIcon from "@mui/icons-material/Boy";
+import {
+  CardPrice,
+  UltimateCardWrapper,
+  UltimateTitle,
+  UltimateTourWrapper,
+} from "./style";
+
 interface GuideData {
   id: string;
   img: string;

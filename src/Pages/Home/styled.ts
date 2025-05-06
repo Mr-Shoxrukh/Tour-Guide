@@ -7,7 +7,7 @@ export const Registan__wrapper = styled.section`
     display: flex;
     flex-direction: column;
     position: relative;
-    margin-top: 100px;
+    margin-top: 10px;
   }
   .slide {
     width: 100%;

@@ -1,3 +1,10 @@
+import React, { useState } from "react";
+
+import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+
 import {
   Box,
   Button,
@@ -6,25 +13,20 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
-import Headers from "../../Pages/Home/Components/header";
-import Footer from "../Home/Components/footer";
-import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import DateRangeIcon from "@mui/icons-material/DateRange";
-import PhoneInput, { CountryData } from "react-phone-input-2";
-import "react-phone-input-2/lib/style.css";
+import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
+
+import Headers from "../../Pages/Home/Components/header";
+import Footer from "../Home/Components/footer";
+
 import {
   ContactWrapper,
   ContactNumber,
-  EmailInput,
-  InputWrapper,
   NumberBox,
   PhoneIcon,
   ReachUs,
 } from "./style";
-import axios from "axios";
-import { toast, ToastContainer } from "react-toastify";
 
 type Props = {};
 
@@ -94,11 +96,8 @@ function ContactPage({}: Props) {
   };
   const handleValidChange = (
     value: string,
-    data: {} | CountryData,
-    event: React.ChangeEvent<HTMLInputElement>,
-    formattedValue: string
+    event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const input = event.target.value;
     setPhoneNumber(value);
     setValidate(validatePhoneNumber(value));
   };
@@ -120,22 +119,11 @@ function ContactPage({}: Props) {
               </PhoneIcon>
               <Typography variant="body1">+998(99)927 22 11</Typography>
             </NumberBox>
-            <NumberBox
-              onClick={handelEmailLink}
-              style={{
-                cursor: "pointer",
-              }}
-            >
+            <NumberBox onClick={handelEmailLink} style={{ cursor: "pointer" }}>
               <PhoneIcon>
                 <AlternateEmailIcon />
               </PhoneIcon>
-              <Typography
-                variant="body1"
-                sx={{
-                  cursor: "pointer",
-                }}
-                onClick={handelEmailLink}
-              >
+              <Typography variant="body1" sx={{ cursor: "pointer" }}>
                 olimjontolipov8@gmail.com
               </Typography>
             </NumberBox>
@@ -146,6 +134,7 @@ function ContactPage({}: Props) {
               <Typography variant="body1">24/7</Typography>
             </NumberBox>
           </ContactNumber>
+
           <ReachUs>
             <Box>
               <Typography variant="h1" fontSize={30} fontWeight={700}>
@@ -163,39 +152,23 @@ function ContactPage({}: Props) {
                 helperText={errors.name ? "Ismni kiriting!" : ""}
               />
 
-              <EmailInput>
-                <PhoneInput
-                  country={"us"}
-                  onChange={handleValidChange}
-                  value={phoneNumber}
-                  inputProps={{
-                    required: true,
-                  }}
-                  placeholder="Phone number"
-                  inputStyle={{
-                    padding: "27px 15px",
-                    width: "100%",
-                    border: "1px solid #e0e0e0",
-                    borderRadius: "5px",
-                    fontSize: "16px",
-                    paddingLeft: "70px",
-                  }}
-                  buttonStyle={{
-                    borderRadius: "8px",
+              <PhoneInput
+                country={"us"}
+                onChange={handleValidChange}
+                value={phoneNumber}
+                inputProps={{ required: true }}
+                placeholder="Phone number"
+              />
 
-                    padding: "10px",
-                  }}
-                />
-                <TextField
-                  label="Email"
-                  fullWidth
-                  name="email"
-                  value={form.email}
-                  onChange={handleChange}
-                  error={errors.email}
-                  helperText={errors.email ? "Emailni kiriting!" : ""}
-                />
-              </EmailInput>
+              <TextField
+                label="Email"
+                fullWidth
+                name="email"
+                value={form.email}
+                onChange={handleChange}
+                error={errors.email}
+                helperText={errors.email ? "Emailni kiriting!" : ""}
+              />
 
               <TextareaAutosize
                 minRows={10}
@@ -212,8 +185,8 @@ function ContactPage({}: Props) {
             </form>
           </ReachUs>
         </ContactWrapper>
+        <ToastContainer />
       </Container>
-      <ToastContainer />
       <Footer />
     </>
   );

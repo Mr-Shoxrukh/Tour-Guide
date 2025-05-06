@@ -1,20 +1,26 @@
 import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import Container from "@mui/material/Container";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
-import CallIcon from "@mui/icons-material/Call";
-import Logo from "./img/Logo.png";
+
+import { getAuth, onAuthStateChanged, User } from "firebase/auth";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Avatar, Divider } from "@mui/material";
-import { getAuth, onAuthStateChanged, signOut, User } from "firebase/auth";
+
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  IconButton,
+  Typography,
+  Menu,
+  Container,
+  Button,
+  Tooltip,
+  MenuItem,
+  Divider,
+} from "@mui/material";
+
+import CallIcon from "@mui/icons-material/Call";
+
 import { app } from "../../../db/firebase";
+import Logo from "./img/Logo.png";
 import { FooterLogo } from ".";
 
 const auth = getAuth(app);
@@ -23,9 +29,6 @@ const pages = ["Home", "About", "Tours", "Gallery", "Contact", "happy-clients"];
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null>(null);
   const [user, setUser] = React.useState<User | null>(null);
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
-  );
   const [showHeader, setShowHeader] = React.useState(true);
   const [lastScrollY, setLastScrollY] = React.useState(0);
   const navigate = useNavigate();
@@ -74,22 +77,23 @@ function ResponsiveAppBar() {
         top: showHeader ? 0 : "-120px",
         transition: "top 0.3s ease-in-out",
         color: "#2c2b39",
-        padding: "20px 0",
       }}
     >
       <Container maxWidth="xl">
-        <Toolbar disableGutters>
+        <Toolbar disableGutters sx={{ justifyContent: "space-between" }}>
+          {/* Logo */}
           <Typography
             variant="h6"
             component="a"
             href="/"
             sx={{
-              mr: 2,
               fontFamily: "monospace",
               fontWeight: 700,
               letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
+              display: "flex",
+              alignItems: "center",
             }}
           >
             <FooterLogo>
@@ -97,7 +101,8 @@ function ResponsiveAppBar() {
             </FooterLogo>
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+          {/* Mobile menu (xs to md) */}
+          <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
               aria-controls="menu-appbar"
@@ -121,7 +126,8 @@ function ResponsiveAppBar() {
             </Menu>
           </Box>
 
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+          {/* Desktop menu (md and up) */}
+          <Box sx={{ display: { xs: "none", md: "flex" }, gap: 2 }}>
             {pages.map((page) => {
               const pagePath = `/${page.toLowerCase().replace(/\s+/g, "-")}`;
               const isActive = location.pathname === pagePath;
@@ -136,7 +142,7 @@ function ResponsiveAppBar() {
                     transition: "0.3s",
                     color: isActive ? "#FF9800" : "#2c2b39",
                     borderRadius: 0,
-                    borderBottom: isActive ? "2px solid #FF9800" : "none", // 🟠 faqat aktiv sahifa uchun chiziq
+                    borderBottom: isActive ? "2px solid #FF9800" : "none",
                     "&:hover": {
                       color: "#FF9800",
                     },
@@ -148,29 +154,30 @@ function ResponsiveAppBar() {
             })}
           </Box>
 
+          {/* Contact info */}
           <Box
             sx={{
-              padding: "10px",
+              padding: { xs: "5px", md: "10px" },
               display: "flex",
-              gap: "10px",
               alignItems: "center",
+              gap: { xs: 1, sm: 2 },
             }}
           >
             <CallIcon
               sx={{
-                fontSize: "30px",
+                fontSize: { xs: "24px", sm: "28px", md: "30px" },
                 color: "#55bd00",
                 cursor: "pointer",
               }}
               onClick={() =>
                 openLink("https://api.whatsapp.com/send/?phone=998999272211")
               }
-            />{" "}
+            />
             <Divider orientation="vertical" flexItem />
-            <Box>
+            <Box sx={{ display: "flex", flexDirection: "column" }}>
               <Typography
                 sx={{
-                  fontSize: "16px",
+                  fontSize: { xs: "12px", sm: "14px", md: "16px" },
                   fontWeight: "bold",
                   cursor: "pointer",
                 }}
@@ -180,30 +187,26 @@ function ResponsiveAppBar() {
               >
                 To More Inquiry
               </Typography>
-              <Tooltip
-                title="Tolipov Olimjon"
-                sx={{
-                  fontSize: "24px",
-                }}
-              >
+              <Tooltip title="Tolipov Olimjon">
                 <Typography
                   variant="body1"
                   sx={{
-                    "@media (max-width: 450px)": {
-                      display: "none",
+                    fontSize: { xs: "13px", sm: "14px", md: "16px" },
+                    display: {
+                      xs: "none",
+                      sm: "inline",
                     },
                   }}
                 >
                   <a
-                    href="https://api.whatsapp.com/send/?phone=998999272211&text&type=phone_number&app_absent=0"
+                    href="https://api.whatsapp.com/send/?phone=998331420077"
                     style={{
                       textDecoration: "none",
                       color: "#55bd00",
-                      fontSize: "18px",
                       fontWeight: "bold",
                     }}
                   >
-                    +998(99)927-22-11
+                    +998(33)142-00-77
                   </a>
                 </Typography>
               </Tooltip>

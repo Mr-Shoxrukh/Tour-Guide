@@ -1,19 +1,27 @@
 import { db } from "../../db/firebase";
 import { collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { Box, Button, Container, Typography } from "@mui/material";
+
 import ReactPlayer from "react-player";
-import GradeIcon from "@mui/icons-material/Grade";
-import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
-import SelfImprovementIcon from "@mui/icons-material/SelfImprovement";
-import activeTourist from "./Components/img/activeTourist.jpg";
-import HealthAndSafetyIcon from "@mui/icons-material/HealthAndSafety";
-import CircularProgress from "@mui/material/CircularProgress";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
+
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+  CircularProgress,
+  Container,
+  Typography,
+} from "@mui/material";
+
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+
+import Footer from "./Components/footer";
 import Header from "./Components/header";
+import UltimateTour from "./Components/Ultimate Travel";
+
+import activeTourist from "./Components/img/activeTourist.jpg";
+
 import {
   CardCity__wrapper,
   CityBox,
@@ -31,8 +39,10 @@ import {
   TourGallery,
   WithTourestyImg,
 } from "./styled";
-import UltimateTour from "./Components/Ultimate Travel";
-import Footer from "./Components/footer";
+
+import { slides } from "../../Mock/slides";
+import { goodSidesData } from "../../Mock/goodSidesData";
+import { slidesData } from "../../Mock/slidesData";
 interface GuideData {
   id: string;
   guideImg: string;
@@ -41,44 +51,14 @@ interface GuideData {
 interface YoutobeShorts {
   video: string;
 }
-const slides = [
-  {
-    image:
-      "https://mjcedactmdisysxnyusx.supabase.co/storage/v1/object/public/bjjb//unnamed.jpg",
-    title: "Wander Through the Timeless Walls of Khiva",
-    description:
-      "Feel history beneath your feet — where old fortresses and narrow lanes whisper tales of the past.",
-  },
-  {
-    image:
-      "https://www.aljazeera.com/wp-content/uploads/2023/07/Souvenir-vendors-in-Bukhara-Uzbekistan-with-one-of-the-citys-trading-domes-in-the-background.-David-Andreas_Al-Jazeera-1688616446.jpg?resize=1920%2C1080",
-    title: "Experience the Spirit of Bukhara",
-    description:
-      "Walk the Silk Road’s paths where poets and traders once roamed. Discover Bukhara’s art, bazaars, and warm hospitality.",
-  },
-  {
-    image:
-      "https://lh3.googleusercontent.com/p/AF1QipNjZB5eixJGUpiTnFA5G5Jq6nZN9fvsc5iQQvgb=w1080-h624-n-k-no",
-    title: "Samarkand: The Timeless Jewel",
-    description:
-      "Discover Samarkand — a city of ancient wonders, vibrant culture!",
-  },
-];
 
 function Home() {
-  const [youtobeShorts, setYoutobeShorts] = useState<YoutobeShorts[]>([]);
+  const [youtubeShortsList, setyoutubeShortsList] = useState<YoutobeShorts[]>(
+    []
+  );
   const [currentIndex, setCurrentIndex] = useState(1);
   const [guide, setGuide] = useState<GuideData[]>([]);
-  const [galleryData, setGalleryData] = useState<any[]>([]);
-  const nextSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % slides.length);
-  };
 
-  const prevSlide = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? slides.length - 1 : prevIndex - 1
-    );
-  };
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % slides.length);
@@ -99,7 +79,7 @@ function Home() {
     const fetchYoutubeVideos = async () => {
       const querySnapshot = await getDocs(collection(db, "youtobeShorts"));
       const youtubeData = querySnapshot.docs.map((doc) => doc.data());
-      setYoutobeShorts(youtubeData as YoutobeShorts[]);
+      setyoutubeShortsList(youtubeData as YoutobeShorts[]);
     };
 
     fetchGuides();
@@ -142,28 +122,25 @@ function Home() {
             className="slider-track"
             sx={{
               display: "flex",
-              width: `${slides.length * 100}%`,
+              width: `${slidesData.length * 100}%`,
               transform: `translateX(-${
-                currentIndex * (100 / slides.length)
+                currentIndex * (100 / slidesData.length)
               }%)`,
               transition: "transform 0.5s ease-in-out",
             }}
           >
-            {slides.map((slide, index) => (
+            {slidesData.map((slide, index) => (
               <Box
                 key={index}
                 sx={{
-                  width: `${100 / slides.length}%`,
+                  width: `${100 / slidesData.length}%`,
                   height: {
                     xs: "70vh",
                     sm: "65vh",
                     md: "70vh",
                     lg: "75vh",
                   },
-                  backgroundImage: `linear-gradient(
-            rgba(0, 0, 0, 0.5),
-            rgba(0, 0, 0, 0.5)
-          ), url(${slide.image})`,
+                  backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${slide.image})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                   flexShrink: 0,
@@ -221,7 +198,7 @@ function Home() {
               gap: 1,
             }}
           >
-            {slides.map((_, index) => (
+            {slidesData.map((_, index) => (
               <Box
                 key={index}
                 onClick={() => setCurrentIndex(index)}
@@ -238,13 +215,14 @@ function Home() {
           </Box>
         </Box>
       </Registan__wrapper>
+
       <Container maxWidth="xl">
         <Tour_Actives>
           <TourActTitle>
             <Typography variant="h1">Exploring Tour Activities</Typography>
           </TourActTitle>
           <TourGallery>
-            {youtobeShorts.map((item: any) => (
+            {youtubeShortsList.map((item: any) => (
               <Box
                 key={item.video}
                 sx={{
@@ -293,43 +271,20 @@ function Home() {
                   marginTop: "78px",
                 }}
               >
-                <Box borderRadius={1}>
-                  <GoodSides>
-                    <GoodSidesIcon>
-                      <HealthAndSafetyIcon />
-                    </GoodSidesIcon>
-                    Safety First Always
-                  </GoodSides>
-                </Box>
-                <Box borderRadius={1}>
-                  <GoodSides>
-                    <GoodSidesIcon>
-                      <WorkspacePremiumIcon />
-                    </GoodSidesIcon>
-                    Trusted Travel Guide
-                  </GoodSides>
-                </Box>
-                <Box borderRadius={1}>
-                  <GoodSides>
-                    <GoodSidesIcon>
-                      <SelfImprovementIcon />
-                    </GoodSidesIcon>
-                    Time Stress SavingsSafety
-                  </GoodSides>
-                </Box>
-                <Box borderRadius={1}>
-                  <GoodSides>
-                    <GoodSidesIcon>
-                      <GradeIcon />
-                    </GoodSidesIcon>
-                    360+ Tour Success
-                  </GoodSides>
-                </Box>
+                {goodSidesData.map((item, index) => (
+                  <Box key={index} borderRadius={1}>
+                    <GoodSides>
+                      <GoodSidesIcon>{item.icon}</GoodSidesIcon>
+                      {item.text}
+                    </GoodSides>
+                  </Box>
+                ))}
               </Box>
             </ExperienceTitle>
-            <img src={activeTourist} alt="" />
+            <img src={activeTourist} alt="Tourist Experience" />
           </WithTourestyImg>
         </ExperienceWithTourests__wrapper>
+
         <SpotTourst>
           <MApImg>
             <SpotTitle>

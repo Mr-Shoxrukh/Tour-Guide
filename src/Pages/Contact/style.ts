@@ -1,12 +1,14 @@
-// ✅ YANGILANGAN styled-components responsive variantlari
 import styled from "styled-components";
 
 export const ContactWrapper = styled.div`
   margin-top: 180px;
   margin-bottom: 50px;
+  width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+  flex-direction: row-reverse;
   flex-wrap: wrap;
+  gap: 30px;
   row-gap: 30px;
 `;
 
@@ -20,13 +22,13 @@ export const ContactNumber = styled.div`
 `;
 
 export const NumberBox = styled.div`
-  max-width: 400px;
-  padding: 10px 15px;
+  max-width: 500px;
+  padding: 20px 15px;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
   p {
     font-size: 17px;
     font-weight: bold;
@@ -34,8 +36,8 @@ export const NumberBox = styled.div`
 `;
 
 export const PhoneIcon = styled.div`
-  width: 50px;
-  height: 50px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   background-color: #de8500;
   display: flex;
@@ -47,7 +49,7 @@ export const PhoneIcon = styled.div`
 export const ReachUs = styled.div`
   flex: 2;
   min-width: 300px;
-  max-width: 1000px;
+  max-width: 300px;
   width: 100%;
   padding: 25px 30px;
   background-color: rgb(255, 251, 235);

@@ -1,6 +1,20 @@
 import { Box, Container, Divider, Typography } from "@mui/material";
+
+import AlarmOnRoundedIcon from "@mui/icons-material/AlarmOnRounded";
+import Diversity3RoundedIcon from "@mui/icons-material/Diversity3Rounded";
+import EventAvailableIcon from "@mui/icons-material/EventAvailable";
+import GroupsIcon from "@mui/icons-material/Groups";
+import HowToRegRoundedIcon from "@mui/icons-material/HowToRegRounded";
+import InventoryRoundedIcon from "@mui/icons-material/InventoryRounded";
+import MultipleStopRoundedIcon from "@mui/icons-material/MultipleStopRounded";
+import OfflineBoltRoundedIcon from "@mui/icons-material/OfflineBoltRounded";
+import PublicRoundedIcon from "@mui/icons-material/PublicRounded";
+import SensorOccupiedRoundedIcon from "@mui/icons-material/SensorOccupiedRounded";
+
+import Footer from "../Home/Components/footer";
 import Headers from "../../Pages/Home/Components/header";
-import React from "react";
+import UltimateTour from "../Home/Components/Ultimate Travel";
+
 import {
   About__content,
   About__wrapper,
@@ -16,18 +30,7 @@ import {
   TourTitle,
   WhyGuideTour,
 } from "./style";
-import EventAvailableIcon from "@mui/icons-material/EventAvailable";
-import GroupsIcon from "@mui/icons-material/Groups";
-import HowToRegRoundedIcon from "@mui/icons-material/HowToRegRounded";
-import SensorOccupiedRoundedIcon from "@mui/icons-material/SensorOccupiedRounded";
-import PublicRoundedIcon from "@mui/icons-material/PublicRounded";
-import OfflineBoltRoundedIcon from "@mui/icons-material/OfflineBoltRounded";
-import InventoryRoundedIcon from "@mui/icons-material/InventoryRounded";
-import Diversity3RoundedIcon from "@mui/icons-material/Diversity3Rounded";
-import AlarmOnRoundedIcon from "@mui/icons-material/AlarmOnRounded";
-import MultipleStopRoundedIcon from "@mui/icons-material/MultipleStopRounded";
-import UltimateTour from "../Home/Components/Ultimate Travel";
-import Footer from "../Home/Components/footer";
+
 type Props = {};
 
 function AboutPage({}: Props) {

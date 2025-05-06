@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
+
 import { Box, CircularProgress, Container } from "@mui/material";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+
 import { app } from "../../db/firebase";
-import { GalleryWrapper, ImageCard } from "./style";
+import { getFirestore, collection, getDocs } from "firebase/firestore";
+
 import Headers from "../Home/Components/header";
 import Footer from "../Home/Components/footer";
+
+import { GalleryWrapper, ImageCard } from "./style";
 
 const db = getFirestore(app);
 
@@ -14,22 +18,19 @@ const GalleryPage = () => {
 
   useEffect(() => {
     const fetchGallery = async () => {
+      setLoading(true);
       try {
         const querySnapshot = await getDocs(collection(db, "gallery"));
-        const items = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setGalleryData(items);
-      } catch (error) {
-        console.error("❌ Firebase error:", error);
+        setGalleryData(
+          querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
+        );
+      } catch {
       } finally {
         setLoading(false);
       }
     };
     fetchGallery();
   }, []);
-
   return (
     <>
       <Headers />

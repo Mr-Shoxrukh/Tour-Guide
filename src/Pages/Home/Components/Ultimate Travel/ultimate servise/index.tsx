@@ -1,26 +1,29 @@
 import { useEffect, useState } from "react";
+
 import { useNavigate, useParams } from "react-router-dom";
 import { collection, doc, getDoc, getDocs } from "firebase/firestore";
-import { db } from "../../../../../db/firebase";
+import { toast } from "react-toastify";
+
 import {
   Box,
+  Button,
   CircularProgress,
   Container,
-  Typography,
-  Button,
   Divider,
+  Typography,
 } from "@mui/material";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
+
+import { db } from "../../../../../db/firebase";
 import Headers from "../../header";
 import Footer from "../../footer";
-import { toast } from "react-toastify";
+
 import {
   CityName_title,
   CostItem,
-  Itinerary,
   UltimateServise__wrapper,
   UltimateServiseImg,
 } from "./style";
