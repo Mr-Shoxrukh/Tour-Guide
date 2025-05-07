@@ -80,20 +80,18 @@ function ResponsiveAppBar() {
       }}
     >
       <Container maxWidth="xl">
-        <Toolbar disableGutters sx={{ justifyContent: "space-between" }}>
-          {/* Logo */}
+        <Toolbar disableGutters>
           <Typography
             variant="h6"
             component="a"
             href="/"
             sx={{
+              mr: 2,
               fontFamily: "monospace",
               fontWeight: 700,
               letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
-              display: "flex",
-              alignItems: "center",
             }}
           >
             <FooterLogo>
@@ -101,8 +99,7 @@ function ResponsiveAppBar() {
             </FooterLogo>
           </Typography>
 
-          {/* Mobile menu (xs to md) */}
-          <Box sx={{ display: { xs: "flex", md: "none" } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
               aria-controls="menu-appbar"
@@ -126,8 +123,7 @@ function ResponsiveAppBar() {
             </Menu>
           </Box>
 
-          {/* Desktop menu (md and up) */}
-          <Box sx={{ display: { xs: "none", md: "flex" }, gap: 2 }}>
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => {
               const pagePath = `/${page.toLowerCase().replace(/\s+/g, "-")}`;
               const isActive = location.pathname === pagePath;
@@ -142,7 +138,7 @@ function ResponsiveAppBar() {
                     transition: "0.3s",
                     color: isActive ? "#FF9800" : "#2c2b39",
                     borderRadius: 0,
-                    borderBottom: isActive ? "2px solid #FF9800" : "none",
+                    borderBottom: isActive ? "2px solid #FF9800" : "none", // 🟠 faqat aktiv sahifa uchun chiziq
                     "&:hover": {
                       color: "#FF9800",
                     },
@@ -154,30 +150,29 @@ function ResponsiveAppBar() {
             })}
           </Box>
 
-          {/* Contact info */}
           <Box
             sx={{
-              padding: { xs: "5px", md: "10px" },
+              padding: "10px",
               display: "flex",
+              gap: "10px",
               alignItems: "center",
-              gap: { xs: 1, sm: 2 },
             }}
           >
             <CallIcon
               sx={{
-                fontSize: { xs: "24px", sm: "28px", md: "30px" },
+                fontSize: "30px",
                 color: "#55bd00",
                 cursor: "pointer",
               }}
               onClick={() =>
                 openLink("https://api.whatsapp.com/send/?phone=998999272211")
               }
-            />
+            />{" "}
             <Divider orientation="vertical" flexItem />
-            <Box sx={{ display: "flex", flexDirection: "column" }}>
+            <Box>
               <Typography
                 sx={{
-                  fontSize: { xs: "12px", sm: "14px", md: "16px" },
+                  fontSize: "16px",
                   fontWeight: "bold",
                   cursor: "pointer",
                 }}
@@ -187,26 +182,30 @@ function ResponsiveAppBar() {
               >
                 To More Inquiry
               </Typography>
-              <Tooltip title="Tolipov Olimjon">
+              <Tooltip
+                title="Tolipov Olimjon"
+                sx={{
+                  fontSize: "24px",
+                }}
+              >
                 <Typography
                   variant="body1"
                   sx={{
-                    fontSize: { xs: "13px", sm: "14px", md: "16px" },
-                    display: {
-                      xs: "none",
-                      sm: "inline",
+                    "@media (max-width: 450px)": {
+                      display: "none",
                     },
                   }}
                 >
                   <a
-                    href="https://api.whatsapp.com/send/?phone=998331420077"
+                    href="https://api.whatsapp.com/send/?phone=998999272211&text&type=phone_number&app_absent=0"
                     style={{
                       textDecoration: "none",
                       color: "#55bd00",
+                      fontSize: "18px",
                       fontWeight: "bold",
                     }}
                   >
-                    +998(33)142-00-77
+                    +998(99)927-22-11
                   </a>
                 </Typography>
               </Tooltip>
