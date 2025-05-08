@@ -49,7 +49,7 @@ export const PhoneIcon = styled.div`
 export const ReachUs = styled.div`
   flex: 2;
   min-width: 300px;
-  max-width: 300px;
+  max-width: 700px;
   width: 100%;
   padding: 25px 30px;
   background-color: rgb(255, 251, 235);

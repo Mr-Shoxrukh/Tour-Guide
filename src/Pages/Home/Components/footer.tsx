@@ -45,10 +45,6 @@ function Footer({}: Props) {
       <FooterContainer maxWidth="xl">
         <FooterLogo>
           <img width={200} src={Logo} alt="logo" />
-          <Typography variant="h6">Want to Take Tour Packages?</Typography>
-          <Button variant="contained" onClick={handleBookTour}>
-            Book a Tour
-          </Button>
         </FooterLogo>
 
         <FooterQuickLinks>
@@ -71,19 +67,21 @@ function Footer({}: Props) {
           <Typography variant="h6">
             <CallIcon /> To More Inquiry
           </Typography>
-          <a href="tel:+998999272211">+998(99)927-22-11</a>
+          <Box marginBottom={3}>
+            <a href="tel:+998999272211">+998(99)927-22-11</a>
+          </Box>
 
-          <div className="section">
-            <Typography variant="h6">
-              <TelegramIcon /> Send Mail
-            </Typography>
+          <Typography variant="h6">
+            <TelegramIcon /> Send Mail
+          </Typography>
+          <Box flexDirection={"column"} display="flex" gap={1}>
             <a href="mailto:olimjontolipov8@gmail.com">
               olimjontolipov8@gmail.com
             </a>
             <a href="mailto:berdiyevsanat5@gmail.com">
               berdiyevsanat5@gmail.com
             </a>
-          </div>
+          </Box>
         </FooterContact>
 
         <FooterSocial>

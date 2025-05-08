@@ -1,13 +1,14 @@
 import styled from "styled-components";
 export const Registan__wrapper = styled.section`
   width: 100%;
+
   .slider-container {
     width: 100%;
     display: flex;
     flex-direction: column;
     position: relative;
-    margin-top: 10px;
   }
+
   .slide {
     width: 100%;
     height: 100%;
@@ -56,10 +57,6 @@ export const Registan__wrapper = styled.section`
     height: 800px;
     object-fit: cover;
     border-radius: 0 0 10px 10px;
-  }
-  @media (max-width: 520px) {
-    background-size: 100% 100%;
-    margin-top: 110px;
   }
 `;
 export const Tour_Actives = styled.section`

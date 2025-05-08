@@ -19,7 +19,7 @@ export const FooterContainer = styled(Container)`
   @media (min-width: 768px) {
     flex-direction: row;
     align-items: flex-start;
-    justify-content: space-between;
+    justify-content: space-evenly;
     text-align: left;
   }
 `;
@@ -66,12 +66,17 @@ export const FooterQuickLinks = styled.div`
 `;
 
 export const FooterContact = styled.div`
+  display: flex;
+  flex-direction: column;
+
   h6 {
     margin-bottom: 8px;
     font-weight: bold;
     display: flex;
     align-items: center;
     gap: 8px;
+    display: flex;
+    align-items: center;
   }
 
   a {
