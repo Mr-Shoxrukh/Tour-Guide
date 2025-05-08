@@ -1,15 +1,19 @@
 import styled from "styled-components";
 
 export const ContactWrapper = styled.div`
+  width: 100%;
   margin-top: 180px;
   margin-bottom: 50px;
   width: 100%;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   flex-direction: row-reverse;
   flex-wrap: wrap;
   gap: 30px;
   row-gap: 30px;
+  @media screen and (max-width: 1193px) {
+    flex-direction: column;
+  }
 `;
 
 export const ContactNumber = styled.div`
