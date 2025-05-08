@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import registan from "./Components/img/registan.png";
 export const Registan__wrapper = styled.section`
   width: 100%;
   .slider-container {

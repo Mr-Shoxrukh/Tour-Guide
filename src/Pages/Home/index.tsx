@@ -191,7 +191,7 @@ function Home() {
           <Box
             sx={{
               position: "absolute",
-              bottom: 20,
+              bottom: 40,
               width: "100%",
               display: "flex",
               justifyContent: "center",
