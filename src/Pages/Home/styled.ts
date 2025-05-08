@@ -135,7 +135,7 @@ export const ExperienceWithTourests__wrapper = styled.section`
   }
 `;
 export const WithTourestyImg = styled.div`
-  width: 100%;
+  /* width: 100%; */
   padding: 0 45px;
   display: flex;
   gap: 40px;

@@ -111,7 +111,7 @@ function Home() {
               xs: "60vh",
               sm: "65vh",
               md: "70vh",
-              lg: "75vh",
+              lg: "85vh",
             },
 
             overflow: "hidden",
@@ -138,7 +138,7 @@ function Home() {
                     xs: "70vh",
                     sm: "65vh",
                     md: "70vh",
-                    lg: "75vh",
+                    lg: "85vh",
                   },
                   backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${slide.image})`,
                   backgroundSize: "cover",
