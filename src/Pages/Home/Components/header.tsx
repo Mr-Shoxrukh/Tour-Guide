@@ -191,6 +191,9 @@ function ResponsiveAppBar() {
                 <Typography
                   variant="body1"
                   sx={{
+                    display: "flex",
+                    flexDirection: "column",
+
                     "@media (max-width: 450px)": {
                       display: "none",
                     },
@@ -206,6 +209,17 @@ function ResponsiveAppBar() {
                     }}
                   >
                     +998(99)927-22-11
+                  </a>
+                  <a
+                    href="https://api.whatsapp.com/send/?phone=998999272211&text&type=phone_number&app_absent=0"
+                    style={{
+                      textDecoration: "none",
+                      color: "#55bd00",
+                      fontSize: "18px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    +998(33) 142 00 77
                   </a>
                 </Typography>
               </Tooltip>

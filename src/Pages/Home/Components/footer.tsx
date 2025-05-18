@@ -67,8 +67,14 @@ function Footer({}: Props) {
           <Typography variant="h6">
             <CallIcon /> To More Inquiry
           </Typography>
-          <Box marginBottom={3}>
+          <Box
+            marginBottom={3}
+            display={"flex"}
+            flexDirection={"column"}
+            gap={2}
+          >
             <a href="tel:+998999272211">+998(99)927-22-11</a>
+            <a href="tel:+998331420077">+998(33) 142 00 77</a>
           </Box>
 
           <Typography variant="h6">
